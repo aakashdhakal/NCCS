@@ -1,3 +1,4 @@
+#include<iostream>
 using namespace std;
 int CRT(int a1,int a2,int a3,int m1,int m2,int m3)
 {
