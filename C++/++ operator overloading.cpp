@@ -20,6 +20,14 @@ class Time{
 			min %= 60;
 			return *this;
 		}
+		Time operator ++(int){
+			sec++;
+			min += sec/60;
+			hour += min/60;
+			sec %= 60;
+			min %= 60;
+			return *this;
+		}
 		void inTime(){
 			cout<<"Please enter time in hour:minute:second: ";
 			cin>>hour>>min>>sec;
@@ -33,8 +41,16 @@ class Time{
 int main(){
 	Time t1;
 	t1.inTime();
-	cout<<"Before increment"<<endl;
-	t1.outTime();
-	cout<<"After increment"<<endl;
+	cout<<"Pre-Increment"<<endl;
+	cout<<"During increment"<<endl;
 	(++t1).outTime();
+	cout<<"After increment"<<endl;
+	t1.outTime();
+	
+	cout<<"Post-Increment"<<endl;
+	cout<<"During increment"<<endl;
+	(t1++).outTime();
+	cout<<"After increment"<<endl;
+	t1.outTime();
+	return 0;
 }
