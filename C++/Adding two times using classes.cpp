@@ -12,60 +12,76 @@ class Time{
 			cin>>hour>>minute>>second;
 		}
 		void showData(){
-			cout<<"The given time is "<<hour<<":"<<minute<<":"<<second<<endl;
+			cout<<"The added time is "<<hour<<":"<<minute<<":"<<second<<endl;
 		}
-		friend void addTime(Time t1, Time t2);
+		friend void addTimeV(Time,Time);
+		friend void addTimeR(Time&,Time&);
+		friend void addTime(Time*,Time*);
 };
 
-void addTime (Time t1, Time t2){
-	Time t3;
-	t3.hour = t1.hour + t2.hour;
-	t3.minute = t1.minute + t2.minute;
-	t3.second = t1.second + t2.second;
+void addTimeV (Time t1,Time t2){
+	Time sum;
+	sum.hour = t1.hour + t2.hour;
+	sum.minute = t1.minute + t2.minute;
+	sum.second = t1.second + t2.second;
 	
-	if(t3.second >= 60){
-		t3.minute += t3.second/60;
-		t3.second %= 60;
+	if(sum.second >= 60){
+		sum.minute += sum.second/60;
+		sum.second %= 60;
 	}
-	if(t3.minute >=60){
-		t3.hour += t3.minute/60;
-		t3.minute %= 60;
+	if(sum.minute >=60){
+		sum.hour += sum.minute/60;
+		sum.minute %= 60;
 	}
 	
-	cout<<"The sum of two times is "<<t3.hour<<":"<<t3.minute<<":"<<t3.second<<endl;
+	sum.showData();
+}
+void addTimeR (Time& t1,Time& t2){
+	Time sum;
+	sum.hour = t1.hour + t2.hour;
+	sum.minute = t1.minute + t2.minute;
+	sum.second = t1.second + t2.second;
+	
+	if(sum.second >= 60){
+		sum.minute += sum.second/60;
+		sum.second %= 60;
+	}
+	if(sum.minute >=60){
+		sum.hour += sum.minute/60;
+		sum.minute %= 60;
+	}
+	
+	sum.showData();
+}
+void addTime (Time* t1 ,Time* t2 ){
+	Time sum;
+	sum.hour = t1 -> hour + t2 -> hour;
+	sum.minute = t1 -> minute + t2 -> minute;
+	sum.second = t1 -> second + t2 -> second;
+	
+	if(sum.second >= 60){
+		sum.minute += sum.second/60;
+		sum.second %= 60;
+	}
+	if(sum.minute >=60){
+		sum.hour += sum.minute/60;
+		sum.minute %= 60;
+	}
+	
+	sum.showData();
 }
 
 int main(){
 	
-	//passing by value
-	Time t1,t2;
-	cout<<"Passing by value"<<endl;
-	cout<<"----------------"<<endl;
+	Time t1,t2,sum;
 	t1.readData();
 	t2.readData();
-	t1.showData();
-	t2.showData();
-	addTime(t1,t2);
+	cout<<"Pass by Value"<<endl;
+	addTimeV(t1,t2);
+	cout<<"Pass by Reference"<<endl;
+	addTimeR(t1,t2);
+	cout<<"Pass by Address"<<endl;
+	addTime(&t1,&t2);
 	
-	//passing by address
-	Time *t3 = new Time,*t4 = new Time;
-	cout<<"Passing by address"<<endl;
-	cout<<"----------------------"<<endl;	
-	t3 -> readData();
-	t4 -> readData();
-	t3 -> showData();
-	t4 -> showData();
-	addTime(*t3,*t4);
-	
-	//passing by reference
-	Time &t5 = *t3;
-	Time &t6 = *t4;
-	cout<<"Passing by reference"<<endl;
-	cout<<"----------------------"<<endl;
-	t5.readData();
-	t6.readData();
-	t5.showData();
-	t6.showData();
-	addTime(t5,t6);
 	return 0;
 }
