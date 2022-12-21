@@ -19,8 +19,8 @@ struct Distance{
 	}
 	Distance addDistance(Distance& d){
 	Distance sum;
-	sum.meter = d.meter + d.meter;
-	sum.centimeter = d.centimeter + d.centimeter;
+	sum.meter = meter + d.meter;
+	sum.centimeter = centimeter + d.centimeter;
 	
 	if(sum.centimeter >= 100){
 		sum.meter += 1;
