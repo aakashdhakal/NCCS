@@ -45,8 +45,6 @@ int main(){
 	Celsius c1;
 	cout<<"Enter the temperature in Farenheit: ";
 	cin>>f1;
-	cout<<"The temperature in Farenheit is: ";
-	cout<<f1;
 	c1 = f1;
 	cout<<"The temperature in celsius is: ";
 	cout<<c1;
