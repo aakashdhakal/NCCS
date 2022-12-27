@@ -19,7 +19,7 @@ class Time{
 		friend void addTime(Time*,Time*);
 };
 
-void addTimeV (Time t1,Time t2){
+Time addTime (Time t1,Time t2){
 	Time sum;
 	sum.hour = t1.hour + t2.hour;
 	sum.minute = t1.minute + t2.minute;
@@ -34,9 +34,9 @@ void addTimeV (Time t1,Time t2){
 		sum.minute %= 60;
 	}
 	
-	sum.showData();
+	return sum;
 }
-void addTimeR (Time& t1,Time& t2){
+Time& addTimeR (Time& t1,Time& t2){
 	Time sum;
 	sum.hour = t1.hour + t2.hour;
 	sum.minute = t1.minute + t2.minute;
@@ -51,24 +51,24 @@ void addTimeR (Time& t1,Time& t2){
 		sum.minute %= 60;
 	}
 	
-	sum.showData();
+	return sum;
 }
-void addTime (Time* t1 ,Time* t2 ){
-	Time sum;
-	sum.hour = t1 -> hour + t2 -> hour;
-	sum.minute = t1 -> minute + t2 -> minute;
-	sum.second = t1 -> second + t2 -> second;
+Time* addTime (Time* t1 ,Time* t2 ){
+	Time* sum;
+	sum -> hour = t1 -> hour + t2 -> hour;
+	sum -> minute = t1 -> minute + t2 -> minute;
+	sum -> second = t1 -> second + t2 -> second;
 	
-	if(sum.second >= 60){
-		sum.minute += sum.second/60;
-		sum.second %= 60;
+	if(sum -> second >= 60){
+		sum -> minute += sum -> second/60;
+		sum -> second %= 60;
 	}
-	if(sum.minute >=60){
-		sum.hour += sum.minute/60;
-		sum.minute %= 60;
+	if(sum -> minute >=60){
+		sum -> hour += sum -> minute/60;
+		sum -> minute %= 60;
 	}
 	
-	sum.showData();
+	return sum;
 }
 
 int main(){
@@ -77,11 +77,12 @@ int main(){
 	t1.readData();
 	t2.readData();
 	cout<<"Pass by Value"<<endl;
-	addTimeV(t1,t2);
+	Time sum = addTime(t1,t2);
 	cout<<"Pass by Reference"<<endl;
-	addTimeR(t1,t2);
+	Time& sum = addTime(t1,t2);
 	cout<<"Pass by Address"<<endl;
-	addTime(&t1,&t2);
+	
+	Time* sum = addTime(&t1,&t2);
 	
 	return 0;
 }
