@@ -14,9 +14,9 @@ class Time{
 		void showData(){
 			cout<<"The added time is "<<hour<<":"<<minute<<":"<<second<<endl;
 		}
-		friend void addTimeV(Time,Time);
-		friend void addTimeR(Time&,Time&);
-		friend void addTime(Time*,Time*);
+		friend Time addTime(Time t1,Time t2);
+		friend Time& addTime(Time& t1,Time& t2);
+		friend Time* addTime(Time* t1,Time* t2);
 };
 
 Time addTime (Time t1,Time t2){
@@ -36,7 +36,7 @@ Time addTime (Time t1,Time t2){
 	
 	return sum;
 }
-Time& addTimeR (Time& t1,Time& t2){
+Time& addTime (Time& t1,Time& t2){
 	Time sum;
 	sum.hour = t1.hour + t2.hour;
 	sum.minute = t1.minute + t2.minute;
@@ -73,16 +73,18 @@ Time* addTime (Time* t1 ,Time* t2 ){
 
 int main(){
 	
-	Time t1,t2,sum;
+	Time t1,t2;
 	t1.readData();
 	t2.readData();
 	cout<<"Pass by Value"<<endl;
 	Time sum = addTime(t1,t2);
-	cout<<"Pass by Reference"<<endl;
-	Time& sum = addTime(t1,t2);
+	sum.showData();
+	/*cout<<"Pass by Reference"<<endl;
+	Time& sum1 = addTime(t1,t2);
+	sum.showData();*/
 	cout<<"Pass by Address"<<endl;
-	
-	Time* sum = addTime(&t1,&t2);
+	Time* sum2 = addTime(&t1,&t2);
+	sum.showData();
 	
 	return 0;
 }
