@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include<string>
+#include <time.h>
 using namespace std;
 int n = 0;
 int np = 0;
@@ -67,10 +69,8 @@ void emptyList() {
 
 void passenger() {
   vline('-');
-  cout << "Select an action\n 1. See Available Buses\n 2. Book a ticket\n 3. "
-          "View your ticket\n 4. Change User Role\n 5. Exit"
-       << endl;
-  int option;
+  cout << "Select an action\n 1. See Available Buses\n 2. Book a ticket\n 3. View your ticket\n 4. Change User Role\n 5. Exit"<< endl;
+  int option = 0;
   cin >> option;
 
   switch (option) {
@@ -93,8 +93,9 @@ void passenger() {
     case 5:
       exit(0);
       break;
+      
     default:
-      cout << "Error! Please enter numbers 1 or 2 or 3" << endl;
+      cout << "Error! Please enter numbers from 1 to 5" << endl;
       passenger();
       break;
   }
@@ -107,7 +108,7 @@ void busAdmin() {
   cout << "Select an action\n 1. Add a bus\n 2. Delete bus\n 3. View Available "
           "Buses\n 4. Change User Role\n 5. Exit"
        << endl;
-  int option;
+  int option = 0;
   cin >> option;
 
   switch (option) {
@@ -202,19 +203,26 @@ void Passenger::bookTicket() {
   }
 
   b[i].seatInfo();
-snum:
+  
+	do{
   cout << "Enter seat number: ";
   cin >> p[np].seatNumber;
+  
+  if(p[np].seatNumber > 32){
+  	cout << "ERROR! The seat limit is 32. So, please enter seat number upto 32" << endl;
+  }
+  
+  else if(b[i].seats[p[np].seatNumber / 4][(p[np].seatNumber % 4) - 1] != 0){
+  	 cout << "ERROR! The seat is already reserved" << endl;
+  }
+  else{
+  	break;
+  }
+  
+}
 
-  if (p[np].seatNumber > 32) {
-    cout << "ERROR! The seat limit is 32. So, please enter seat number upto 32"
-         << endl;
-    goto snum;
-  }
-  if (b[i].seats[p[np].seatNumber / 4][(p[np].seatNumber % 4) - 1] != 0) {
-    cout << "ERROR! The seat is already reserved" << endl;
-    goto snum;
-  }
+while(p[np].seatNumber > 32);
+
 
   cout << "Enter passenger's name: ";
   cin >> p[np].name;
@@ -259,6 +267,7 @@ void Passenger::showTicket() {
   cout << "Seat Number: " << p[i].seatNumber << endl;
   vline('-');
   system("pause");
+  
 }
 void Bus::inputInfo() {
   cout << "Enter the bus number: ";
@@ -281,7 +290,7 @@ void Bus::inputInfo() {
   getline(cin, b[n].arrivalTime);
   cout << "Enter the departure time (hh:mm): ";
   getline(cin, b[n].departureTime);
-  cot << "Enter the fare: ";
+  cout << "Enter the fare: ";
   cin >> b[n].fare;
   cout << "Bus added successfully" << endl;
   n++;
