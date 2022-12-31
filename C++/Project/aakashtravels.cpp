@@ -77,7 +77,7 @@ void passenger(){
 						break;
 				
 				case 3: 
-						//p[0].showTicket();
+						p[0].showTicket();
 						break;
 						
 				case 4: roleSelect();
@@ -192,6 +192,12 @@ void Passenger::bookTicket(){
 		snum:
 		cout<<"Enter seat number: ";
 		cin>>p[np].seatNumber;
+		
+		if(p[np].seatNumber > 32){
+			cout<<"ERROR! The seat limit is 32. So, please enter seat number upto 32"<<endl;
+			goto snum;
+			
+		}
 		if(b[i].seats[p[np].seatNumber/4][(p[np].seatNumber%4)-1] != 0){
 			cout<<"ERROR! The seat is already reserved"<<endl;
 			goto snum;
@@ -209,16 +215,37 @@ void Passenger::bookTicket(){
 		system("pause");
 }
 
-
-
-
-
-
-
-
-
-
-
+void Passenger::showTicket(){
+	int tnum,i,j ,temp = 0;
+	cout<<"Please enter your ticket number: ";
+	cin>>tnum;
+	
+	for( i = 0 ;i<np; i++){
+		if(p[i].ticketNumber == tnum){
+		break;
+	}
+		else{
+			temp++;
+			
+		}
+	}
+	
+	if(temp == np){
+			cout<<"ERROR! Ticket number not found"<<endl;
+			showTicket();
+		}
+		
+	for( j = 0; j<=n; j++){
+		if(b[j].seats[i][j] == p[i].ticketNumber);
+		break;
+	}
+	b[j].showInfo();
+	cout<<"Ticket number: "<<p[i].ticketNumber<<endl;
+	cout<<"Passenger's Name: "<<p[i].name<<endl;
+	cout<<"Seat Number: "<<p[i].seatNumber<<endl;
+	cout<<"------------------------------------------------"<<endl;
+	system("pause");
+}
 		void Bus::inputInfo(){
 			
 cout<<"Enter the bus number: ";
