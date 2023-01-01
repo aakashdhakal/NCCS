@@ -25,7 +25,8 @@ class Bus {
   void showInfo();
   void removeInfo();
   void seatInfo();
-  void select();
+  void passenger();
+  void admin();
 	void bookTicket();
   void showTicket();
 }b[10], p[1000]; 
@@ -43,6 +44,7 @@ void vline(char ch) {
 void emptyList() {
   vline('-');
   cout << "The list is empty" << endl;
+  	  vline('-');
 }
 
 void Bus::seatInfo() {
@@ -80,7 +82,7 @@ void Bus::bookTicket() {
   }
   if (temp == n) {
     cout << "ERROR! No buses are available for the given destination" << endl;
-    select();
+    passenger();
   }
 
   cout << "Enter bus number: ";
@@ -172,7 +174,7 @@ void Bus::removeInfo() {
         b[i] = b[i + 1];
         n--;
         cout << "The bus is removed from the list!" << endl;
-        select();
+        admin();
       }
 }
       	    cout << "Error! Bus not found in the list" << endl;
@@ -222,15 +224,17 @@ void Bus::showInfo() {
       
     }
 
-
-void Bus::select() {
-  vline('-');
-  cout << "Select an action\n 1. Add a bus\n 2. Delete bus\n 3. View Available Buses\n 4. Book a ticket\n 5. View your ticket\n 6. Exit"<< endl;
-  int option = 0;
+void Bus::admin(){
+	vline('-');
+  cout << "Select an action\n 1. Add a bus\n 2. Delete bus\n 3. View Available Buses\n 4. Change to Passenger mode\n 5. Exit"<< endl;
+     vline('-');
+   int option = 0;
   cin >> option;
 
+
   switch (option) {
-  	
+  
+  
   	case 1:
       b[n].inputInfo();
       break;
@@ -240,37 +244,91 @@ void Bus::select() {
       break;
       
     case 3:
+    	  if (n <= 0) {
+    		 emptyList();
+  } 
       for(int i=0;i<n;i++)
 		{
       b[i].showInfo();
   }
       break;
+      
+      case 4: passenger();
+      break;
+      
+      case 5:
+      exit(0);
+      break;
+  }
 
-    case 4:
+     admin();
+}
+void Bus::passenger() {
+  vline('-');
+  cout << "Select an action\n 1. View Available Buses\n 2. Book a ticket\n 3. View your ticket\n 4. Change to Admin mode\n 5. Exit"<< endl;
+  
+    vline('-');
+  int option = 0;
+  cin >> option;
+
+
+  switch (option) {
+  	
+  	case 1:
+    	  if (n <= 0) {
+    emptyList();
+  } 
+      for(int i=0;i<n;i++)
+		{
+      b[i].showInfo();
+  }
+  break;
+  
+    case 2:
       p[np].bookTicket();
       break;
 
-    case 5:
+    case 3:
       showTicket();
       break;
+      
+      case 4: admin();
+      break;
+      	
 
-    case 6:
+    case 5:
       exit(0);
       break;
       
     default:
       cout << "Error! Please enter numbers from 1 to 6" << endl;
-      b[0].select();
+      passenger();
       break;
   }
-  b[0].select();
+  passenger();
   vline('-');
 }
 
 
-
 int main() {
-	cout << "E-Ticket" << endl;
-	b[0].select();
+	Bus b1;
+	  vline('-');
+	cout<<"Please select program mode\n 1. Admin\n 2. Passenger"<<endl;
+	  vline('-');
+	int choice;
+	cin>>choice;
+	
+	switch(choice){
+		
+		case 1: b1.admin();
+		break;
+		
+		case 2: b1.passenger();
+		break;
+		
+		default: cout<<"Please enter numbers 1 or 2"<<endl;
+		main();
+		break;
+	}
   	return 0;
 }
