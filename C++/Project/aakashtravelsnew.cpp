@@ -4,6 +4,7 @@
 #include <time.h>
 #include<stdlib.h>
 #include<cstdlib>
+#include<fstream>
 using namespace std;
 
 /*n keeps track of the bus at a time. Every time bus is added the value of n increases by one. 
