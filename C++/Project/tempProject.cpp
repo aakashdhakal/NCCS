@@ -54,7 +54,6 @@ void vline(char ch) {
 void emptyList() {
   vline('-');
   cout << "The list is empty" << endl;
-  vline('-');
 }
 
 //This function shows the seats of the bus and shows whether they are booked or not
@@ -173,9 +172,9 @@ void Bus::removeInfo() {
   cin >> busNumber;
 
   // open file for reading
-  inFile.open("bus_info.txt");
+  inFile.open("bus_info.dat");
   // open temporary file for writing
-  outFile.open("temp.txt");
+  outFile.open("temp.dat");
   
   int temp; // define temp as a local variable
   // copy all the bus information except the one to be removed to the temporary file
@@ -189,25 +188,27 @@ void Bus::removeInfo() {
   outFile.close();
 
   // delete the original file
-  remove("bus_info.txt");
+  remove("bus_info.dat");
   // rename the temporary file to the original file name
-  rename("temp.txt", "bus_info.txt");
+  rename("temp.dat", "bus_info.dat");
 }
 
 
 //This function inputs bus details into the system
 void Bus::inputInfo() {
-	outFile.open("bus_info.txt", ios::out|ios::app);
+	  int temp;
+	inFile.open("bus_info.dat");
+	outFile.open("bus_info.dat", ios::out|ios::app|ios::binary);
   vline('-');
+  do{
   cout << "Enter the bus number: ";
   cin >> busNumber;
-
-  for (int i = 0; i < n; i++) {
-    if (b[i].busNumber == busNumber) {
-      cout << "The bus number already exists\nPlease enter different bus number" << endl;
-      return inputInfo();
+  while (inFile >> destination >> origin >> driverName >> temp >> arrivalTime >> departureTime >> fare) {
+    if (temp == busNumber) {
+      cout<<"ERROR! This bus number already exists\nPlease enter bus number again"<<endl;
     }
   }
+}while(temp != busNumber);
   cout << "Enter the driver's name: ";
   getline(cin >> ws, driverName);
   cout << "From: ";
@@ -224,7 +225,6 @@ void Bus::inputInfo() {
   outFile << destination << " " << origin << " " << driverName << " " << busNumber << " " << arrivalTime << " " << departureTime << " " << fare << endl;
   outFile.close();
   n++;
-
 
 }
 
@@ -262,11 +262,18 @@ void Bus::admin() {
     break;
 
   case 3:
-  	inFile.open("bus_info.txt", ios::in);
+
+     inFile.open("bus_info.dat", ios::in|ios::binary);
+     if(inFile.peek() == std::ifstream::traits_type::eof()){
+     	emptyList();
+}
+else{
   	 while (inFile >> destination >> origin >> driverName >> busNumber >> arrivalTime >> departureTime >> fare) {
       showInfo();
   }
+}
 inFile.close();
+
     break;
 
   case 4:
@@ -298,12 +305,17 @@ void Bus::passenger() {
   switch (option) {
 
   case 1:
-    if (n <= 0) {
-      emptyList();
-    }
-    for (int i = 0; i < n; i++) {
-      b[i].showInfo();
-    }
+     inFile.open("bus_info.dat", ios::in|ios::binary);
+     if(inFile.peek() == std::ifstream::traits_type::eof()){
+     	emptyList();
+}
+else{
+  	 while (inFile >> destination >> origin >> driverName >> busNumber >> arrivalTime >> departureTime >> fare) {
+      showInfo();
+  }
+}
+inFile.close();
+
     break;
 
   case 2:
