@@ -1,10 +1,18 @@
 //Basic header files required for different inbuilt function 
 #include <iostream>
-#include<string>
+
+#include <string>
+
 #include <time.h>
-#include<stdlib.h>
-#include<cstdlib>
-#include<fstream>
+
+#include <stdlib.h>
+
+#include <cstdlib>
+
+#include <fstream>
+
+#include <conio.h>
+
 using namespace std;
 
 /*n keeps track of the bus at a time. Every time bus is added the value of n increases by one. 
@@ -30,7 +38,7 @@ class Bus {
   ifstream inFile;
 
   public:
-  void inputInfo();
+    void inputInfo();
   void showInfo();
   void removeInfo();
   void seatInfo();
@@ -38,8 +46,12 @@ class Bus {
   void admin();
   void bookTicket();
   void showTicket();
+  bool searchBus();
+  void changePassword();
 }
-b[10], p[1000]; /*Here array of objects b and p is declared to store info 
+
+b[10], p[1000];
+/*Here array of objects b and p is declared to store info 
 					about bus and passenger respectively*/
 
 //This function is used to generate line for distinctive output
@@ -47,6 +59,7 @@ void vline(char ch) {
   for (int i = 75; i > 0; i--) {
     cout << ch;
   }
+
   cout << endl;
 }
 
@@ -54,6 +67,49 @@ void vline(char ch) {
 void emptyList() {
   vline('-');
   cout << "The list is empty" << endl;
+}
+
+void Bus::changePassword() {
+
+  string password, pass;
+  inFile.open("password.bin", ios::binary);
+
+  inFile >> pass;
+  vline('-');
+  do {
+    cout << "Enter current password: ";
+    char ch = _getch();
+    while (ch != 13) {
+      // 13 is the ASCII code for the Enter key
+      if (ch == 8) {
+        // 8 is the ASCII code for the backspace key
+        if (!password.empty()) {
+          cout << '\b' << ' ' << '\b';
+          password.pop_back();
+        }
+      } else {
+        password.push_back(ch);
+        cout << '*';
+      }
+
+      ch = _getch();
+    }
+
+    if (password != pass) {
+      cout << "Incorrect Password" << endl;
+      password.clear();
+      vline('-');
+    }
+
+  } while (password != pass);
+  inFile.close();
+  cout << "\nEnter new password: ";
+  cin >> password;
+  outFile.open("password.bin", ios::binary | ios::trunc);
+  outFile << password;
+
+  outFile.close();
+  cout << "Password Changed" << endl;;
 }
 
 //This function shows the seats of the bus and shows whether they are booked or not
@@ -70,6 +126,7 @@ void Bus::seatInfo() {
         cout << ++q << ". Available";
       }
     }
+
     cout << endl;
   }
 }
@@ -89,6 +146,7 @@ void Bus::bookTicket() {
       temp++;
     }
   }
+
   if (temp == n) {
     cout << "ERROR! No buses are available for the given destination" << endl;
     passenger();
@@ -116,7 +174,6 @@ void Bus::bookTicket() {
     } else {
       break;
     }
-
   }
 
   while (p[np].seatNumber > 32 || b[i].seats[p[np].seatNumber / 4][(p[np].seatNumber % 4) - 1] != 0);
@@ -157,6 +214,7 @@ void Bus::showTicket() {
     ;
     break;
   }
+
   b[j].showInfo();
   cout << "Ticket number: " << p[i].ticketNumber << endl;
   cout << "Passenger's Name: " << p[i].name << endl;
@@ -167,48 +225,56 @@ void Bus::showTicket() {
 
 //This function removes a bus from the system
 void Bus::removeInfo() {
-  // prompt user to enter the bus number of the bus to be removed
   cout << "Enter the bus number of the bus to be removed: ";
   cin >> busNumber;
 
-  // open file for reading
-  inFile.open("bus_info.dat");
-  // open temporary file for writing
-  outFile.open("temp.dat");
-  
-  int temp; // define temp as a local variable
-  // copy all the bus information except the one to be removed to the temporary file
+  inFile.open("bus_info.bin");
+
+  outFile.open("temp.bin");
+
+  int temp;
+
   while (inFile >> destination >> origin >> driverName >> temp >> arrivalTime >> departureTime >> fare) {
     if (temp != busNumber) {
       outFile << destination << " " << origin << " " << driverName << " " << temp << " " << arrivalTime << " " << departureTime << " " << fare << endl;
     }
   }
-  // close the input and output files
+
   inFile.close();
   outFile.close();
 
-  // delete the original file
-  remove("bus_info.dat");
-  // rename the temporary file to the original file name
-  rename("temp.dat", "bus_info.dat");
+  remove("bus_info.bin");
+
+  rename("temp.bin", "bus_info.bin");
 }
 
-
-//This function inputs bus details into the system
 void Bus::inputInfo() {
-	  int temp;
-	inFile.open("bus_info.dat");
-	outFile.open("bus_info.dat", ios::out|ios::app|ios::binary);
+  int temp;
+  bool busNumberExists = false;
+
+  ifstream inFile("bus_info.bin");
+  ofstream outFile("bus_info.bin", ios::app | ios::binary);
   vline('-');
-  do{
-  cout << "Enter the bus number: ";
-  cin >> busNumber;
-  while (inFile >> destination >> origin >> driverName >> temp >> arrivalTime >> departureTime >> fare) {
-    if (temp == busNumber) {
-      cout<<"ERROR! This bus number already exists\nPlease enter bus number again"<<endl;
+  do {
+    cout << "Enter the bus number: ";
+    cin >> busNumber;
+    // Check if the bus number already exists in the file
+    while (inFile >> destination >> origin >> driverName >> temp >> arrivalTime >> departureTime >> fare) {
+      if (temp == busNumber) {
+        cout << "ERROR! Bus number " << busNumber << " already exists\nPlease enter bus number again" << endl;
+        vline('-');
+        busNumberExists = true;
+        break;
+      } else {
+        busNumberExists = false;
+      }
     }
-  }
-}while(temp != busNumber);
+
+    // Reset the file position to the beginning
+    inFile.clear();
+    inFile.seekg(0);
+  } while (busNumberExists == true);
+
   cout << "Enter the driver's name: ";
   getline(cin >> ws, driverName);
   cout << "From: ";
@@ -222,16 +288,16 @@ void Bus::inputInfo() {
   cout << "Enter the fare: ";
   cin >> fare;
   cout << "Bus added successfully" << endl;
+  // Write the bus data to the file
   outFile << destination << " " << origin << " " << driverName << " " << busNumber << " " << arrivalTime << " " << departureTime << " " << fare << endl;
+  // Close the file
+  inFile.close();
   outFile.close();
   n++;
-
 }
 
 //This function shows the details about the bus
 void Bus::showInfo() {
-  
-  
   vline('-');
   cout << "Bus number: " << busNumber << endl;
   cout << "Driver's Name: " << driverName << endl;
@@ -246,13 +312,50 @@ void Bus::showInfo() {
 //This function contains acions that can be performed by bus admin
 void Bus::admin() {
   vline('-');
-  cout << "Select an action\n 1. Add a bus\n 2. Delete bus\n 3. View Available Buses\n 4. Change to Passenger mode\n 5. Exit" << endl;
+
+  string password, pass;
+  inFile.open("password.bin", ios::binary);
+  outFile.open("password.bin", ios::app | ios::binary);
+  if (inFile.peek() == std::ifstream::traits_type::eof()) {
+    outFile << "admin123";
+  }
+  outFile.close();
+
+  inFile >> pass;
+  inFile.close();
+
+  do {
+    cout << "Enter password: ";
+    char ch = _getch();
+    while (ch != 13) {
+      // 13 is the ASCII code for the Enter key
+      if (ch == 8) {
+        // 8 is the ASCII code for the backspace key
+        if (!password.empty()) {
+          cout << '\b' << ' ' << '\b';
+          password.pop_back();
+        }
+      } else {
+        password.push_back(ch);
+        cout << '*';
+      }
+
+      ch = _getch();
+    }
+    if (password != pass) {
+      cout << "\nIncorrect Password" << endl;
+      vline('-');
+      password.clear();
+    }
+  } while (password != pass);
+  cout << endl;
+  vline('-');
+  cout << "Select an action\n 1. Add a bus\n 2. Delete bus\n 3. View Available Buses\n 4. Change to Passenger mode\n 5. Change admin password\n 6. Exit" << endl;
   vline('-');
   int option = 0;
   cin >> option;
 
   switch (option) {
-
   case 1:
     b[n].inputInfo();
     break;
@@ -263,16 +366,16 @@ void Bus::admin() {
 
   case 3:
 
-     inFile.open("bus_info.dat", ios::in|ios::binary);
-     if(inFile.peek() == std::ifstream::traits_type::eof()){
-     	emptyList();
-}
-else{
-  	 while (inFile >> destination >> origin >> driverName >> busNumber >> arrivalTime >> departureTime >> fare) {
-      showInfo();
-  }
-}
-inFile.close();
+    inFile.open("bus_info.bin", ios::in | ios::binary);
+    if (inFile.peek() == std::ifstream::traits_type::eof()) {
+      emptyList();
+    } else {
+      while (inFile >> destination >> origin >> driverName >> busNumber >> arrivalTime >> departureTime >> fare) {
+        showInfo();
+      }
+    }
+
+    inFile.close();
 
     break;
 
@@ -281,7 +384,11 @@ inFile.close();
     break;
 
   case 5:
-  	cout<<"Closing the program!!"<<endl<<"<Thank You :)>"<<endl<<"Created By Aakash Dhakal"<<endl;
+    changePassword();
+    break;
+
+  case 6:
+    cout << "Closing the program!!" << endl << "<Thank You :)>" << endl << "Created By Aakash Dhakal" << endl;
     exit(0);
     break;
 
@@ -303,18 +410,17 @@ void Bus::passenger() {
   cin >> option;
 
   switch (option) {
-
   case 1:
-     inFile.open("bus_info.dat", ios::in|ios::binary);
-     if(inFile.peek() == std::ifstream::traits_type::eof()){
-     	emptyList();
-}
-else{
-  	 while (inFile >> destination >> origin >> driverName >> busNumber >> arrivalTime >> departureTime >> fare) {
-      showInfo();
-  }
-}
-inFile.close();
+    inFile.open("bus_info.bin", ios::in | ios::binary);
+    if (inFile.peek() == std::ifstream::traits_type::eof()) {
+      emptyList();
+    } else {
+      while (inFile >> destination >> origin >> driverName >> busNumber >> arrivalTime >> departureTime >> fare) {
+        showInfo();
+      }
+    }
+
+    inFile.close();
 
     break;
 
@@ -327,11 +433,11 @@ inFile.close();
     break;
 
   case 4:
-    admin();
+    return admin();
     break;
 
   case 5:
-  	cout<<"Closing the program!!"<<endl<<"<Thank You :)>"<<endl<<"Created By Aakash Dhakal"<<endl;
+    cout << "Closing the program!!" << endl << "<Thank You :)>" << endl << "Created By Aakash Dhakal" << endl;
     exit(0);
     break;
 
@@ -340,6 +446,7 @@ inFile.close();
     passenger();
     break;
   }
+
   passenger();
   vline('-');
 }
@@ -354,7 +461,6 @@ int main() {
   cin >> choice;
 
   switch (choice) {
-
   case 1:
     b1.admin();
     break;
@@ -362,9 +468,9 @@ int main() {
   case 2:
     b1.passenger();
     break;
-    
+
   case 3:
-	cout<<"Closing the program!!"<<endl<<"<Thank You :)>"<<endl<<"Created By Aakash Dhakal"<<endl;
+    cout << "Closing the program!!" << endl << "<Thank You :)>" << endl << "Created By Aakash Dhakal" << endl;
     exit(0);
 
   default:
