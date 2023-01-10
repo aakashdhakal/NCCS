@@ -36,6 +36,7 @@ class Bus {
   int ticketNumber;
   ofstream outFile;
   ifstream inFile;
+  	bool bypass = false;
 
   public:
     void inputInfo();
@@ -96,7 +97,7 @@ void Bus::changePassword() {
     }
 
     if (password != pass) {
-      cout << "Incorrect Password" << endl;
+      cout << "\nIncorrect Password" << endl;
       password.clear();
       vline('-');
     }
@@ -323,9 +324,10 @@ void Bus::admin() {
 
   inFile >> pass;
   inFile.close();
-
+if(bypass == false){
   do {
     cout << "Enter password: ";
+    bypass = true;
     char ch = _getch();
     while (ch != 13) {
       // 13 is the ASCII code for the Enter key
@@ -349,6 +351,7 @@ void Bus::admin() {
     }
   } while (password != pass);
   cout << endl;
+}
   vline('-');
   cout << "Select an action\n 1. Add a bus\n 2. Delete bus\n 3. View Available Buses\n 4. Change to Passenger mode\n 5. Change admin password\n 6. Exit" << endl;
   vline('-');
@@ -459,10 +462,9 @@ int main() {
   vline('-');
   int choice;
   cin >> choice;
-
-  switch (choice) {
-  case 1:
-    b1.admin();
+switch(choice){
+	
+    case 1:b1.admin();
     break;
 
   case 2:
