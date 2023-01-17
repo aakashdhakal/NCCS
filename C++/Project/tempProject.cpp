@@ -1,6 +1,5 @@
 //Basic header files required for different inbuilt function 
-#include <iostream>
-#include <string>
+#include<iostream>
 #include <ctime>
 #include <stdlib.h>
 #include <cstdlib>
@@ -33,14 +32,14 @@ class Bus
 
 	//Public access functions for class Bus
 	public:
-		void inputInfo();
+	void inputInfo();
 	void showInfo();
 	void removeInfo();
 	void seatInfo();
 	void passenger();
 	void admin();
 	void bookTicket();
-	void cancelReservation(int);
+	void cancelReservation();
 	void showTicket(int);
 	bool searchBus();
 	void changePassword();
@@ -434,20 +433,21 @@ void Bus::bookTicket()
 
 }
 
-void Bus::cancelReservation(int number)
+void Bus::cancelReservation()
 {
 	//Creating objects of the class Bus
 	Bus pass1, pass2;
 	bool ticketNumberExists = false;
 
 	//Opening the passenger info file for reading and writing
-	passFileIn.open("passengerInfo.bin");
-	passFileOut.open("tempPass.bin");
-	number = pass1.ticketNumber;
+	passFileIn.open("passengerInfo.bin", ios::in);
+	passFileOut.open("tempPass.bin",ios::out);
+	
+	pass1.ticketNumber = ticketNumber;
 
 	//Checking if the entered ticket number exists
 	ticketNumberExists = pass1.checkTicketNum();
-
+cout<<ticketNumberExists<<endl;
 	if (ticketNumberExists == false)
 	{
 		cout << "\x1b[91mERROR! Ticket number not found\033[0m" << endl;
@@ -458,12 +458,13 @@ void Bus::cancelReservation(int number)
 	passFileIn.seekg(0);
 	while (passFileIn >> pass2.name >> pass2.ticketNumber >> pass2.seatNumber >> pass2.phoneNumber >> pass2.busNumber)
 	{
-		if (pass2.ticketNumber == pass1.ticketNumber)
+		if (pass2.ticketNumber != pass1.ticketNumber)
 		{
-			continue;
+			cout<<"loop";
+			passFileOut << pass2.name << " " << pass2.ticketNumber << " " << pass2.seatNumber << " " << pass2.phoneNumber << " " << pass2.busNumber << endl;
 		}
 
-		passFileOut << pass2.name << " " << pass2.ticketNumber << " " << pass2.seatNumber << " " << pass2.phoneNumber << " " << pass2.busNumber << endl;
+		
 	}
 
 	passFileIn.close();
@@ -585,8 +586,8 @@ void Bus::removeInfo()
 		{
 			if (bus1.busNumber == pass.busNumber)
 			{
-				cout << "loop" << endl;
-				cancelReservation(pass.ticketNumber);
+
+				pass.cancelReservation();
 			}
 		}
 
@@ -777,7 +778,8 @@ void Bus::passenger()
 		case 4:
 			cout << "Enter your ticket number: ";
 			cin >> pass.ticketNumber;
-			cancelReservation(pass.ticketNumber);
+			pass.cancelReservation();
+			cout<<"\u001b[32;1mSUCCESS! The reservation of ticket number "<< pass.ticketNumber<<" is successfully cancelled\033[0m"<<endl;
 			break;
 
 		case 5:
@@ -832,7 +834,7 @@ int main()
 			return 0;
 
 		default:
-			cout << "\x1b[91mERROR! Please enter valid numbers 1 or 2\033[0m" << endl;
+			cout << "\x1B[31mERROR! Please enter valid numbers 1 or 2\x1B[0m" << endl;
 			return main();
 			break;
 	}
