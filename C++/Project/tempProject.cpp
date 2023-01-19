@@ -44,6 +44,7 @@ public:
 	bool checkSeatNum();
 	bool checkTicketNum();
 	bool checkDestinationWithBusNum();
+	void adminCheck();
 };
 
 // This function is used to generate line for distinctive output
@@ -264,6 +265,27 @@ bool Bus::checkDestinationWithBusNum()
 	return true;
 }
 
+void Bus::adminCheck(){
+	Bus b;
+	bool busNumberExists = false;
+	
+	do{
+	cout<<"Enter the bus number: ";
+	cin>>b.busNumber;
+	
+	busNumberExists = b.checkBusNum();
+	
+	if(busNumberExists == false){
+		cout<<"ERROR! The bus of number "<<b.busNumber<<" doesnot exists"<<endl;
+	}
+}
+	while(busNumberExists == false);
+	b.seatInfo();
+	
+	
+	
+}
+
 // This function shows the seats of the bus and shows whether they are booked or not
 void Bus::seatInfo()
 {
@@ -293,7 +315,7 @@ void Bus::seatInfo()
 
 			if (seats[i][j] == 1)
 			{
-				cout << ++q << ". !RESERVED!";
+				cout << ++q << ".!RESERVED";
 			}
 			else
 			{
@@ -626,8 +648,8 @@ void Bus::admin()
 	}
 
 	vline('-',75);
-	cout << "Select an action\n 1. Add a bus\n 2. Delete bus\n 3. View Available Buses\n 4. Change to Passenger mode\n 5. Change admin password\n 6. Exit" << endl;
-	vline('-',75);
+	cout << "Select an action\n 1. Add a bus\n 2. Delete bus\n 3. View Available Buses\n 4. Check seat status\n 5. Change to Passenger mode\n 6. Change admin password\n 7. Exit" << endl;
+	vline('-',75); 
 	int option = 0;
 	do
 	{
@@ -669,15 +691,19 @@ void Bus::admin()
 		break;
 
 	case 4:
+	adminCheck();
+	break;
+	
+	case 5:
 		passenger();
 		break;
 
-	case 5:
+	case 6:
 		bypass = false;
 		changePassword();
 		break;
 
-	case 6:
+	case 7:
 		cout << "Closing the program!!" << endl
 			 << "<Thank You :)>" << endl
 			 << "Created By Aakash Dhakal" << endl;
@@ -686,8 +712,6 @@ void Bus::admin()
 
 	default:
 		cout << "ERROR! Please enter numbers from 1 to 6" << endl;
-		cin.clear();
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		return admin();
 	}
 
@@ -775,7 +799,7 @@ void Bus::passenger()
 void programMode(){
 		Bus b;
 	vline('-',120);
-	cout <<setw(30)<< " 1. Admin"<<setw(30)<<" 2. Passenger "<<setw(20)<<"3. Exit" << endl;
+	cout <<setw(30)<< " 1. Admin"<<setw(30)<<" 2. Passenger "<<setw(25)<<"3. Exit" << endl;
 	vline('-',120);
 	int choice;
 
@@ -814,11 +838,10 @@ void programMode(){
 	}
 }
 
-// This is the main function from where the program starts
-int main()
-{
 
-	cout << R"(
+
+void headerDisplay(){
+		cout << R"(
                      _______       _                _        _______                      _       
                     (_______)     | |              | |      (_______)                    | |      
                      _______ _____| |  _ _____  ___| |__        _  ____ _____ _   _ _____| |  ___ 
@@ -826,6 +849,14 @@ int main()
                     | |   | / ___ |  _ (/ ___ |___ | | | |     | | |   / ___ |\ V /| ____| ||___ |
                     |_|   |_\_____|_| \_)_____(___/|_| |_|     |_|_|   \_____| \_/ |_____)\_|___/                                                                                  
 )";
+	
+}
+
+// This is the main function from where the program starts
+int main()
+{
+
+headerDisplay();
 programMode();
 
 
