@@ -1,0 +1,68 @@
+8000
+{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Courier New;}}
+{\colortbl ;\red0\green0\blue0;}
+\viewkind4\uc1\pard\li195\cf1\f0\fs20 START: LXI H 2041h
+\par MVI D 00h
+\par MVI C 04h
+\par 
+\par CHECK: MOV A M
+\par INX H
+\par CMP M
+\par JC NEXT
+\par MOV B M
+\par MOV M A
+\par DCX H
+\par MOV M B
+\par INX H
+\par MVI D 01h
+\par 
+\par NEXT: DCR C
+\par JNZ CHECK
+\par MOV A D
+\par CPI 01h
+\par JZ START
+\par HLT\cf0 
+\par }
+<End Codes>
+20
+1| 2041| 02
+2| 2042| 10
+3| 2043| 21
+4| 2044| 35
+5| 2045| F0
+<End UserData>
+44
+1| 8000| 21
+2| 8001| 41
+3| 8002| 20
+4| 8003| 16
+5| 8004| 00
+6| 8005| 0E
+7| 8006| 04
+8| 8007| 7E
+9| 8008| 23
+10| 8009| BE
+11| 800A| DA
+12| 800B| 14
+13| 800C| 80
+14| 800D| 46
+15| 800E| 77
+16| 800F| 2B
+17| 8010| 70
+18| 8011| 23
+19| 8012| 16
+20| 8013| 01
+21| 8014| 0D
+22| 8015| C2
+23| 8016| 07
+24| 8017| 80
+25| 8018| 7A
+26| 8019| FE
+27| 801A| 01
+28| 801B| CA
+29| 801C| 00
+30| 801D| 80
+31| 801E| 76
+<End HexData>
+
+<End Comment>
