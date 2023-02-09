@@ -10,7 +10,7 @@ using namespace std;
 class Bus{
 	
 	private:
-		string destination;
+
 		string origin;
 		string driverName;
 		string arrivalTime;
@@ -22,6 +22,7 @@ class Bus{
 	protected:
 		int busNumber;
 		int seats[8][4] = {0};
+				string destination;
 		
 	public:
 		void inputInfo();
@@ -68,25 +69,50 @@ void vline(char ch,int n)
 		
 	busFileIn.open("bus_info.bin");
 	Bus bus;
+	int checkNum = 0;
+
+	
+	if(n == 4){
+		cout<<"Please enter desired destination: ";
+		cin >> destination;
+	}
 	
 	busFileIn.clear();
 	busFileIn.seekg(0);	
 	while (busFileIn >> bus.destination >> bus.origin >> bus.driverName >> bus.busNumber >> bus.arrivalTime >> bus.departureTime >> bus.fare){
+			bool showInfo = false;
 		
 		if(busNumber == bus.busNumber && n == 1){
-			busFileIn.close();
-			return true;
+			checkNum++;
 		}
 		
 		
-		if(destination == bus.destination && n == 2){
-			busFileIn.close();
-			return true;
+		
+		if(destination == bus.destination && n == 2 || n == 4){
+			checkNum++;
+			if(n == 4){
+				showInfo = true;
+			}
+		}
+		
+		if(n == 5){
+			showInfo = true;
 		}
 		
 		
 		if(destination == bus.destination && busNumber == bus.busNumber && n == 3){
-			busFileIn.close();
+			checkNum++;
+		}
+		
+		if(showInfo = true){
+			bus.showInfo();
+		}
+		
+	}
+	
+	
+	busFileIn.close();
+		if(checkNum != 0){
 			return true;
 		}
 		
@@ -181,9 +207,7 @@ void Passenger::seatInfo()
 void Passenger::bookTicket()
 {
 	vline('-',75);
-	passFileIn.open("passengerInfo.bin");
 	passFileOut.open("passengerInfo.bin", ios::app);
-	busFileIn.open("bus_info.bin", ios::in);
 	int i, row, col;
 	bool reserved = false;
 	bool busNumberExists = false;
@@ -191,22 +215,12 @@ void Passenger::bookTicket()
 	Bus bus;
 	Passenger pass;
 
-	cout << "Please enter the desired destination: ";
-	cin >> bus.destination;
-	destinationExists = bus.checkDetails(2);
+	destinationExists = bus.checkDetails(4);
 
 	if (destinationExists == false)
 	{
 		cout << "ERROR! No buses are available for given destination" << endl;
-		return passenger();
-	}
-
-	while (busFileIn >> bus1.destination >> bus1.origin >> bus1.driverName >> bus1.busNumber >> bus1.arrivalTime >> bus1.departureTime >> bus1.fare)
-	{
-		if (bus.destination == bus1.destination)
-		{
-			bus.showInfo();
-		}
+		//return passenger();
 	}
 
 	do
@@ -232,7 +246,7 @@ void Passenger::bookTicket()
 		cout << "Enter seat number: ";
 		cin >> pass.seatNumber;
 
-		reserved = pass.checkSeatNum();
+		reserved = pass.checkDetails(2);
 
 		if (reserved == true)
 		{
@@ -259,8 +273,6 @@ void Passenger::bookTicket()
 	uniform_int_distribution<> dis(1000, 10000);
 	pass.ticketNumber = dis(gen);
 	passFileOut << pass.name << " " << pass.ticketNumber << " " << pass.seatNumber << " " << pass.phoneNumber << " " << pass.busNumber << endl;
-	busFileIn.close();
-	passFileIn.close();
 	passFileOut.close();
 	cout << "Your seat is reserved successfully" << endl;
 	system("pause");
