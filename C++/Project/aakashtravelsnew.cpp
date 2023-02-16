@@ -10,14 +10,16 @@ using namespace std;
 class Bus {
 	string destination;
   	string origin;
-  	string driverName;
+  	string driverFirstName;
+  	string driverLastName;
   	int busNumber;
   	string arrivalTime;
   	string departureTime;
   	int fare;
   	int seats[8][4] = {0};
 
-  	string name;
+  	string firstName;
+  	string lastName;
   	int seatNumber;
   	int ticketNumber;
   	long long phoneNumber;
@@ -128,7 +130,7 @@ bool Bus::fileHandling(int n) {
   busFileIn.seekg(0);
   if (n <= 5) {
     busFileIn.open("bus_info.bin");
-    while (busFileIn >> bus.destination >> bus.origin >> bus.driverName >> bus.busNumber >> bus.arrivalTime >> bus.departureTime >> bus.fare) {
+    while (busFileIn >> bus.destination >> bus.origin >> bus.driverFirstName >>bus.driverLastName>> bus.busNumber >> bus.arrivalTime >> bus.departureTime >> bus.fare) {
       bool showInfo = false;
 
 
@@ -164,7 +166,7 @@ bool Bus::fileHandling(int n) {
           table++;
         }
         	        cout << setw(5);
-        cout << setw(9) << ++q << setw(15) << bus.busNumber << setw(20) << bus.origin << " - " << bus.destination <<setw(23-bus.destination.length())<< bus.arrivalTime << setw(18) << bus.departureTime <<setw(20)<< "Rs " << bus.fare <<resetiosflags(ios::left)<< endl;
+        cout << setw(9) << ++q << setw(15) << bus.busNumber << setw(20) << bus.origin << " - " << bus.destination <<setw(23-bus.destination.length())<< bus.arrivalTime << setw(18) << bus.departureTime <<setw(20)<< "Rs " << bus.fare << endl;
 		vline('-',120);
       }
 
@@ -184,7 +186,7 @@ bool Bus::fileHandling(int n) {
     passFileIn.clear();
     passFileIn.seekg(0);
 
-    while (passFileIn >> pass.name >> pass.ticketNumber >> pass.seatNumber >> pass.phoneNumber >> pass.busNumber) {
+    while (passFileIn >> pass.firstName >>pass.lastName>> pass.ticketNumber >> pass.seatNumber >> pass.phoneNumber >> pass.busNumber) {
 
       if (ticketNumber == pass.ticketNumber && n == 6) {
         countVar++;
@@ -304,15 +306,28 @@ void Bus::bookTicket() {
 
   row = (seatNumber - 1) / 4;
   col = (seatNumber - 1) % 4;
-  cout << "Enter passenger's name: ";
-  getline(cin >> ws, pass.name);
-  cout << "Enter passenger's phone number: ";
+  cout << "Passenger's Details"<<endl;
+  vline('-',21);
+  cout<<"Firstname: ";
+  getline(cin >> ws, pass.firstName);
+cout<<"Lastname: ";
+  getline(cin >> ws, pass.lastName);
+  do{
+  	cout << "Enter passenger's phone number: ";
   cin >> pass.phoneNumber;
+  if(sizeof(pass.phoneNumber)!= 10){
+  	vline('-',120);
+  	cout<<"ERROR! Please enter 10 digits number"<<endl;
+  	 	vline('-',120);
+  	cin.clear();
+  }
+}
+  while(sizeof(pass.phoneNumber) != 10);
   random_device rd;
   mt19937 gen(rd());
   uniform_int_distribution < > dis(1000, 10000);
   pass.ticketNumber = dis(gen);
-  passFileOut << pass.name << " " << pass.ticketNumber << " " << pass.seatNumber << " " << pass.phoneNumber << " " << pass.busNumber << endl;
+  passFileOut << pass.firstName << " "<<pass.lastName<<" " << pass.ticketNumber << " " << pass.seatNumber << " " << pass.phoneNumber << " " << pass.busNumber << endl;
   passFileOut.close();
   cout << "Your seat is reserved successfully" << endl;
   system("pause");
@@ -334,9 +349,9 @@ void Bus::cancelReservation() {
   passFileOut.open("tempPass.bin");
   passFileIn.clear();
   passFileIn.seekg(0);
-  while (passFileIn >> pass2.name >> pass2.ticketNumber >> pass2.seatNumber >> pass2.phoneNumber >> pass2.busNumber) {
+  while (passFileIn >> pass2.firstName >>pass2.lastName>> pass2.ticketNumber >> pass2.seatNumber >> pass2.phoneNumber >> pass2.busNumber) {
     if (pass1.ticketNumber != pass2.ticketNumber) {
-      passFileOut << pass2.name << " " << pass2.ticketNumber << " " << pass2.seatNumber << " " << pass2.phoneNumber << " " << pass2.busNumber << endl;
+      passFileOut << pass2.firstName<<" "<< pass2.lastName << " " << pass2.ticketNumber << " " << pass2.seatNumber << " " << pass2.phoneNumber << " " << pass2.busNumber << endl;
     }
   }
 
@@ -363,7 +378,7 @@ void Bus::showTicket() {
   passFileIn.clear();
   passFileIn.seekg(0);
 
-  while (passFileIn >> pass2.name >> pass2.ticketNumber >> pass2.seatNumber >> pass2.phoneNumber >> pass2.busNumber) {
+  while (passFileIn >> pass2.firstName >> pass2.lastName>> pass2.ticketNumber >> pass2.seatNumber >> pass2.phoneNumber >> pass2.busNumber) {
     if (pass2.ticketNumber == ticketNumber) {
       n++;
       break;
@@ -377,7 +392,7 @@ void Bus::showTicket() {
     return passenger();
   }
 
-  while (busFileIn >> bus.destination >> bus.origin >> bus.driverName >> bus.busNumber >> bus.arrivalTime >> bus.departureTime >> bus.fare) {
+  while (busFileIn >> bus.destination >> bus.origin >> bus.driverFirstName >> bus.driverLastName>> bus.busNumber >> bus.arrivalTime >> bus.departureTime >> bus.fare) {
     if (pass2.busNumber == bus.busNumber) {
       break;
     }
@@ -388,7 +403,7 @@ void Bus::showTicket() {
   vline('=', 120);
   cout << setw(60) << "BUS TICKET" << endl;
   vline('-', 120);
-  cout << setw(30) << "Passenger's Name: " << pass2.name << setw(60) << "Ticket Number: " << pass2.ticketNumber << endl;
+  cout << setw(30) << "Passenger's Name: " << pass2.firstName <<" "<<pass2.lastName<< setw(50) << "Ticket Number: " << pass2.ticketNumber << endl;
   cout << setw(30) << "Contact Number: " << pass2.phoneNumber <<setw(56) << "Arrival Time: " << bus.arrivalTime<< endl;
   cout << setw(30) << "Bus Number: " << pass2.busNumber <<setw(63) << "Departure Time: " << bus.departureTime <<endl;
   cout << setw(30) << "Seat Number: " << pass2.seatNumber << setw(56) << endl;
@@ -427,9 +442,9 @@ void Bus::removeInfo() {
   busFileIn.open("bus_info.bin");
   busFileOut.open("tempBus.bin");
 
-  while (busFileIn >> bus2.destination >> bus2.origin >> bus2.driverName >> bus2.busNumber >> bus2.arrivalTime >> bus2.departureTime >> bus2.fare) {
+  while (busFileIn >> bus2.destination >> bus2.origin >> bus2.driverFirstName >> bus2.driverLastName>> bus2.busNumber >> bus2.arrivalTime >> bus2.departureTime >> bus2.fare) {
     if (bus1.busNumber != bus2.busNumber) {
-      busFileOut << bus2.destination << " " << bus2.origin << " " << bus2.driverName << " " << bus2.busNumber << " " << bus2.arrivalTime << " " << bus2.departureTime << " " << bus2.fare << endl;
+      busFileOut << bus2.destination << " " << bus2.origin << " " << bus2.driverFirstName << " "<<bus2.driverLastName<<" " << bus2.busNumber << " " << bus2.arrivalTime << " " << bus2.departureTime << " " << bus2.fare << endl;
     }
   }
 
@@ -458,8 +473,12 @@ void Bus::inputInfo() {
     }
   } while (busNumberExists == true);
 
-  cout << "Enter the driver's name: ";
-  getline(cin >> ws, inBus.driverName);
+  cout << "Driver Details"<<endl;
+  vline('-',16);
+  cout<<"Firstname: ";
+  getline(cin >> ws, inBus.driverFirstName);
+  cout<<"Lastname: ";
+  getline(cin >> ws, inBus.driverLastName);
   cout << "From: ";
   getline(cin, inBus.origin);
   cout << "To: ";
@@ -470,7 +489,7 @@ void Bus::inputInfo() {
   getline(cin, inBus.departureTime);
   cout << "Enter the fare: ";
   cin >> inBus.fare;
-  busFileOut << inBus.destination << " " << inBus.origin << " " << inBus.driverName << " " << inBus.busNumber << " " << inBus.arrivalTime << " " << inBus.departureTime << " " << inBus.fare << endl;
+  busFileOut << inBus.destination << " " << inBus.origin << " " << inBus.driverFirstName << " "<<inBus.driverLastName<<" " << inBus.busNumber << " " << inBus.arrivalTime << " " << inBus.departureTime << " " << inBus.fare << endl;
   cout << "Bus added successfully" << endl;
   busFileOut.close();
 }
