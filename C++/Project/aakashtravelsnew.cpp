@@ -20,7 +20,7 @@ class Bus {
   	string name;
   	int seatNumber;
   	int ticketNumber;
-  	int phoneNumber;
+  	long long phoneNumber;
   	ofstream busFileOut, passFileOut;
   	ifstream busFileIn, passFileIn;
   	bool bypass = false;
@@ -35,8 +35,6 @@ class Bus {
   	void bookTicket();
   	void cancelReservation();
   	void showTicket();
-  	void deleteTicket();
-  	bool searchBus();
   	bool fileHandling(int);
   	void adminCheck();
 };
@@ -79,6 +77,7 @@ void inputPassword() {
   	passFile.close();
 
   do {
+  	  vline('-',120);
     cout << "Enter password: ";
     char ch = _getch();
     while (ch != 13) {
@@ -117,6 +116,7 @@ void changePassword() {
   passFile << password;
   passFile.close();
   cout << "Password Changed" << endl;
+
 }
 
 // Function to check if the bus number entered exists in the system
@@ -131,11 +131,12 @@ bool Bus::fileHandling(int n) {
     while (busFileIn >> bus.destination >> bus.origin >> bus.driverName >> bus.busNumber >> bus.arrivalTime >> bus.departureTime >> bus.fare) {
       bool showInfo = false;
 
+
       if (busNumber == bus.busNumber && n == 1) {
         countVar++;
       }
 
-      if (destination == bus.destination && n == 2 || n == 4) {
+      if (destination == bus.destination && (n == 2 || n == 4)) {
         countVar++;
 
         if (n == 4) {
@@ -159,12 +160,12 @@ bool Bus::fileHandling(int n) {
           headerDisplay();
           vline('-', 120);
           cout << setw(10) << "S.No" << setw(18) << "Bus Number" << setw(21) << "From - To" << setw(25) << "Arrival Time" << setw(20) << "Departure Time" << setw(17) << "Fare" << endl;
+        	vline('=', 120);
           table++;
         }
-        cout << setw(5);
-        vline('=', 113);
-        cout << setw(9) << ++q << setw(15) << bus.busNumber << setw(20) << bus.origin << " - " << bus.destination << setw(17) << bus.arrivalTime << setw(18) << bus.departureTime << setw(20) << "Rs " << bus.fare << endl;
-
+        	        cout << setw(5);
+        cout << setw(9) << ++q << setw(15) << bus.busNumber << setw(20) << bus.origin << " - " << bus.destination <<setw(23-bus.destination.length())<< bus.arrivalTime << setw(18) << bus.departureTime <<setw(20)<< "Rs " << bus.fare <<resetiosflags(ios::left)<< endl;
+		vline('-',120);
       }
 
       if (n == 3 && destination == bus.destination && busNumber == bus.busNumber) {
@@ -261,7 +262,6 @@ void Bus::bookTicket() {
   bool busNumberExists = false;
   bool destinationExists = false;
   Bus bus, pass;
-  pass.fileHandling(7);
 
   cout << "Please enter the desired destination: ";
   cin >> pass.destination;
@@ -317,35 +317,26 @@ void Bus::bookTicket() {
   cout << "Your seat is reserved successfully" << endl;
   system("pause");
   pass.showTicket();
+    cout << "\033c";
 }
 
 void Bus::cancelReservation() {
 
-  Bus pass;
+  Bus pass1,pass2;
 
   cout << "Enter ticket number: ";
-  cin >> pass.ticketNumber;
+  cin >> pass1.ticketNumber;
 
-  bool ticketNumberExists = pass.fileHandling(6);
+  bool ticketNumberExists = pass1.fileHandling(6);
 
   if (ticketNumberExists == true) {
-    pass.deleteTicket();
-  } else {
-    cout << "The ticket number " << pass.ticketNumber << " is not found in the list" << endl;
-    return passenger();
-  }
-}
-
-void Bus::deleteTicket() {
-
-  Bus pass;
-  passFileIn.open("passengerInfo.bin");
+    passFileIn.open("passengerInfo.bin");
   passFileOut.open("tempPass.bin");
   passFileIn.clear();
   passFileIn.seekg(0);
-  while (passFileIn >> pass.name >> pass.ticketNumber >> pass.seatNumber >> pass.phoneNumber >> pass.busNumber) {
-    if (ticketNumber != pass.ticketNumber) {
-      passFileOut << pass.name << " " << pass.ticketNumber << " " << pass.seatNumber << " " << pass.phoneNumber << " " << pass.busNumber << endl;
+  while (passFileIn >> pass2.name >> pass2.ticketNumber >> pass2.seatNumber >> pass2.phoneNumber >> pass2.busNumber) {
+    if (pass1.ticketNumber != pass2.ticketNumber) {
+      passFileOut << pass2.name << " " << pass2.ticketNumber << " " << pass2.seatNumber << " " << pass2.phoneNumber << " " << pass2.busNumber << endl;
     }
   }
 
@@ -355,6 +346,12 @@ void Bus::deleteTicket() {
   remove("passengerInfo.bin");
 
   rename("tempPass.bin", "passengerInfo.bin");
+  
+    cout << "SUCCESS! The ticket is successfully cancelled" << endl;
+  } else {
+    cout << "The ticket number " << pass1.ticketNumber << " is not found in the list" << endl;
+    return passenger();
+  }
 }
 
 // This function gives the details about the seat and ticket
@@ -391,15 +388,15 @@ void Bus::showTicket() {
   vline('=', 120);
   cout << setw(60) << "BUS TICKET" << endl;
   vline('-', 120);
-  cout << setw(30) << "Passenger's Name: " << pass2.name << setw(30) << "Ticket Number: " << pass2.ticketNumber << endl;
-  cout << setw(30) << "Contact Number: " << pass2.phoneNumber << endl;
-  cout << setw(30) << "Bus Number: " << pass2.busNumber << endl;
+  cout << setw(30) << "Passenger's Name: " << pass2.name << setw(60) << "Ticket Number: " << pass2.ticketNumber << endl;
+  cout << setw(30) << "Contact Number: " << pass2.phoneNumber <<setw(56) << "Arrival Time: " << bus.arrivalTime<< endl;
+  cout << setw(30) << "Bus Number: " << pass2.busNumber <<setw(63) << "Departure Time: " << bus.departureTime <<endl;
   cout << setw(30) << "Seat Number: " << pass2.seatNumber << setw(56) << endl;
-  cout << setw(33) << "From: " << bus.origin << setw(5) << "To: " << bus.destination << endl;
-  cout << setw(63) << "Total Amount: Rs " << bus.fare << endl;
+  cout << setw(53) << "From: " << bus.origin << setw(5) << "To: " << bus.destination << endl;
+  cout << setw(99) << "Total Amount: Rs " << bus.fare << endl;
   vline('-', 120);
-  cout << "NOTE: Please note down your ticket number as it is required for further use" << endl;
-  cout << " Please report to the respective counter before an hour of departure otherwise your ticket will be cancelled" << endl;
+  cout << "NOTE: 1) Please note down your ticket number as it is required for further use" << endl;
+  cout << "      2)Please report to the respective counter before an hour of departure otherwise your ticket will be cancelled" << endl;
   vline('=', 120);
   system("pause");
 }
@@ -520,7 +517,7 @@ void Bus::admin() {
     break;
 
   case 6:
-    bypass = false;
+  	bypass = false;
     changePassword();
     break;
 
@@ -574,7 +571,6 @@ void Bus::passenger() {
 
   case 4:
     b.cancelReservation();
-    cout << "SUCCESS! The ticket is successfully cancelled" << endl;
     break;
 
   case 5:
