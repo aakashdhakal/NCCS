@@ -40,7 +40,12 @@ class Bus {
   	bool fileHandling(int);
   	void adminCheck();
 };
-
+void vline(char ch, int n) {
+  for (int i = n; i > 0; i--) {
+	cout << ch;
+  }
+  cout << endl;
+}
 void headerDisplay() {
   cout << R"(	
                      _______       _                _        _______                      _       
@@ -51,14 +56,11 @@ void headerDisplay() {
                     |_|   |_\_____|_| \_)_____(___/|_| |_|     |_|_|   \_____| \_/ |_____)\_|___/       
 					                                                                           
 )";
+
+vline('-',120);
 }
 // This function is used to generate line for distinctive output
-void vline(char ch, int n) {
-  for (int i = n; i > 0; i--) {
-	cout << ch;
-  }
-  cout << endl;
-}
+
 
 // This function will run if  there are no bus in the system and user try to access bus info
 void emptyList() {
@@ -79,7 +81,6 @@ void inputPassword() {
   	passFile.close();
 
   do {
-  	  vline('-',120);
     cout << "Enter password: ";
     char ch = _getch();
     while (ch != 13) {
@@ -99,8 +100,8 @@ void inputPassword() {
     }
 
     if (password != pass) {
-      cout << "\nIncorrect Password" << endl;
-      vline('-', 120);
+      cout << "\nERROR! Incorrect Password" << endl;
+      vline('-',120);
       password.clear();
     }
   } while (password != pass);
@@ -111,13 +112,17 @@ void changePassword() {
   fstream passFile;
   string password;
   inputPassword();
+  Bus b;
   cout << "Enter new password: ";
   cin >> password;
 
   passFile.open("password.bin", ios::trunc | ios::out);
   passFile << password;
   passFile.close();
-  cout << "Password Changed" << endl;
+  vline('-',120);
+  cout << "SUCCESS! Password Changed" << endl;
+  vline('-',120);
+  return b.admin();
 
 }
 
@@ -160,7 +165,6 @@ bool Bus::fileHandling(int n) {
         if (table == 0) {
           cout << "\033c";
           headerDisplay();
-          vline('-', 120);
           cout << setw(10) << "S.No" << setw(18) << "Bus Number" << setw(21) << "From - To" << setw(25) << "Arrival Time" << setw(20) << "Departure Time" << setw(17) << "Fare" << endl;
         	vline('=', 120);
           table++;
@@ -187,6 +191,7 @@ bool Bus::fileHandling(int n) {
     passFileIn.seekg(0);
 
     while (passFileIn >> pass.firstName >>pass.lastName>> pass.ticketNumber >> pass.seatNumber >> pass.phoneNumber >> pass.busNumber) {
+    	bool showInfo = false;
 
       if (ticketNumber == pass.ticketNumber && n == 6) {
         countVar++;
@@ -197,9 +202,31 @@ bool Bus::fileHandling(int n) {
 
       }
 
-      if (busNumber == pass.busNumber && n == 8) {
+      if (busNumber == pass.busNumber && (n == 8 || n == 9)) {
         seats[(pass.seatNumber - 1) / 4][(pass.seatNumber - 1) % 4] = 1;
         countVar++;
+        if(n == 9){
+        	showInfo = true;
+		}
+      }
+      
+      if (showInfo == true) {
+
+	    if (passFileIn.peek() == ifstream::traits_type::eof()) {
+      emptyList();
+      return false;
+    }
+
+        if (table == 0) {
+          cout << "\033c";
+          headerDisplay();
+          cout << setw(10) << "S.No" << setw(28) << "Passenger's Name" << setw(21) << "Seatnumber" << setw(25) << "Ticketnumber" << setw(23) << "Phonenumber" << endl;
+        	vline('=', 120);
+          table++;
+        }
+        	        cout << setw(5);
+        cout << setw(9) << ++q << setw(20) << pass.firstName << " "<< pass.lastName <<setw(25-pass.lastName.length())<<pass.seatNumber<<setw(25)<<pass.ticketNumber<<setw(27)<<pass.phoneNumber<< endl;
+		vline('-',120);
       }
     }
     passFileIn.close();
@@ -212,7 +239,10 @@ bool Bus::fileHandling(int n) {
 
 void Bus::adminCheck() {
   Bus b;
+  string choice;
   bool busNumberExists = false;
+    cout<<"\033c";
+headerDisplay();
 
   do {
     cout << "Enter the bus number: ";
@@ -227,7 +257,24 @@ void Bus::adminCheck() {
   while (busNumberExists == false);
   b.fileHandling(8);
   b.seatInfo();
-
+  
+  cout<<"Would you like to see details of passengers of this bus? (Y/N)"<<endl;
+  do{
+  	cout<<"Your choice: ";
+  	cin >> choice;
+  	
+  	if(choice == "y" || choice == "Y"){
+  		b.fileHandling(9);
+	  }
+	  else if(choice == "n" || choice == "N"){
+	  	return admin();
+	  }
+	  
+	  else{
+	  	cout<<"ERROR! Please enter Y or y for yes or N or n for no"<<endl;
+	  }
+	}while(choice != "n" && choice != "N" && choice != "y" && choice != "Y");
+	
 }
 
 // This function shows the seats of the bus and shows whether they are booked or not
@@ -236,6 +283,7 @@ void Bus::seatInfo() {
   int q = 0;
 
   fileHandling(7);
+  cout<<endl;
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 4; j++) {
       cout.width(10);
@@ -250,8 +298,10 @@ void Bus::seatInfo() {
       }
     }
 
-    cout << endl;
+    cout << endl<<endl;
   }
+  
+  vline('-',120);
 
 }
 
@@ -422,6 +472,8 @@ void Bus::removeInfo() {
   bool validChoice = false;
   Bus bus1, bus2, pass;
   string choice;
+  cout<<"\033c";
+headerDisplay();
   cout << "Enter the bus number: ";
   cin >> bus1.busNumber;
 
@@ -429,6 +481,7 @@ void Bus::removeInfo() {
 
   if (busNumberExists == false) {
     cout << "ERROR! The bus number " << bus1.busNumber << " is not on the list" << endl;
+    vline('-',120);
     return admin();
   }
 
@@ -436,6 +489,7 @@ void Bus::removeInfo() {
 
   if (busNumberExists == true) {
     cout << "ERROR! The passengers have already reserved seats of this bus. So, it cannot be deleted" << endl;
+     vline('-',120);
     return admin();
   }
 
@@ -452,16 +506,16 @@ void Bus::removeInfo() {
   busFileOut.close();
   remove("bus_info.bin");
   rename("tempBus.bin", "bus_info.bin");
-
   cout << "SUCCESS! The bus is deleted from the list successfully" << endl;
+   vline('-',120);
 }
 
 void Bus::inputInfo() {
   bool busNumberExists = false;
   Bus inBus;
-
+cout<<"\033c";
+headerDisplay();
   busFileOut.open("bus_info.bin", ios::app);
-  vline('-', 120);
   do {
     cout << "Enter the bus number: ";
     cin >> inBus.busNumber;
@@ -470,15 +524,17 @@ void Bus::inputInfo() {
 
     if (busNumberExists == true) {
       cout << "ERROR! The bus number " << inBus.busNumber << " already exists" << endl;
+		vline('-',120);
     }
   } while (busNumberExists == true);
-
+ vline('-',16);
   cout << "Driver Details"<<endl;
   vline('-',16);
   cout<<"Firstname: ";
   getline(cin >> ws, inBus.driverFirstName);
   cout<<"Lastname: ";
   getline(cin >> ws, inBus.driverLastName);
+   vline('-',16);
   cout << "From: ";
   getline(cin, inBus.origin);
   cout << "To: ";
@@ -499,13 +555,32 @@ void Bus::admin() {
   Bus b;
   if (bypass == false) {
     inputPassword();
+    	cout<<"\033c";
+	headerDisplay();
     bypass = true;
   }
 
-  vline('-', 120);
-  cout << "Select an action\n 1. Add a bus\n 2. Delete bus\n 3. View Available Buses\n 4. Check seat status\n 5. Change to Passenger mode\n 6. Change admin password\n 7. Exit" << endl;
-  vline('-', 120);
+  cout<<R"(
+			+-------------------------------------------------------------------+
+			|                                                                   |
+			|                    1. Add a Bus                                   |
+			|                                                                   |																
+			|                    2. Delete a Bus                                |																	
+			|                                                                   |																
+			|                    3. View Available Buses                        |																
+			|                                                                   |																
+			|                    4. Chect seat status                           |																
+			|                                                                   |																
+			|                    5. Change to Passenger mode                    |
+			|                                                                   |
+			|                    6. Change admin password                       |            
+			|                                                                   |
+			|                    7. Exit                                        |                          
+			|                                                                   |																
+			+-------------------------------------------------------------------+
+)";
   int option = 0;
+  cout<<setw(45)<<"Select an action: ";
   do {
     cin >> option;
     if (cin.fail() == true) {
@@ -517,26 +592,34 @@ void Bus::admin() {
   switch (option) {
   case 1:
     b.inputInfo();
+    system("pause");
     break;
 
   case 2:
     b.removeInfo();
+    system("pause");
     break;
 
   case 3:
     b.fileHandling(5);
+    system("pause");
     break;
 
   case 4:
     b.adminCheck();
+    system("pause");
     break;
 
   case 5:
+  	cout<<"\033c";
+	headerDisplay();
     b.passenger();
     break;
 
   case 6:
   	bypass = false;
+  		cout<<"\033c";
+	headerDisplay();
     changePassword();
     break;
 
@@ -548,21 +631,40 @@ void Bus::admin() {
     break;
 
   default:
-    cout << "ERROR! Please enter numbers from 1 to 6" << endl;
+    cout<<"\033c";
+  	headerDisplay();
+  	vline('-',120);
+    cout <<setw(80)<< "ERROR! Please enter valid numbers from 1 to 6" << endl;
+    vline('-',120);
     return admin();
   }
-
+	cout<<"\033c";
+	headerDisplay();
   admin();
 }
 
 // This function contains acions that can be performed by passenger
 void Bus::passenger() {
   Bus b;
-  vline('-', 120);
-  cout << "Select an action\n 1. View Available Buses\n 2. Book a ticket\n 3. View your ticket\n 4. Cancel your Reservation\n 5. Change to Admin mode\n 6. Exit" << endl;
-
-  vline('-', 120);
+cout<<R"(
+			+-------------------------------------------------------------------+
+			|                                                                   |
+			|                    1. View Available Buses                        |
+			|                                                                   |																
+			|                    2. Book a Ticket                               |																	
+			|                                                                   |																
+			|                    3. View your Ticket                            |																
+			|                                                                   |																
+			|                    4. Cancel your Reservation                     |																
+			|                                                                   |																
+			|                    5. Change to Admin mode                        |
+			|                                                                   |
+			|                    6. Exit                                        |                          
+			|                                                                   |																
+			+-------------------------------------------------------------------+
+)";
   int option = 0;
+  cout<<setw(45)<<"Select an action: ";
   do {
     cin >> option;
     if (cin.fail() == true) {
@@ -574,6 +676,7 @@ void Bus::passenger() {
   switch (option) {
   case 1:
     b.fileHandling(5);
+    system("pause");
 
     break;
 
@@ -590,9 +693,12 @@ void Bus::passenger() {
 
   case 4:
     b.cancelReservation();
+    system("pause");
     break;
 
   case 5:
+  	cout<<"\033c";
+	headerDisplay();
     b.admin();
     break;
 
@@ -604,7 +710,10 @@ void Bus::passenger() {
     break;
 
   default:
-    cout << "Error! Please enter valid numbers from 1 to 6" << endl;
+  	cout<<"\033c";
+  	headerDisplay();
+  	vline('-',120);
+    cout <<setw(80)<< "ERROR! Please enter valid numbers from 1 to 6" << endl;
     return passenger();
     break;
   }
@@ -615,13 +724,12 @@ void Bus::passenger() {
 
 void programMode() {
   Bus b;
-  vline('-', 120);
   cout << setw(30) << " 1. Admin" << setw(30) << " 2. Passenger " << setw(25) << "3. Exit" << endl;
   vline('-', 120);
   int choice;
 
   do {
-    cout << "Selet program mode: ";
+    cout << "Select program mode: ";
     cin >> choice;
     if (cin.fail() == true) {
 
@@ -632,10 +740,14 @@ void programMode() {
 
   switch (choice) {
   case 1:
+  	cout<<"\033c";
+  	headerDisplay();
     b.admin();
     break;
 
   case 2:
+  	cout<<"\033c";
+  	headerDisplay();
     b.passenger();
     break;
 
@@ -646,9 +758,11 @@ void programMode() {
     exit(0);
 
   default:
-    cout << "ERROR! Please enter valid numbers 1 or 2" << endl;
-    programMode();
-    break;
+      cout<<"\033c";
+  	headerDisplay();
+    cout <<setw(80)<< "ERROR! Please enter valid numbers from 1 to 3" << endl;
+    vline('-',120);
+    return programMode();
   }
 }
 
