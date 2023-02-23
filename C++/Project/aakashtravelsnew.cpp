@@ -241,7 +241,7 @@ void Bus::adminCheck() {
   Bus b;
   string choice;
   bool busNumberExists = false;
-    cout<<"\033c";
+    system("cls");
 headerDisplay();
 
   do {
@@ -472,7 +472,7 @@ void Bus::removeInfo() {
   bool validChoice = false;
   Bus bus1, bus2, pass;
   string choice;
-  cout<<"\033c";
+  system("cls");
 headerDisplay();
   cout << "Enter the bus number: ";
   cin >> bus1.busNumber;
@@ -513,7 +513,7 @@ headerDisplay();
 void Bus::inputInfo() {
   bool busNumberExists = false;
   Bus inBus;
-cout<<"\033c";
+system("cls");
 headerDisplay();
   busFileOut.open("bus_info.bin", ios::app);
   do {
@@ -555,7 +555,7 @@ void Bus::admin() {
   Bus b;
   if (bypass == false) {
     inputPassword();
-    	cout<<"\033c";
+    	system("cls");
 	headerDisplay();
     bypass = true;
   }
@@ -611,14 +611,14 @@ void Bus::admin() {
     break;
 
   case 5:
-  	cout<<"\033c";
+  	system("cls");
 	headerDisplay();
     b.passenger();
     break;
 
   case 6:
   	bypass = false;
-  		cout<<"\033c";
+  		system("cls");
 	headerDisplay();
     changePassword();
     break;
@@ -631,14 +631,14 @@ void Bus::admin() {
     break;
 
   default:
-    cout<<"\033c";
+    system("cls");
   	headerDisplay();
   	vline('-',120);
     cout <<setw(80)<< "ERROR! Please enter valid numbers from 1 to 6" << endl;
     vline('-',120);
     return admin();
   }
-	cout<<"\033c";
+	system("cls");
 	headerDisplay();
   admin();
 }
@@ -697,7 +697,7 @@ cout<<R"(
     break;
 
   case 5:
-  	cout<<"\033c";
+  	system("cls");
 	headerDisplay();
     b.admin();
     break;
@@ -710,7 +710,7 @@ cout<<R"(
     break;
 
   default:
-  	cout<<"\033c";
+  	system("cls");
   	headerDisplay();
   	vline('-',120);
     cout <<setw(80)<< "ERROR! Please enter valid numbers from 1 to 6" << endl;
@@ -740,13 +740,13 @@ void programMode() {
 
   switch (choice) {
   case 1:
-  	cout<<"\033c";
+  	system("cls");
   	headerDisplay();
     b.admin();
     break;
 
   case 2:
-  	cout<<"\033c";
+  	system("cls");
   	headerDisplay();
     b.passenger();
     break;
@@ -758,7 +758,7 @@ void programMode() {
     exit(0);
 
   default:
-      cout<<"\033c";
+      system("cls");
   	headerDisplay();
     cout <<setw(80)<< "ERROR! Please enter valid numbers from 1 to 3" << endl;
     vline('-',120);
