@@ -3,7 +3,8 @@ using namespace std;
 
 int main()
 {
-	int op, a[] = {0, 0, 1, 1}, b[] = {0, 1, 0, 1};
+	int op;
+	bool a[] = {0, 0, 1, 1}, b[] = {0, 1, 0, 1};
 
 	char w;
 
@@ -37,7 +38,7 @@ int main()
 			for (int j = 0; j < 4; j++)
 				if (i == j)
 				{
-					cout << "\t" << a[i] << "\t" << b[j] << "\t" << !a[i] + b[j] << endl;
+					cout << "\t" << a[i] << "\t" << b[j] << "\t" << (!a[i] || b[j]) << endl;
 				}
 		}
 		break;
@@ -46,7 +47,7 @@ int main()
 		cout << "\tA \tB \tA<->B" << endl;
 		for (int i = 0; i < 4; i++)
 		{
-			for (int j = 0; j < 4; i++)
+			for (int j = 0; j < 4; j++)
 				if (i == j)
 				{
 					cout << "\t" << a[i] << "\t" << b[j] << "\t" << (!a[i] + b[j]) * (!b[j] + a[i]) << endl;
@@ -58,10 +59,10 @@ int main()
 		cout << "\tA \tB \tAvB" << endl;
 		for (int i = 0; i < 4; i++)
 		{
-			for (int j = 0; j < 4; i++)
+			for (int j = 0; j < 4; j++)
 				if (i == j)
 				{
-					cout << "\t" << a[i] << "\t" << b[j] << "\t" << a[i] + b[j] << endl;
+					cout << "\t" << a[i] << "\t" << b[j] << "\t" << (a[i] || b[j]) << endl;
 				}
 		}
 		break;
