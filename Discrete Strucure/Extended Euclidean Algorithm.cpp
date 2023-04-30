@@ -16,8 +16,10 @@ int gcdExtended(int a, int b, int *x, int *y){
 
 
 int main(){
-    int x,y,a=35,b=15;
+    int x,y,a,b;
+    cout<<"Enter two numbers: ";
+    cin>>a>>b;
     int g=gcdExtended(a,b,&x,&y);
-    cout<<g;
+    cout<<"The gcd of the given two numbers is "<<g;
     return 0;
     }
