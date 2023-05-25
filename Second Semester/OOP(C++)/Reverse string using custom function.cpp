@@ -1,23 +1,30 @@
 #include<iostream>
-#include<string>
+#include<string.h>
+
 using namespace std;
 
-string revStr(string str){
-int i, n = str.length();
-string temp="";
-
-for(i=n-1; i>=0; i--){
-	temp = temp + str[i];
-}
-return temp;
+string strRev(string& str){
+	int i,n=0,len=0;
+	char tempStr;
+	len = str.length();
+	n = len-1;
+	
+	for(i=0 ; i<=(len/2)-1 ; i++){
+		tempStr = str[i];
+		str[i] = str[n];
+		str[n] = tempStr;
+		n--;
+	}
+	return str;
 }
 
 int main(){
 	string str;
-	cout<<"Enter the required string value: ";
-	//cin>>str;
-	getline(cin,str);
-	cout<<"You have entered: "<<str<<endl;
-	cout<<"The reverse of your string will be: "<<revStr(str)<<endl;
-	return 0;
+	cout<<"Enter the desired string: ";
+	cin>>str;
+	//getline (cin, str);
+		cout<<"The given string is: "<<str<<endl;
+	strRev(str);
+	cout<<"The reverse of the given string is: "<<str<<endl;
+	return 0;	                                               
 }

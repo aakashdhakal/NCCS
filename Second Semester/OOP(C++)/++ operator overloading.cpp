@@ -6,9 +6,12 @@ class Time{
 	int min;
 	int sec;
 	public:
-		Time(){
-		}
-                                                                                                               
+	/*----	Time(int h,int s, int m){
+			h = hour;
+			m = min;
+			s = sec;
+		}    ----*/                                                                                                                         
+		
 		Time operator ++(){
 			sec++;
 			min += sec/60;
