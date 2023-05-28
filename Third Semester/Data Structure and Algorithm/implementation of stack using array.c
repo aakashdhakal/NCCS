@@ -33,7 +33,7 @@ void display(){
 			printf("%d",stack[i]);
 			printf("\t");
 		}
-		
+		printf("\t");
 	}
 }
 int main(){
