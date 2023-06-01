@@ -1,45 +1,57 @@
-#include <stdio.h>
-#include <conio.h>
-#include <math.h>
-#include <stdlib.h>
-
-float f(float x)
-{
-    float y;
-    y = pow(x, 2) + x - 2;
-    return y;
-}
+/* Program: Finding real roots of nonlinear
+   equation using Bisection Method
+   Author: CodeSansar
+   Date: November 18, 2018 */
+/* Header Files */
+#include<stdio.h>
+#include<conio.h>
+#include<math.h>
+/*
+ Defining equation to be solved.
+ Change this equation to solve another problem.
+*/
+#define f(x) cos(x) - x * exp(x)
 
 void main()
 {
-    float x1, x2, x0, error = 0.0001;
-    int i = 0;
-
-    printf("\nEnter two initial guesses:");
-    scanf("%f%f", &x1, &x2);
-
-    if (f(x1) * f(x2) > 0)
-    {
-        printf("\nWrong Input!!");
-        exit(0);
-    }
-    else
-    {
-        do
-        {
-            x0 = (x1 + x2) / 2;
-
-            if (f(x0) * f(x1) > 0)
-                x1 = x0;
-            else
-                x2 = x0;
-
-            i++;
-        } while (fabs(f(x0)) > error);
-    }
-
-    printf("\nRoot = %f", x0);
-    printf("\nNumber of iterations = %d", i);
-
-    getch();
+	 float x0, x1, x2, f0, f1, f2, e;
+	 int step = 1;
+	 /* Inputs */
+	 up:
+	 printf("\nEnter two initial guesses:\n");
+	 scanf("%f%f", &x0, &x1);
+	 printf("Enter tolerable error:\n");
+	 scanf("%f", &e);
+	 /* Calculating Functional Value */
+	 f0 = f(x0);
+	 f1 = f(x1);
+	 /* Checking whether given guesses brackets the root or not. */
+	 if( f0 * f1 > 0.0)
+	 {
+		  printf("Incorrect Initial Guesses.\n");
+		  goto up;
+	 }
+   /* Implementing Bisection Method */
+	 printf("\nStep\t\tx0\t\tx1\t\tx2\t\tf(x2)\n");
+	 do
+	 {
+		  x2 = (x0 + x1)/2;
+		  f2 = f(x2);
+		
+		  printf("%d\t\t%f\t%f\t%f\t%f\n",step, x0, x1, x2, f2);
+		
+		  if( f0 * f2 < 0)
+		  {
+			   x1 = x2;
+			   f1 = f2;
+		  }
+		  else
+		  {
+			   x0 = x2;
+			   f0 = f2;
+		  }
+		  step = step + 1;
+	 }while(fabs(f2)>e);
+	 printf("\nRoot is: %f", x2);
+	 getch();
 }
