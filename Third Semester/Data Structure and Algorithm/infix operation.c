@@ -44,7 +44,7 @@ int main()
     printf("Enter infix expression: ");
     gets(infix);
     rs = evaluate_infix(infix);
-    printf("Result of evaluation is %d", rs);
+    printf("Result of evaluation is %d\n", rs);
     getch();
     return 0;
 }
@@ -58,9 +58,21 @@ int evaluate_infix(char infix[])
     {
         if (isoperand(infix[i]))
         {
-            printf("Enter value of %c = ", infix[i]);
-            scanf("%d", &n);
+            if (infix[i] >= '0' && infix[i] <= '9')
+            {
+                n = infix[i] - '0';
+            }
+            else
+            {
+
+                printf("Enter value of %c = ", infix[i]);
+                scanf("%d", &n);
+            }
             opndstk[++opndtos] = n;
+        }
+        else if (infix[i] >= '0' && infix[i] <= '9')
+        {
+            opstk[++optos] = infix[i] - '0';
         }
         else if (isoperator(infix[i]))
         {
@@ -98,6 +110,7 @@ int evaluate_infix(char infix[])
             }
             optos--;
         }
+
         i++;
     }
     while (optos != -1)
@@ -112,7 +125,7 @@ int evaluate_infix(char infix[])
 }
 int isoperand(char ch)
 {
-    if (ch >= 'A' && ch <= 'Z' || ch >= 'a' && ch <= 'z')
+    if ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9'))
         return 1;
     else
         return 0;
