@@ -3,11 +3,11 @@
 #define MAX_SIZE 100
 
 int stack[MAX_SIZE];
-int top =1;
+int top = -1;
 
 void push(int value){
 	if(top == MAX_SIZE){
-		printf("ERROR! Stack Overflow");
+		printf("ERROR! Stack Overflow\n");
 	}
 	else{
 		stack[++top] = value ;
@@ -16,26 +16,25 @@ void push(int value){
 }
 void pop(){
 	if(top == -1){
-		printf("ERROR! Stack Underflow");
+		printf("ERROR! Stack Underflow\n");
 	}
 	else{
-		printf("The popped element is %d", stack[top--]);
+		printf("The popped element is %d\n", stack[top--]);
 	}
 }
-void display(){
-	int i;
-	if(top == -1){
-		printf("ERROR! Stack is empty");
-	}
-	else{
-		printf("The elements of the stack are: ");
-		for (i=top;i>=0;i--){
-			printf("%d",stack[i]);
-			printf("\t");
-		}
-		printf("\t");
-	}
+void display() {
+    int i;
+    if (top == -1) {
+        printf("ERROR! Stack is empty\n");
+    } else {
+        printf("The elements of the stack are: ");
+        for (i = top; i >= 0; i--) {
+            printf("%d\t", stack[i]);
+        }
+        printf("\n");
+    }
 }
+
 int main(){
 	int option,value,i;
 	
