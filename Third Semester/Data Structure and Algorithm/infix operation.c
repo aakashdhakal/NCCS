@@ -70,10 +70,6 @@ int evaluate_infix(char infix[])
             }
             opndstk[++opndtos] = n;
         }
-        else if (infix[i] >= '0' && infix[i] <= '9')
-        {
-            opstk[++optos] = infix[i] - '0';
-        }
         else if (isoperator(infix[i]))
         {
             if (optos == -1)
