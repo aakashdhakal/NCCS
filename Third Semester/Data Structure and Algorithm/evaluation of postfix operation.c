@@ -60,10 +60,7 @@ int evaluate_post(char *post)
 				break;
 			}
 		}
-		else if (*post >= '0' && *post <= '9')
-		{
-			opndstk[++tos] = *post - '0';
-		}
+	
 		post++;
 	}
 	return opndstk[tos];
@@ -71,7 +68,7 @@ int evaluate_post(char *post)
 
 int isoperand(char ch)
 {
-	if ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z'))
+	if ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')||(ch >= '0' && ch <= '9'))
 		return 1;
 	else
 		return 0;
