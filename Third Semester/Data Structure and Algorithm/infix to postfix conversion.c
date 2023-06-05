@@ -7,6 +7,13 @@ int isOperator(char);
 int priority(char);
 void conversion(char *);
 
+void main()
+{
+    char infix[100];
+    printf("Enter the infix expression: ");
+    gets(infix);
+    conversion(infix);
+}
 int isOperand(char ch)
 {
     if ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9'))
@@ -93,12 +100,4 @@ void conversion(char *ch)
     poststring[i] = '\0';
 
     printf("The postfix expression is: %s\n", poststring);
-}
-
-void main()
-{
-    char infix[100];
-    printf("Enter the infix expression: ");
-    gets(infix);
-    conversion(infix);
 }

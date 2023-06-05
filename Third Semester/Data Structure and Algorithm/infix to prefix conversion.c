@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <conio.h>
 #include <string.h>
@@ -7,7 +6,14 @@ int isOperand(char);
 int isOperator(char);
 int priority(char);
 void conversion(char *);
-;
+
+void main()
+{
+    char infix[100];
+    printf("Enter the infix expression: ");
+    gets(infix);
+    conversion(infix);
+}
 int isOperand(char ch)
 {
     if ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9'))
@@ -100,12 +106,4 @@ void conversion(char *ch)
         printf("%c", prestring[j]);
     }
     printf("\n");
-}
-
-void main()
-{
-    char infix[100];
-    printf("Enter the infix expression: ");
-    gets(infix);
-    conversion(infix);
 }
