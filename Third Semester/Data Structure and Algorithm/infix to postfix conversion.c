@@ -58,10 +58,10 @@ void conversion(char *ch)
             {
                 opstack[++top] = *ch;
             }
-            else if (*ch == '(')
-            {
-                opstack[++top] = *ch;
-            }
+//             else if (*ch == '(')
+//             {
+//                 opstack[++top] = *ch;
+//             }
             else if (priority(*ch) > priority(opstack[top]))
             {
                 opstack[++top] = *ch;
