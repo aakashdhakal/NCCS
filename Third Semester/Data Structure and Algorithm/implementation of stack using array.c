@@ -59,7 +59,7 @@ int main(){
 				exit(0);
 				
 		default: printf("Invalid!!\n");
-				 	fflush(stdin);
+				 	break;
 		
 	}
 }
