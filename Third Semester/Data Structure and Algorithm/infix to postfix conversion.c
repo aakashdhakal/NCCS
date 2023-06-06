@@ -81,7 +81,7 @@ void conversion(char *ch)
         }
         else if (*ch == ')')
         {
-            while (opstack[top] != '(' && top != -1)
+            while (opstack[top] != '(')
             {
                 poststring[i++] = opstack[top--];
             }
