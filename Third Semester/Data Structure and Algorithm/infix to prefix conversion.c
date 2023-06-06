@@ -60,17 +60,13 @@ void conversion(char *ch)
             {
                 opstack[++top] = ch[j];
             }
-            else if (ch[j] == ')')
-            {
-                opstack[++top] = ch[j];
-            }
             else if (priority(ch[j]) >= priority(opstack[top]))
             {
                 opstack[++top] = ch[j];
             }
             else
             {
-                while (top != -1 && priority(ch[j]) < priority(opstack[top]) && opstack[top] != ')')
+                while (top != -1 && priority(ch[j]) < priority(opstack[top]))
                 {
                     prestring[i++] = opstack[top--];
                 }
