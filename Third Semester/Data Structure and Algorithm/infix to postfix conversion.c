@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <conio.h>
-#include <string.h>
+// #include <string.h>
 
 int isOperand(char);
 int isOperator(char);
@@ -58,17 +58,17 @@ void conversion(char *ch)
             {
                 opstack[++top] = *ch;
             }
-//             else if (*ch == '(')
-//             {
-//                 opstack[++top] = *ch;
-//             }
+            // else if (*ch == '(')
+            // {
+            //     opstack[++top] = *ch;
+            // }
             else if (priority(*ch) > priority(opstack[top]))
             {
                 opstack[++top] = *ch;
             }
             else
             {
-                while (priority(*ch) <= priority(opstack[top]) && top != -1 && opstack[top] != '(')
+                while (priority(*ch) <= priority(opstack[top]))
                 {
                     poststring[i++] = opstack[top--];
                 }
