@@ -3,6 +3,7 @@
 #include <conio.h>
 #include <math.h>
 
+// यो भित्र को function कृपया change गर्दिनु होला !! धन्यबाद !!
 float f(float x)
 {
 	return (sin(x) - 5 * x + 2);
