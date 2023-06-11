@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <conio.h>
 #include <math.h>
-#include <stdlib.h>
 
 float f(float x)
 {
@@ -24,9 +23,6 @@ int main()
 	printf("Enter tolerable error: ");
 	scanf("%f", &e);
 
-	printf("Enter maximum iteration: ");
-	scanf("%d", &N);
-
 	printf("\n\tStep\t\tx0\t\tf(x0)\t\tx1\t\tf(x1)\n");
 
 	do
@@ -37,7 +33,7 @@ int main()
 		if (g0 == 0.0)
 		{
 			printf("Mathematical Error.");
-			exit(0);
+			return 0;
 		}
 
 		x1 = x0 - f0 / g0;
@@ -47,12 +43,6 @@ int main()
 
 		x0 = x1;
 		step = step + 1;
-
-		if (step > N)
-		{
-			printf("Not Convergent.");
-			exit(0);
-		}
 
 	} while (fabs(f1) > e);
 

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <conio.h>
 #include <math.h>
-#include <stdlib.h>
 
 float f(float x)
 {
@@ -28,7 +27,7 @@ void main()
 		if (f0 == f1)
 		{
 			printf("Mathematical Error.");
-			exit(0);
+			return 0;
 		}
 
 		x2 = x1 - (x1 - x0) * f1 / (f1 - f0);
@@ -46,7 +45,7 @@ void main()
 		if (step > N)
 		{
 			printf("Not Convergent.");
-			exit(0);
+			return 0;
 		}
 	} while (fabs(f2) > e);
 
