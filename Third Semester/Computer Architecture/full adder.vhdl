@@ -1,14 +1,17 @@
-library ieee ;
-use ieee.std_logic_1164.all ;
-entity fa is
-Port ( a : in std_logic;
-b : in std_logic;
-cin : in std_logic;
-s : out std_logic;
-cout : out std_logic);
-end fa;
-architecture Behavioral of fa is
+library ieee;
+use ieee.std_logic_1164.all; 
+use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
+entity fa1 is
+Port ( a,b,ci : in std_logic; 
+s,co : out std_logic
+); 
+end fa1;
+architecture Behavioral of fa1 is 
 begin
-s <= (a xor b) xor cin;
-cout <= (a and b) or (b and cin) or (a and cin);
+process (a,b,ci)
+begin
+s<=a xor b xor ci;
+co<=(a and b)or (b and ci)or (ci and a);
+end process;
 end Behavioral;
