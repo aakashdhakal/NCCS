@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <conio.h>
 #define MAX_SIZE 5
 
 struct queue
@@ -18,30 +16,26 @@ void display(queueType *);
 int main()
 {
     queueType q;
-    q.front = MAX_SIZE - 1;
-    q.rear = MAX_SIZE - 1;
+    q.front = -1;
+    q.rear = 0;
     int option;
-
+    printf("Enter the queue operation\n 1. Enqueue\n 2. Dequeue\n 3. Display Elements\n 4. Exit\n");
     do
     {
-        system("cls");
-        printf("Enter the queue operation\n 1. Enqueue\n 2. Dequeue\n 3. Display Elements\n 4. Exit\n");
-        printf("Your Choice: ");
+
+        printf("\nYour Choice: ");
         scanf("%d", &option);
 
         switch (option)
         {
         case 1:
             enqueue(&q);
-            getch();
             break;
         case 2:
             dequeue(&q);
-            getch();
             break;
         case 3:
             display(&q);
-            getch();
             break;
         case 4:
             printf("Exiting...\n");
