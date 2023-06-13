@@ -16,8 +16,8 @@ void display(queueType *);
 int main()
 {
     queueType q;
-    q.front = -1;
-    q.rear = 0;
+    q.front = MAX_SIZE - 1;
+    q.rear = MAX_SIZE - 1;
     int option;
     printf("Enter the queue operation\n 1. Enqueue\n 2. Dequeue\n 3. Display Elements\n 4. Exit\n");
     do
