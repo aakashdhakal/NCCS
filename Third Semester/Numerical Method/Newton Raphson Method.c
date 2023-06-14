@@ -16,7 +16,7 @@ float g(float x)
 int main()
 {
 	float x0, x1, f0, f1, g0, e;
-	int step = 1, N;
+	int step = 1;
 
 	printf("\nEnter initial guess: ");
 	scanf("%f", &x0);
