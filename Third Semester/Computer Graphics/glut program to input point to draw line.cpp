@@ -1,4 +1,5 @@
 #include <GL/glut.h>
+#include<GL/glu.h >
 #include <iostream>
 using namespace std;
 
@@ -18,17 +19,17 @@ void drawLine(){
 
 void myInit(){
 
-    glutInitWindowSize(800, 600); // Increase window size
+    glutInitWindowSize(600, 600); // Increase window size
     glutInitWindowPosition(100, 100);
-    	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
+    glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
     glutCreateWindow("Drawing Line");
     glClearColor(1,1,1,1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3d(0,0,0);
-//	glMatrixMode(GL_PROJECTION);
-//	glLoadIdentity();
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
 //	gluOrtho(0,640,0,640);
-//	glMatrixMode(GL_MODELVIEW); 
+	glMatrixMode(GL_MODELVIEW); 
 
 }
 int main(int argc, char* argv[])
