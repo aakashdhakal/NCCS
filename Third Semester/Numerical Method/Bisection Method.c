@@ -11,7 +11,7 @@ float f(float x)
 void main()
 {
 	float x0, x1, x2, f0, f1, f2, e;
-	int step = 1,N;
+	int step = 1;
 	do
 	{
 		printf("\nEnter two initial guesses [a,b]: ");
@@ -48,10 +48,6 @@ void main()
 			f0 = f2;
 		}
 		
-		if(step >N){
-			printf("Not Convergence");
-			return 0;
-		}
 		step = step + 1;
 	} while (fabs(f2) > e);
 	printf("\nRoot is: %f", x2);
