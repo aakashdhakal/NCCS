@@ -11,7 +11,7 @@ float f(float x)
 void main()
 {
 	float x0, x1, x2, f0, f1, f2, e;
-	int step = 1;
+	int step = 1,N;
 	do
 	{
 		printf("\nEnter two initial guesses [a,b]: ");
@@ -20,9 +20,12 @@ void main()
 		{
 			printf("Incorrect Initial Guesses.\n");
 		}
+		
 	} while (f0 * f1 > 0.0);
 	printf("Enter tolerable error: ");
 	scanf("%f", &e);
+	printf("Enter total no. of steps: ");
+	scanf("%f", &N);
 	f0 = f(x0);
 	f1 = f(x1);
 
@@ -43,6 +46,11 @@ void main()
 		{
 			x0 = x2;
 			f0 = f2;
+		}
+		
+		if(step >N){
+			printf("Not Convergence");
+			return 0;
 		}
 		step = step + 1;
 	} while (fabs(f2) > e);
