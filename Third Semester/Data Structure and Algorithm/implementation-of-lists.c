@@ -20,9 +20,10 @@ int main()
     listType list;
     list.size = 0;
     int choice;
+    printf("\n1. Insert\n2. Delete\n3. Search\n4. Modify\n5. Print\n6. Exit\n");
     do
     {
-        printf("\n1. Insert\n2. Delete\n3. Search\n4. Modify\n5. Print\n6. Exit\n\nEnter your choice: ");
+        printf("\nEnter your choice : ");
         scanf("%d", &choice);
         switch (choice)
         {
@@ -70,19 +71,18 @@ void insert(listType *list)
     else if (pos > list->size)
     {
         list->data[list->size] = data;
-        list->size++;
         printf("%d is inserted at the last of the list\n", data);
     }
     else
     {
-        for (int i = list->size - 1; i >= pos; i--)
+        for (int i = list->size - 1; i >= pos - 1; i--)
         {
             list->data[i + 1] = list->data[i];
         }
         list->data[pos - 1] = data;
-        list->size++;
         printf("%d is inserted in the position %d of the list\n", data, pos);
     }
+    list->size++;
 }
 void deleteElement(listType *list)
 {
@@ -101,30 +101,30 @@ void deleteElement(listType *list)
     }
     else
     {
-        value = list->data[pos];
-        for (int i = pos; i < list->size; i++)
+        value = list->data[pos - 1];
+        for (int i = pos - 1; i < list->size; i++)
         {
             list->data[i] = list->data[i + 1];
         }
         list->size--;
     }
-    printf("The value %d at position %d is deleted\n", pos);
+    printf("The value %d at position %d is deleted\n", value, pos);
 }
 void modify(listType *list)
 {
     int value, pos;
-    printf("Enter position [0 - %d]: ", list->size);
+    printf("Enter position [1 - %d]: ", list->size - 1);
     scanf("%d", &pos);
     printf("Enter new value: ");
     scanf("%d", &value);
-    if (pos > list->size || pos < 0)
+    if (pos > list->size - 1 || pos < 1)
     {
         printf("Invalid position\n");
         return;
     }
     else
     {
-        list->data[pos] = value;
+        list->data[pos - 1] = value;
     }
     printf("The value at position %d is modified to %d\n", pos, value);
 }
@@ -137,7 +137,7 @@ void search(listType *list)
     {
         if (list->data[i] == value)
         {
-            printf("The value found at position %d\n", i);
+            printf("The value found at position %d\n", i + 1);
             return;
         }
     }
@@ -154,7 +154,7 @@ void printList(listType *list)
     printf("List: ");
     for (int i = 0; i < list->size; i++)
     {
-        printf("%d:%d ", list->data[i], i);
+        printf("%d\t ", list->data[i]);
     }
     printf("\n");
 }
