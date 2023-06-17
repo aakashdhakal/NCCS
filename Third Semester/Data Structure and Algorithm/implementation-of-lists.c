@@ -67,6 +67,12 @@ void insert(listType *list)
         printf("Invalid position\n");
         return;
     }
+    else if (pos > list->size)
+    {
+        list->data[list->size] = data;
+        list->size++;
+        printf("%d is inserted at the last of the list\n", data);
+    }
     else
     {
         for (int i = list->size - 1; i >= pos; i--)
@@ -75,8 +81,8 @@ void insert(listType *list)
         }
         list->data[pos - 1] = data;
         list->size++;
+        printf("%d is inserted in the position %d of the list\n", data, pos);
     }
-    printf("%d is inserted in the position %d of the list\n", data, pos);
 }
 void deleteElement(listType *list)
 {
