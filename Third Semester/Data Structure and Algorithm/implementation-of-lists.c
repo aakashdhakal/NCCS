@@ -113,11 +113,11 @@ void deleteElement(listType *list)
 void modify(listType *list)
 {
     int value, pos;
-    printf("Enter position [1 - %d]: ", list->size - 1);
+    printf("Enter position [1 - %d]: ", list->size);
     scanf("%d", &pos);
     printf("Enter new value: ");
     scanf("%d", &value);
-    if (pos > list->size - 1 || pos < 1)
+    if (pos > list->size || pos < 1)
     {
         printf("Invalid position\n");
         return;
@@ -133,7 +133,7 @@ void search(listType *list)
     int value;
     printf("Enter value to search: ");
     scanf("%d", &value);
-    for (int i = 0; i < list->size; i++)
+    for (int i = 0; i <= list->size; i++)
     {
         if (list->data[i] == value)
         {
