@@ -6,7 +6,7 @@ int stack[MAX_SIZE];
 int top = -1;
 
 void push(int value){
-	if(top == MAX_SIZE){
+	if(top == MAX_SIZE-1){
 		printf("ERROR! Stack Overflow\n");
 	}
 	else{
