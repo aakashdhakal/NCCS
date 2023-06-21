@@ -24,11 +24,10 @@ void drawShapes()
     // Draw a triangle
     glColor3f(0.0, 0.0, 1.0); // Blue
     glBegin(GL_TRIANGLES);
-    glVertex2f(-0.3f, -0.5f);
-    glVertex2f(0.0f, 0.5f);
-    glVertex2f(0.3f, -0.5f);
+    glVertex2f(-0.3, -0.5);
+    glVertex2f(0.0, 0.5);
+    glVertex2f(0.3, -0.5);
     glEnd();
-    glPopMatrix();
 
     // Draw a hexagon
     glColor3f(1.0, 1.0, 0.0); // Yellow
@@ -40,7 +39,6 @@ void drawShapes()
     glVertex2f(0.65, -0.5); // Bottom-right vertex
     glVertex2f(0.35, -0.5); // Bottom vertex
     glEnd();
-    glPopMatrix();
 
     glFlush();
 }
