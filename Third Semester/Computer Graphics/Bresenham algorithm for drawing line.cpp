@@ -3,7 +3,7 @@
 #include <cmath>
 
 using namespace std;
- float xi, yi, xf, yf, x, y, xinc, yinc,dx,dy,p,xend;
+ float xi, yi, xf, yf, x, y,dx,dy,p,xend;
 void plotPixel()
 {
    
