@@ -26,6 +26,9 @@ void plotPixel()
 		y = yi;
 		xend = xf;
 	}
+	glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(1.0, 0.0, 0.0);
+    glBegin(GL_POINTS);
 	while(x <= xend){
 		if(p < 0 ){
 			p += 2*dy;
@@ -37,10 +40,9 @@ void plotPixel()
 			x += 1;
 			y -= 1;   
 		}
+		 glVertex2f(x, y);
 	}
-    glClear(GL_COLOR_BUFFER_BIT);
-    glColor3f(1.0, 0.0, 0.0);
-    glBegin(GL_POINTS);
+
 
     glEnd();
     glFlush();
