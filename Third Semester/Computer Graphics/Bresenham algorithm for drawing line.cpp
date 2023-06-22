@@ -30,6 +30,7 @@ void plotPixel()
     glColor3f(1.0, 0.0, 0.0);
     glBegin(GL_POINTS);
 	while(x <= xend){
+		 glVertex2f(x, y);
 		if(p < 0 ){
 			p += 2*dy;
 			x += 1;
@@ -40,7 +41,7 @@ void plotPixel()
 			x += 1;
 			y -= 1;   
 		}
-		 glVertex2f(x, y);
+		
 	}
 
 
