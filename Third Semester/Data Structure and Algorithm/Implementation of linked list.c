@@ -93,16 +93,10 @@ void insert(int n)
         scanf("%d", &pos);
         temp = start;
         i = 1;
-        while (i < pos - 1 && temp != NULL)
+        while (i < pos - 1)
         {
             temp = temp->next;
             i++;
-        }
-        if (temp == NULL)
-        {
-            printf("Invalid position\n");
-            free(newnode);
-            return;
         }
         newnode->next = temp->next;
         temp->next = newnode;
