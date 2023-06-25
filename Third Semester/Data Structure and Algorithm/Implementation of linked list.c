@@ -132,8 +132,9 @@ void delete(int n)
     Node *temp;
     if (n == 1)
     {
+        temp = start;
         start = start->next;
-        free(start);
+        free(temp);
     }
     else if (n == 2)
     {
