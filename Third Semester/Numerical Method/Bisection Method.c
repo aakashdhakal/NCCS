@@ -16,16 +16,14 @@ void main()
 	{
 		printf("\nEnter two initial guesses [a,b]: ");
 		scanf("%f%f", &x0, &x1);
-		if (f0 * f1 > 0.0)
+		if (f(x0) * f(x1) > 0.0)
 		{
 			printf("Incorrect Initial Guesses.\n");
 		}
 		
-	} while (f0 * f1 > 0.0);
+	} while (f(x0) * f(x1) > 0.0);
 	printf("Enter tolerable error: ");
 	scanf("%f", &e);
-	printf("Enter total no. of steps: ");
-	scanf("%f", &N);
 	f0 = f(x0);
 	f1 = f(x1);
 
