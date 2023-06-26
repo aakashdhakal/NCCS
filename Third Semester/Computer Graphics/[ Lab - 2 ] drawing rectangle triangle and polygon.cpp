@@ -17,26 +17,26 @@ void drawShapes()
     // Draw a triangle
     glColor3f(0.0, 0.0, 1.0); // Blue
     glBegin(GL_TRIANGLES);
-    glVertex2f(-0.5, -0.4); //Bottom-Left-Vertex
-    glVertex2f(-0.2, 0.2);    //Top-Vertex
-    glVertex2f(0.1, -0.4);    //Bottom-Right-Vertex
+    glVertex2f(-0.5, -0.4); // Bottom-Left-Vertex
+    glVertex2f(-0.2, 0.2);  // Top-Vertex
+    glVertex2f(0.1, -0.4);  // Bottom-Right-Vertex
     glEnd();
 
     // Draw a hexagon
     glColor3f(0.0, 1.0, 0.0); // Green
     glBegin(GL_POLYGON);
-        glVertex2f(-0.1, -0.7);//Bottom-Left
-		glVertex2f(0.1, -0.7); //Bottom-Right
-		glVertex2f(0.2, -0.5); //Top-Left
-		glVertex2f(0.1, -0.3); //Middle-Right
-		glVertex2f(-0.1, -0.3); //Top-Right
-		glVertex2f(-0.2, -0.5); //Middle-Left
+    glVertex2f(-0.25, -0.4); // Left vertex
+    glVertex2f(-0.1, -0.7);  // Bottom-Left vertex
+    glVertex2f(0.1, -0.7);   // Bottom-right vertex
+    glVertex2f(0.25, -0.4);  // Right vertex
+    glVertex2f(0.1, -0.1);   // Top-Right vertex
+    glVertex2f(-0.1, -0.1);  // Top-left vertex
     glEnd();
 
     glFlush();
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     glutInit(&argc, argv);
 
