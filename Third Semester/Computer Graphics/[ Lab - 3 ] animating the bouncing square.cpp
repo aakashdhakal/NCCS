@@ -1,3 +1,5 @@
+//Not updated according to lab
+
 #include <GL/glut.h>
 
 // Square properties
