@@ -2,60 +2,50 @@
 
 void drawHut()
 {
-    // Draw the roof of the hut
-    glColor3f(0.6f, 0.8f, 1.0f); // Light blue color
-    glBegin(GL_TRIANGLES);
+    glClear(GL_COLOR_BUFFER_BIT);
 
-    glVertex2f(-170.0f, 50.0f); // Bottom-left vertex
-    glVertex2f(170.0f, 50.0f);  // Bottom-right vertex
-    glVertex2f(0.0f, 200.0f);   // Top vertex
+    // Draw the roof of the hut
+    glColor3f(0.3490f, 0.5098f, 0.6902f); // Light blue color
+    glBegin(GL_TRIANGLES);
+    glVertex2f(230.0f, 350.0f); // Bottom-left vertex
+    glVertex2f(570.0f, 350.0f); // Bottom-right vertex
+    glVertex2f(400.0f, 500.0f); // Top vertex
     glEnd();
 
     // Draw the walls of the hut
-    glColor3f(0.0f, 1.3f, 0.0f); // Red color
-    glBegin(GL_POLYGON);
-    glVertex2f(-170.0f, -250.0f); // Bottom-left vertex
-    glVertex2f(-170.0f, 50.0f);   // Top-left vertex
-    glVertex2f(170.0f, 50.0f);    // Top-right vertex
-    glVertex2f(170.0f, -250.0f);  // Bottom-right vertex
+    glColor3f(0.5019f, 0.8314f, 0.1059f); // Red color
+    glBegin(GL_QUADS);
+    glVertex2f(230.0f, 50.0f);  // Bottom-left vertex
+    glVertex2f(230.0f, 350.0f); // Top-left vertex
+    glVertex2f(570.0f, 350.0f); // Top-right vertex
+    glVertex2f(570.0f, 50.0f);  // Bottom-right vertex
     glEnd();
 
     // Draw the door of the hut
-    glColor3f(0.6f, 0.8f, 1.0f); // Light blue color
-    glBegin(GL_POLYGON);
-    glVertex2f(-60.0f, -240.0f); // Bottom-left vertex
-    glVertex2f(-60.0f, -100.0f); // Top-left vertex
-    glVertex2f(60.0f, -100.0f);  // Top-right vertex
-    glVertex2f(60.0f, -240.0f);  // Bottom-right vertex
+    glColor3f(0.3490f, 0.5098f, 0.6902f); // Light blue color
+    glBegin(GL_QUADS);
+    glVertex2f(350.0f, 60.0f);  // Bottom-left vertex
+    glVertex2f(350.0f, 185.0f); // Top-left vertex
+    glVertex2f(450.0f, 185.0f); // Top-right vertex
+    glVertex2f(450.0f, 60.0f);  // Bottom-right vertex
     glEnd();
 
-    // Draw the window of the hut
-    glColor3f(1.0f, 0.0f, 0.0f); // Red color
-    glBegin(GL_POLYGON);
-    glVertex2f(40.0f, -80.0f);  // Bottom-right vertex
-    glVertex2f(40.0f, -10.0f);  // Top-right vertex
-    glVertex2f(120.0f, -10.0f); // Top-left vertex
-    glVertex2f(120.0f, -80.0f); // Bottom-left vertex
+    // Draw the first window of the hut
+    glColor3f(0.9412f, 0.0471f, 0.0471f); // Red color
+    glBegin(GL_QUADS);
+    glVertex2f(430.0f, 200.0f); // Bottom-right vertex
+    glVertex2f(430.0f, 280.0f); // Top-right vertex
+    glVertex2f(510.0f, 280.0f); // Top-left vertex
+    glVertex2f(510.0f, 200.0f); // Bottom-left vertex
     glEnd();
 
-    // Draw the window of the hut
-    glBegin(GL_POLYGON);
-    glVertex2f(-40.0f, -80.0f);  // Bottom-right vertex
-    glVertex2f(-40.0f, -10.0f);  // Top-right vertex
-    glVertex2f(-120.0f, -10.0f); // Top-left vertex
-    glVertex2f(-120.0f, -80.0f); // Bottom-left vertex
+    // Draw the second window of the hut
+    glBegin(GL_QUADS);
+    glVertex2f(290.0f, 200.0f); // Bottom-right vertex
+    glVertex2f(290.0f, 280.0f); // Top-right vertex
+    glVertex2f(370.0f, 280.0f); // Top-left vertex
+    glVertex2f(370.0f, 200.0f); // Bottom-left vertex
     glEnd();
-}
-
-void display()
-{
-    glClear(GL_COLOR_BUFFER_BIT);
-    glLoadIdentity();
-
-    // Translate the hut to the center of the window
-    glTranslatef(400.0f, 300.0f, -1.0f);
-
-    drawHut();
 
     glFlush();
 }
@@ -65,13 +55,13 @@ int main(int argc, char **argv)
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize(800, 600);
-    glutCreateWindow("Hut");
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glutCreateWindow("Hut - Aakash Dhakal");
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0, 800, 0, 600);
     glMatrixMode(GL_MODELVIEW);
-    glutDisplayFunc(display);
+    glutDisplayFunc(drawHut);
     glutMainLoop();
     return 0;
 }
