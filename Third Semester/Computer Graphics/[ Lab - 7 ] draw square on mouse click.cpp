@@ -1,3 +1,4 @@
+//not cannon according to lab
 #include <GL/glut.h>
 
 int windowWidth = 800;
