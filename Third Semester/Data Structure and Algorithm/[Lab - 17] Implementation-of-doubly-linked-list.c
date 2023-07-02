@@ -14,7 +14,7 @@ typedef struct node Node;
 Node *start = NULL;
 
 void insert(int);
-void delete(int);
+void deleteElement(int);
 void display();
 void search();
 
@@ -39,13 +39,13 @@ int main()
             insert(3);
             break;
         case 4:
-            delete (1);
+            deleteElement(1);
             break;
         case 5:
-            delete (2);
+            deleteElement(2);
             break;
         case 6:
-            delete (3);
+            deleteElement(3);
             break;
         case 7:
             display();
@@ -105,33 +105,32 @@ void insert(int n)
             temp = temp->next;
             i++;
         }
-        newnode->prev = temp;
         newnode->next = temp->next;
-        temp->next = newnode;
+        newnode->prev = temp;
         temp->next->prev = newnode;
+        temp->next = newnode;
     }
     printf("The data is inserted successfully\n");
 }
 
 void display()
 {
-    Node *temp;
-    temp = start;
+    Node *temp = start;
     if (temp == NULL)
     {
         printf("The list is empty\n");
         return;
     }
-    printf("List: ");
+    printf("List:");
     while (temp != NULL)
     {
-        printf("%d\t", temp->data);
+        printf("\t%d", temp->data);
         temp = temp->next;
     }
     printf("\n");
 }
 
-void delete(int n)
+void deleteElement(int n)
 {
     if (start == NULL)
     {
@@ -163,7 +162,7 @@ void delete(int n)
         scanf("%d", &pos);
 
         int i = 1;
-        while (temp != NULL && i < pos)
+        while (i < pos)
         {
             temp = temp->next;
             i++;
@@ -174,6 +173,7 @@ void delete(int n)
             printf("Invalid Position\n");
             return;
         }
+
         temp->prev->next = temp->next;
         temp->next->prev = temp->prev;
         free(temp);
