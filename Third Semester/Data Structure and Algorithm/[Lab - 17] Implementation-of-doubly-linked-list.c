@@ -144,29 +144,17 @@ void delete(int n)
     if (n == 1)
     {
         start = start->next;
-        if (start != NULL)
-        {
-            start->prev = NULL;
-        }
+        start->prev = NULL;
         free(temp);
     }
     else if (n == 2)
     {
-        if (start->next == NULL)
+        while (temp->next != NULL)
         {
-            free(start);
-            start = NULL;
+            temp = temp->next;
         }
-        else
-        {
-            while (temp->next != NULL)
-            {
-                temp = temp->next;
-            }
-
-            temp->prev->next = NULL;
-            free(temp);
-        }
+        temp->prev->next = NULL;
+        free(temp);
     }
     else
     {
@@ -186,24 +174,10 @@ void delete(int n)
             printf("Invalid Position\n");
             return;
         }
-
-        if (temp->prev != NULL)
-        {
-            temp->prev->next = temp->next;
-        }
-        else
-        {
-            start = temp->next;
-        }
-
-        if (temp->next != NULL)
-        {
-            temp->next->prev = temp->prev;
-        }
-
+        temp->prev->next = temp->next;
+        temp->next->prev = temp->prev;
         free(temp);
     }
-
     printf("Node deleted successfully\n");
 }
 
