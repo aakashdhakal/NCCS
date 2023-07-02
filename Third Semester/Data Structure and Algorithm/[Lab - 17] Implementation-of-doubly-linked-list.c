@@ -1,4 +1,4 @@
-//Code is not fully completed so please check once
+// Code is not fully completed so please check once
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -70,12 +70,11 @@ void insert(int n)
     int pos, i;
     printf("Enter the data: ");
     scanf("%d", &newnode->data);
-    
 
     if (start == NULL)
     {
-    	newnode->next = NULL;
-    	newnode->prev = NULL;
+        newnode->next = NULL;
+        newnode->prev = NULL;
         start = newnode;
     }
     else if (n == 1)
@@ -134,51 +133,77 @@ void display()
 
 void delete(int n)
 {
-	 int pos, i;
     if (start == NULL)
     {
         printf("The list is empty\n");
         return;
     }
-    Node *temp;
+
+    Node *temp = start;
+
     if (n == 1)
     {
-    	temp = start;
-        start->next->prev = NULL;
         start = start->next;
+        if (start != NULL)
+        {
+            start->prev = NULL;
+        }
         free(temp);
     }
     else if (n == 2)
     {
-    	temp = start;
-    	while(temp->next != NULL){
-    		temp = temp->next;
-		}
- 		temp->prev->next = NULL;
- 		printf("%d", temp->data);
- 	 	free(temp);
+        if (start->next == NULL)
+        {
+            free(start);
+            start = NULL;
+        }
+        else
+        {
+            while (temp->next != NULL)
+            {
+                temp = temp->next;
+            }
+
+            temp->prev->next = NULL;
+            free(temp);
+        }
     }
     else
     {
+        int pos;
         printf("Enter the position: ");
         scanf("%d", &pos);
-        temp = start;
-        i = 1;
-        
-        
-        while (i < pos && temp!= NULL)
+
+        int i = 1;
+        while (temp != NULL && i < pos)
         {
             temp = temp->next;
             i++;
         }
-        if(temp == NULL){
-        	printf("Invalid Position\n");
-		}
-        temp->prev->next = temp->next;
-        temp->next->prev  = temp -> prev;
+
+        if (temp == NULL)
+        {
+            printf("Invalid Position\n");
+            return;
+        }
+
+        if (temp->prev != NULL)
+        {
+            temp->prev->next = temp->next;
+        }
+        else
+        {
+            start = temp->next;
+        }
+
+        if (temp->next != NULL)
+        {
+            temp->next->prev = temp->prev;
+        }
+
         free(temp);
-        
     }
+
     printf("Node deleted successfully\n");
 }
 
