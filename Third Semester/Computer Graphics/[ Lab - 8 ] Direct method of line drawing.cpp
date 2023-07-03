@@ -1,3 +1,5 @@
+//Code is not completed so it is not working
+
 #include <GL/glut.h>
 #include <iostream>
 #include <cmath>
