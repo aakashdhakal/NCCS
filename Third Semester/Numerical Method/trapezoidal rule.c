@@ -3,7 +3,8 @@
 #include<conio.h>
 #include<math.h>
 
-// यो भित्र को function कृपया change गर्दिनु होला !! धन्यबाद !!double f(double x){
+// यो भित्र को function कृपया change गर्दिनु होला !! धन्यबाद !!
+
 double f(double x)
 	return pow(x,2)+ 2*x;
 }
