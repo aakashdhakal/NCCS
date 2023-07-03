@@ -11,5 +11,6 @@ begin
 q<="00" when a="0001" else
 "01" when a="0010" else
 "10" when a="0100" else
-"11";
+"11" when a="1000" else
+"XX";
 end Behavioral;
