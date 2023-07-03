@@ -1,12 +1,3 @@
-#include<stdio.h>
-#include<conio.h>
-#include<math.h>
-
-// यो भित्र को function कृपया change गर्दिनु होला !! धन्यबाद !!
-double f(double x){
-	return pow(x,2)+ 2*x;
-}
-
 int main()
 {
  float lower, upper, integration=0.0, stepSize, k;
@@ -16,8 +7,15 @@ int main()
  scanf("%f", &lower);
  printf("Enter upper limit of integration: ");
  scanf("%f", &upper);
+ do{
  printf("Enter number of sub intervals: ");
  scanf("%d", &subInterval);
+ if(subInterval%2 != 0){
+ 	printf("\nThe subintervals should be even\n");
+ }
+}
+ while(subInterval%2 != 0);
+ 
 
  /* Calculation */
  /* Finding step size */
@@ -41,4 +39,5 @@ int main()
  printf("\nRequired value of integration is: %.3f", integration);
  getch();
  return 0;
+
 }
