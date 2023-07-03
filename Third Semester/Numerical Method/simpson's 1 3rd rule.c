@@ -1,3 +1,12 @@
+#include<stdio.h>
+#include<conio.h>
+#include<math.h>
+
+/* Define function here */
+double f(double x){
+	return pow(x,2)+ 2*x;
+}
+
 int main()
 {
  float lower, upper, integration=0.0, stepSize, k;
