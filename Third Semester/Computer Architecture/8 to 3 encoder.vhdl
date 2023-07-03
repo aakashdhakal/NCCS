@@ -7,7 +7,7 @@ Port (a: in STD_LOGIC_VECTOR (7 downto 0);
 q:out STD_LOGIC_VECTOR (2 downto 0));
 end encod2;
 
-architecture Behavioral of encod1 is
+architecture Behavioral of encod2 is
 begin
 q<="000" when a="00000001" else
 "001" when a="00000010" else
