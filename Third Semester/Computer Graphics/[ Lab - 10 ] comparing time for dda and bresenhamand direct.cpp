@@ -34,12 +34,13 @@ void bresenham()
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_POINTS);
+    glVertex2f(x, y);
     if (dx < dy)
     {
         p = 2 * dx - dy;
         while (x <= xend)
         {
-            glVertex2f(x, y);
+
             if (p < 0)
             {
                 p += 2 * dx;
@@ -50,6 +51,7 @@ void bresenham()
                 y += (yf > yi) ? 1 : -1;
             }
             x += 1;
+            glVertex2f(x, y);
         }
     }
     else
@@ -57,7 +59,7 @@ void bresenham()
         p = 2 * dy - dx;
         while (x <= xend)
         {
-            glVertex2f(x, y);
+
             if (p < 0)
             {
                 p += 2 * dy;
@@ -68,6 +70,7 @@ void bresenham()
                 x += (xf > xi) ? 1 : -1;
             }
             y += 1;
+            glVertex2f(x, y);
         }
     }
     glEnd();
@@ -94,11 +97,12 @@ void dda()
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_POINTS);
+    glVertex2f(round(x), round(y));
     for (int i = 0; i <= steps; i++)
     {
-        glVertex2f(x, y);
         x += xIncrement;
         y += yIncrement;
+        glVertex2f(round(x), round(y));
     }
     glEnd();
     glFlush();
@@ -126,11 +130,13 @@ void direct()
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_POINTS);
+    glVertex2f(round(x), round(y));
     while (x <= xend)
     {
-        glVertex2f(round(x), round(y));
+
         x += 1;
         y = m * x + c;
+        glVertex2f(round(x), round(y));
     }
     glEnd();
     glFlush();
@@ -143,22 +149,17 @@ void plotPixel()
     dda_start = clock();
     dda();
     dda_end = clock();
-
     bresenham_start = clock();
     bresenham();
     bresenham_end = clock();
-
     direct_start = clock();
     direct();
     direct_end = clock();
 
-    double dda_time = (double)(dda_end - dda_start) / CLOCKS_PER_SEC;
-    double bresenham_time = (double)(bresenham_end - bresenham_start) / CLOCKS_PER_SEC;
-    double direct_time = (double)(direct_end - direct_start) / CLOCKS_PER_SEC;
     cout << endl;
-    cout << "The time taken by DDA is " << dda_time << " seconds" << endl;
-    cout << "The time taken by Bresenham is " << bresenham_time << " seconds" << endl;
-    cout << "The time taken by Direct is " << direct_time << " seconds" << endl;
+    cout << "The time taken by DDA is " << (float)(dda_end - dda_start) / CLOCKS_PER_SEC << " seconds" << endl;
+    cout << "The time taken by Bresenham is " << (float)(bresenham_end - bresenham_start) / CLOCKS_PER_SEC << " seconds" << endl;
+    cout << "The time taken by Direct is " << (float)(direct_end - direct_start) / CLOCKS_PER_SEC << " seconds" << endl;
 }
 
 int main(int argc, char *argv[])
