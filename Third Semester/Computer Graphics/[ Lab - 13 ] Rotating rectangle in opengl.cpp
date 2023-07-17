@@ -32,8 +32,8 @@ void drawRectangle()
 
 int main(int argc, char *argv[])
 {
-    x = 100;
-    y = 100;
+    x = 400;
+    y = 400;
     width = 200;
     height = 150;
 
