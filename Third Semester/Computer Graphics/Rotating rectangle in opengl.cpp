@@ -11,20 +11,20 @@ void drawRectangle()
     // Original rectangle
     glColor3f(1.0, 0.0, 0.0); // Red color
     glBegin(GL_POLYGON);
-    glVertex2i(x, y);
-    glVertex2i(x + width, y);
-    glVertex2i(x + width, y + height);
-    glVertex2i(x, y + height);
+    glVertex2f(x, y);
+    glVertex2f(x + width, y);
+    glVertex2f(x + width, y + height);
+    glVertex2f(x, y + height);
     glEnd();
 
     //Rotated Rectangle
-    glRotatef(30,0,0,0);
+    glRotatef(30.0f,0.0f,0.0f,1.0f);
     glColor3f(0.0, 0.0, 1.0); // Blue color
     glBegin(GL_POLYGON);
-    glVertex2i(x, y);
-    glVertex2i(x + width, y);
-    glVertex2i(x + width, y + height);
-    glVertex2i(x, y + height);
+    glVertex2f(x, y);
+    glVertex2f(x + width, y);
+    glVertex2f(x + width, y + height);
+    glVertex2f(x, y + height);
     glEnd();
 
     glFlush();
