@@ -2,34 +2,35 @@
 
 int partition(int *arr, int low, int high)
 {
+    int pivot = arr[low];
     int x = low;
     int y = high;
 
-    int p = arr[low], temp;
-
     while (x < y)
     {
-        while (arr[x] <= p)
+        while (arr[x] <= pivot && x < high)
         {
             x++;
         }
-        while (arr[y] > p)
+        while (arr[y] > pivot)
         {
             y--;
         }
         if (x < y)
         {
-            temp = arr[x];
+            int temp = arr[x];
             arr[x] = arr[y];
             arr[y] = temp;
         }
     }
+
     arr[low] = arr[y];
-    arr[y] = p;
+    arr[y] = pivot;
+
     return y;
 }
 
-void quickSort(int arr[], int low, int high)
+void quickSort(int *arr, int low, int high)
 {
     int p;
     if (low < high)
@@ -46,7 +47,7 @@ int main()
     printf("Enter the total no. of elements: ");
     scanf("%d", &n);
     int numbers[n], i;
-    printf("Enter %d numbers\n ");
+    printf("Enter %d numbers\n", n);
     for (i = 0; i < n; i++)
     {
         scanf("%d", &numbers[i]);
