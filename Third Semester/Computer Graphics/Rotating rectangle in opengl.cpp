@@ -17,9 +17,9 @@ void drawRectangle()
     glVertex2i(x, y + height);
     glEnd();
 
-    // Rotated rectangle
+    //Rotated Rectangle
+    glRotatef(30,0,0,0);
     glColor3f(0.0, 0.0, 1.0); // Blue color
-    glRotatef(30, 0, 0, 1);
     glBegin(GL_POLYGON);
     glVertex2i(x, y);
     glVertex2i(x + width, y);
@@ -32,10 +32,10 @@ void drawRectangle()
 
 int main(int argc, char *argv[])
 {
-    x = 400;
-    y = 400;
-    width = 200;
-    height = 150;
+    x = 100;
+    y = 100;
+    width = 100;
+    height = 50;
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
