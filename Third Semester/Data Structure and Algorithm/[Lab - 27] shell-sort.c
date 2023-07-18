@@ -30,7 +30,7 @@ int main()
     printf("Enter the total no. of elements: ");
     scanf("%d", &n);
     int numbers[n], i;
-    printf("Enter %d numbers\n");
+    printf("Enter %d numbers\n",n);
     for (i = 0; i < n; i++)
     {
         scanf("%d", &numbers[i]);
