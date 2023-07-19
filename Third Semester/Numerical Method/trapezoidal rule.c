@@ -14,7 +14,6 @@ int main()
  float lower, upper, integration=0.0, stepSize, k;
  int i, subInterval;
 
- /* Input */
  printf("Enter lower limit of integration: ");
  scanf("%f", &lower);
  printf("Enter upper limit of integration: ");
@@ -22,11 +21,8 @@ int main()
  printf("Enter number of sub intervals: ");
  scanf("%d", &subInterval);
 
- /* Calculation */
- /* Finding step size */
  stepSize = (upper - lower)/subInterval;
 
- /* Finding Integration Value */
  integration = f(lower) + f(upper);
  for(i=1; i<= subInterval-1; i++)
  {
