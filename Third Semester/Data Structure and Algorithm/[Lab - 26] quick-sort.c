@@ -8,7 +8,7 @@ int partition(int *arr, int low, int high)
 
     while (x < y)
     {
-        while (arr[x] <= pivot && x < high)
+        while (arr[x] <= pivot)
         {
             x++;
         }
@@ -23,10 +23,8 @@ int partition(int *arr, int low, int high)
             arr[y] = temp;
         }
     }
-
     arr[low] = arr[y];
     arr[y] = pivot;
-
     return y;
 }
 
