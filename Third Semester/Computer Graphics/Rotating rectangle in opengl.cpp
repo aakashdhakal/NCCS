@@ -3,11 +3,19 @@
 
 int x, y;
 int width, height;
+int win_width = 800;
+int win_height = 600;
 
 void drawRectangle()
 {
+    glColor3f(0.0, 0.0, 0.0); // Black color
     glClear(GL_COLOR_BUFFER_BIT);
-
+    glBegin(GL_LINES);
+    glVertex2i(-800, 0);
+    glVertex2i(800, 0);
+    glVertex2i(0, -600);
+    glVertex2i(0, 600);
+    glEnd();
     // Original rectangle
     glColor3f(1.0, 0.0, 0.0); // Red color
     glBegin(GL_POLYGON);
@@ -17,8 +25,8 @@ void drawRectangle()
     glVertex2f(x, y + height);
     glEnd();
 
-    //Rotated Rectangle
-    glRotatef(30.0f,0.0f,0.0f,1.0f);
+    // Rotated Rectangle
+    glRotatef(30.0f, 0.0f, 0.0f, 1.0f);
     glColor3f(0.0, 0.0, 1.0); // Blue color
     glBegin(GL_POLYGON);
     glVertex2f(x, y);
@@ -39,11 +47,11 @@ int main(int argc, char *argv[])
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
-    glutInitWindowSize(800, 600);
+    glutInitWindowSize(win_width, win_height);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Rotate Rectangle - Aakash Dhakal");
     glClearColor(1.0, 1.0, 1.0, 1.0);
-    gluOrtho2D(0, 800, 0, 600);
+    gluOrtho2D(-100, win_width, -100, win_height);
     glutDisplayFunc(drawRectangle);
     glutMainLoop();
 
