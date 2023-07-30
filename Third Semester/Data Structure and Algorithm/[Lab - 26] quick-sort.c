@@ -1,42 +1,40 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
 
 int partition(int *arr, int low, int high)
 {
-    int pivot = arr[low];
-    int x = low;
-    int y = high;
+    int pivot = arr[high];
+    int i = low - 1, j;
 
-    while (x < y)
+    for (j = low; j <= high; j++)
     {
-        while (arr[x] <= pivot)
+        if (arr[j] <= pivot)
         {
-            x++;
+            i++;
+            swap(&arr[i], &arr[j]);
         }
-        while (arr[y] > pivot)
-        {
-            y--;
-        }
-        if (x < y)
-        {
-            int temp = arr[x];
-            arr[x] = arr[y];
-            arr[y] = temp;
-        }
+        swap(&arr[i++], &pivot);
     }
-    arr[low] = arr[y];
-    arr[y] = pivot;
-    return y;
+    return i;
 }
 
 void quickSort(int *arr, int low, int high)
 {
+    if (low >= high)
+        return;
+
     int p;
-    if (low < high)
-    {
-        p = partition(arr, low, high);
-        quickSort(arr, low, p - 1);
-        quickSort(arr, p + 1, high);
-    }
+    p = partition(arr, low, high);
+
+    quickSort(arr, low, p - 1);
+    quickSort(arr, p + 1, high);
 }
 
 int main()
@@ -44,7 +42,7 @@ int main()
     int n;
     printf("Enter the total no. of elements: ");
     scanf("%d", &n);
-    int numbers[n], i;
+    int *numbers = (int *)malloc(n * sizeof(int)), i;
     printf("Enter %d numbers\n", n);
     for (i = 0; i < n; i++)
     {
