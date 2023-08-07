@@ -8,16 +8,25 @@ float width, height;
 int win_width = 800;
 int win_height = 600;
 
-void drawRectangle(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
-{
-}
-
 void rotate()
 {
     float theta = (30 * 3.14159265) / 180.0;
     float rotationMatrix[3][3] = {cos(theta), -sin(theta), 0, sin(theta), cos(theta), 0, 0, 0, 1};
     float originalVertex[3][4] = {x, y, 1, x + width, y, 1, x + width, y + height, 1, x, y + height, 1};
     float finalVertex[3][4] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+
+    glColor3f(0.0f,0.0f,1.0f);
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            glVertex2f(rotationMatrix[0][i],rotationMatrix[1][j]);
+        }
+    }
+    glEnd();
+    glFlush();
 
     for (int i = 0; i < 3; i++)
     {
@@ -29,18 +38,13 @@ void rotate()
             }
         }
     }
-    float x1 = finalVertex[0][0];
-    float y1 = finalVertex[1][0];
-
-    // Rotated rectangle
-    glColor3f(0.0, 0.0, 1.0); // Blue color
-    glBegin(GL_POLYGON);
-    glVertex2f(x1, y1);
-    glVertex2f(x1 + width, y1);
-    glVertex2f(x1 + width, y1 + height);
-    glVertex2f(x1, y1 + height);
-    glEnd();
-    glFlush();
+    glColor3f(1.0,0.0,0.0);
+    glBegin(GL_LINE_LOOP);
+    for (int i=0;i<3;i++){
+        for(int j =0;j<3;j++){
+            glVertex2f(finalVertex[0][i],finalVertex[j][1]);
+        }
+    }
 }
 
 void display()
@@ -53,18 +57,7 @@ void display()
     glVertex2i(0, -600);
     glVertex2i(0, 600);
     glEnd();
-
     rotate();
-
-    // Original rectangle
-    glColor3f(1.0, 0.0, 0.0); // Red color
-    glBegin(GL_POLYGON);
-    glVertex2f(x, y);
-    glVertex2f(x + width, y);
-    glVertex2f(x + width, y + height);
-    glVertex2f(x, y + height);
-    glEnd();
-    glFlush();
 }
 
 int main(int argc, char *argv[])
