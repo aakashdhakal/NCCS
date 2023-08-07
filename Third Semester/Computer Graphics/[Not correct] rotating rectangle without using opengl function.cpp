@@ -12,18 +12,16 @@ void rotate()
 {
     float theta = (30 * 3.14159265) / 180.0;
     float rotationMatrix[3][3] = {cos(theta), -sin(theta), 0, sin(theta), cos(theta), 0, 0, 0, 1};
-    float originalVertex[3][4] = {x, y, 1, x + width, y, 1, x + width, y + height, 1, x, y + height, 1};
+    float originalVertex[3][4] = {{x, x + width, x + width, x}, {y, y, y + height, y + height}, {1, 1, 1, 1}};
+
     float finalVertex[3][4] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-
-    glColor3f(0.0f,0.0f,1.0f);
+    glColor3f(0.0f, 0.0f, 1.0f);
+    glLineWidth(2.0);
     glBegin(GL_LINE_LOOP);
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 4; i++)
     {
-        for (int j = 0; j < 3; j++)
-        {
-            glVertex2f(rotationMatrix[0][i],rotationMatrix[1][j]);
-        }
+        glVertex2f(originalVertex[0][i], originalVertex[1][i]);
     }
     glEnd();
     glFlush();
@@ -38,13 +36,15 @@ void rotate()
             }
         }
     }
-    glColor3f(1.0,0.0,0.0);
+    glColor3f(1.0, 0.0, 0.0);
     glBegin(GL_LINE_LOOP);
-    for (int i=0;i<3;i++){
-        for(int j =0;j<3;j++){
-            glVertex2f(finalVertex[0][i],finalVertex[j][1]);
-        }
+    for (int i = 0; i < 4; i++)
+    {
+        glVertex2f(finalVertex[0][i], finalVertex[1][i]);
     }
+
+    glEnd();
+    glFlush();
 }
 
 void display()
@@ -57,6 +57,7 @@ void display()
     glVertex2i(0, -600);
     glVertex2i(0, 600);
     glEnd();
+    glFlush();
     rotate();
 }
 
