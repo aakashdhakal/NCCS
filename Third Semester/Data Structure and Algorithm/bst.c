@@ -1,5 +1,3 @@
-//not working
-
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -10,43 +8,63 @@ struct BST{
 };
 
 typedef struct BST node;
-node *root = NULL;
 
-
-
-node* insert(node *p ,int item){
-	
+node* createNewNode(int item){
 	node *newNode = (node*)malloc(sizeof(node));
 	newNode->key = item;
 	newNode->left = newNode->right = NULL;
+	return newNode;
+}
+
+node* insert(node *root ,int item){
 	
-	if(p == NULL){
-		p = newNode;
+	node *newNode = createNewNode(item);
+	if(root == NULL){
+		root = newNode;
 	}
-	else if(item < p->key){
-		p->left = insert(p->left,item);
+	else if(item < root->key){
+		root->left = insert(root->left,item);
 	}
 	else{
-		p->right = insert(p->right,item);
+		root->right = insert(root->right,item);
 	}
 	return newNode;
 }
 
-void inorderTraversal(node* p) {
+void inorderTraversal(node* root) {
+	
+  if (root == NULL) {
+  	return;
+  }
+  inorderTraversal(root->left);
+  printf("%d -> ", root->key);
+  inorderTraversal(root->right);
+  
+}
+void preorderTraversal(node* p) {
 	
   if (p == NULL) {
   	return;
   }
-  inorderTraversal(p->left);
-  printf("%d ->", p->key);
-  inorderTraversal(p->right);
+  printf("%d -> ", p->key);
+  preorderTraversal(p->left);
+  preorderTraversal(p->right);
   
+}
+void postorderTraversal(node* p) {
+	
+  if (p == NULL) {
+  	return;
+  }
+  postorderTraversal(p->left);
+  postorderTraversal(p->right);
+  printf("%d -> ", p->key);
 }
 
 int main(){
 	int choice,data;
-	printf(" 1. Insert\n 2. Inorder Traversal\n 3. Exit\n");
-	
+	printf("\n 1. Insert\n 2. Inorder Traversal\n 3. Preorder Traversal\n 4. Postorder Traversal\n 5. Exit\n");
+	node *root = NULL;
 	do{
 		printf("\n Enter your choice: ");
 		scanf("%d",&choice);
@@ -54,14 +72,21 @@ int main(){
 			case 1: printf(" Enter the data: ");
 					scanf("%d",&data);
 					insert(root,data);
-					break;
 					
 			case 2: printf(" Datas: ");
 					inorderTraversal(root);
 					break;
+					
+			case 3: printf(" Datas: ");
+					preorderTraversal(root);
+					break;
+					
+			case 4: printf(" Datas: ");
+					postorderTraversal(root);
+					break;
 			
-			case 3: break;
+			case 5: break;
 		}
-	}while(choice != 3);
+	}while(choice != 5);
 }
 
