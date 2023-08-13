@@ -66,11 +66,55 @@ void postorderTraversal(node *root)
     postorderTraversal(root->right);
     printf("%d -> ", root->key);
 }
+int getMin(node* root){
+	node *temp = root;
+    while(temp->left != NULL){ temp = temp->left;}
 
+    return temp->key;
+}
+
+node* deleteNode(node* root, int item){
+	
+	if(root == NULL){
+		return NULL;
+	}
+	else if(root->key < item){
+		 root->right = deleteNode(root->right,item);
+	}
+	else if(root->key > item){
+		 root->left = deleteNode(root->right,item);
+	}
+	else{
+		if(root->left == NULL && root->right == NULL)
+        {
+            free(root);
+            return NULL;
+        }
+        else if(root->left == NULL)
+        {
+            node *temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if(root->right == NULL)
+        {
+            node *temp = root->left;
+            free(root);
+            return temp;
+        }
+        else
+        {
+            int rightMin = getMin(root->right);
+            root->key = rightMin;
+            root->right = deleteNode(root->right,rightMin);
+        }
+	}
+	return root;
+}
 int main()
 {
     int choice, data;
-    printf("\n 1. Insert\n 2. Inorder Traversal\n 3. Preorder Traversal\n 4. Postorder Traversal\n 5. Exit\n");
+    printf("\n 1. Insert\n 2. Inorder Traversal\n 3. Preorder Traversal\n 4. Postorder Traversal\n 5. Delete\n 6. Exit\n");
     node *root = NULL;
     do
     {
@@ -87,21 +131,29 @@ int main()
         case 2:
             printf(" Datas: ");
             inorderTraversal(root);
+            printf("\n");
             break;
 
         case 3:
             printf(" Datas: ");
             preorderTraversal(root);
+            printf("\n");
             break;
 
         case 4:
             printf(" Datas: ");
             postorderTraversal(root);
+            printf("\n");
             break;
 
         case 5:
+            printf(" Enter the data to be deleted: ");
+            scanf("%d", &data);
+            deleteNode(root,data);
             break;
+            
+        case 6: break;
         }
-    } while (choice != 5);
+    } while (choice != 6);
     return 0;
 }
