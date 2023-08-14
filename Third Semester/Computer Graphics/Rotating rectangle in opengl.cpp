@@ -1,41 +1,53 @@
-
 #include <GL/glut.h>
+#include <cmath>
+#include <iostream>
+using namespace std;
 
-int x, y;
-int width, height;
+float x, y;
+float width, height;
 int win_width = 800;
 int win_height = 600;
 
-void drawRectangle()
+void drawRectangle(float rectangleMatrix[][4])
 {
-    glColor3f(0.0, 0.0, 0.0); // Black color
+    glLineWidth(3.0);
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i < 4; i++)
+    {
+        glVertex2f(rectangleMatrix[0][i], rectangleMatrix[1][i]);
+    }
+    glEnd();
+    glFlush();
+}
+
+void scale()
+{
+    float sx = 2, sy = 2;
+    float theta = (30 * 3.14159265) / 180.0;
+    float scaleMatrix[3][3] = {sx, 0, 0, 0, sy, 0, 0, 0, 1};
+    float originalVertex[3][4] = {{x, x + width, x + width, x}, {y, y, y + height, y + height}, {1, 1, 1, 1}};
+
+    glColor3f(0.0f, 0.0f, 0.0f);
+    drawRectangle(originalVertex);
+
+    glRotatef(30, 0, 0, 1);
+
+    glColor3f(0.5f, 0.5f, 0.5f);
+    drawRectangle(originalVertex);
+}
+
+void display()
+{
     glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(0.0, 0.0, 0.0); // Black color
     glBegin(GL_LINES);
     glVertex2i(-800, 0);
     glVertex2i(800, 0);
     glVertex2i(0, -600);
     glVertex2i(0, 600);
     glEnd();
-    // Original rectangle
-    glColor3f(1.0, 0.0, 0.0); // Red color
-    glBegin(GL_POLYGON);
-    glVertex2f(x, y);
-    glVertex2f(x + width, y);
-    glVertex2f(x + width, y + height);
-    glVertex2f(x, y + height);
-    glEnd();
-
-    // Rotated Rectangle
-    glRotatef(30.0f, 0.0f, 0.0f, 1.0f);
-    glColor3f(0.0, 0.0, 1.0); // Blue color
-    glBegin(GL_POLYGON);
-    glVertex2f(x, y);
-    glVertex2f(x + width, y);
-    glVertex2f(x + width, y + height);
-    glVertex2f(x, y + height);
-    glEnd();
-
     glFlush();
+    scale();
 }
 
 int main(int argc, char *argv[])
@@ -49,10 +61,10 @@ int main(int argc, char *argv[])
     glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
     glutInitWindowSize(win_width, win_height);
     glutInitWindowPosition(100, 100);
-    glutCreateWindow("Rotate Rectangle - Aakash Dhakal");
+    glutCreateWindow("Rotate Rectangle Without Using Function - Aakash Dhakal");
     glClearColor(1.0, 1.0, 1.0, 1.0);
     gluOrtho2D(-100, win_width, -100, win_height);
-    glutDisplayFunc(drawRectangle);
+    glutDisplayFunc(display);
     glutMainLoop();
 
     return 0;
