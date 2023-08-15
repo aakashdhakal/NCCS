@@ -22,9 +22,6 @@ void drawRectangle(float rectangleMatrix[][4])
 
 void scale()
 {
-    float sx = 2, sy = 2;
-    float theta = (30 * 3.14159265) / 180.0;
-    float scaleMatrix[3][3] = {sx, 0, 0, 0, sy, 0, 0, 0, 1};
     float originalVertex[3][4] = {{x, x + width, x + width, x}, {y, y, y + height, y + height}, {1, 1, 1, 1}};
 
     glColor3f(0.0f, 0.0f, 0.0f);
