@@ -20,7 +20,7 @@ void drawRectangle(float rectangleMatrix[][4])
     glFlush();
 }
 
-void scale()
+void rotate()
 {
     float sx = 2, sy = 2;
     float theta = (30 * 3.14159265) / 180.0;
@@ -47,7 +47,7 @@ void display()
     glVertex2i(0, 600);
     glEnd();
     glFlush();
-    scale();
+    rotate();
 }
 
 int main(int argc, char *argv[])
