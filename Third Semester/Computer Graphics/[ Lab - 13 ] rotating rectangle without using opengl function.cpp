@@ -8,6 +8,17 @@ float width, height;
 int win_width = 800;
 int win_height = 600;
 
+void drawRectangle(float rectangle[][4]){
+    glLineWidth(2.0);
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i < 4; i++)
+    {
+        glVertex2f(rectangle[0][i], rectangle[1][i]);
+    }
+    glEnd();
+    glFlush();
+}
+
 void rotate()
 {
     float theta = (30 * 3.14159265) / 180.0;
@@ -16,15 +27,9 @@ void rotate()
 
     float finalVertex[3][4] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glLineWidth(2.0);
-    glBegin(GL_LINE_LOOP);
-    for (int i = 0; i < 4; i++)
-    {
-        glVertex2f(originalVertex[0][i], originalVertex[1][i]);
-    }
-    glEnd();
-    glFlush();
+    glColor3f(0.0f, 0.0f, 0.0f);
+    drawRectangle(originalVertex);
+
 
     for (int i = 0; i < 3; i++)
     {
@@ -36,15 +41,8 @@ void rotate()
             }
         }
     }
-    glColor3f(1.0, 0.0, 0.0);
-    glBegin(GL_LINE_LOOP);
-    for (int i = 0; i < 4; i++)
-    {
-        glVertex2f(finalVertex[0][i], finalVertex[1][i]);
-    }
-
-    glEnd();
-    glFlush();
+    glColor3f(0.5, 0.5, 0.5);
+    drawRectangle(finalVertex);
 }
 
 void display()
