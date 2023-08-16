@@ -76,13 +76,13 @@ int getMin(node* root){
 node* deleteNode(node* root, int item){
 	
 	if(root == NULL){
-		return NULL;
+		return root;
 	}
 	else if(root->key < item){
 		 root->right = deleteNode(root->right,item);
 	}
 	else if(root->key > item){
-		 root->left = deleteNode(root->right,item);
+		 root->left = deleteNode(root->left,item);
 	}
 	else{
 		if(root->left == NULL && root->right == NULL)
@@ -111,11 +111,24 @@ node* deleteNode(node* root, int item){
 	}
 	return root;
 }
+
+node *search(node *root, int key){
+	if(root == NULL){
+		printf("The key : %d is not found",key);
+		return NULL;
+	}
+	 else if(key < root->key)
+                return search(root->left, key);
+        else if(key > root->key)
+                return search(root->right, key);
+        else
+                return root;
+}
 int main()
 {
     int choice, data;
-    printf("\n 1. Insert\n 2. Inorder Traversal\n 3. Preorder Traversal\n 4. Postorder Traversal\n 5. Delete\n 6. Exit\n");
-    node *root = NULL;
+    printf("\n 1. Insert\n 2. Inorder Traversal\n 3. Preorder Traversal\n 4. Postorder Traversal\n 5. Delete\n 6. Search \n 7. Exit");
+    node *root = NULL,*ptr;
     do
     {
         printf("\n Enter your choice: ");
@@ -152,8 +165,15 @@ int main()
             deleteNode(root,data);
             break;
             
-        case 6: break;
+        case 6: 
+        	printf(" Enter the key to be searched: ");
+        	scanf("%d", &data);
+        	ptr = search(root,data);
+        	if(ptr != NULL){
+        		printf(" The key is found in the tree\n");				
+			}
+			break;
         }
-    } while (choice != 6);
+    } while (choice != 7);
     return 0;
 }
