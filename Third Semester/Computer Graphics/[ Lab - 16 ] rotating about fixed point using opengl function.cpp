@@ -27,9 +27,9 @@ void rotate()
     glColor3f(0.0f, 0.0f, 0.0f);
     drawRectangle(originalVertex);
 
-    glTranslatef(-150,-125,0);
-    glRotatef(30,0,0,1);
     glTranslatef(150,125,0);
+    glRotatef(30,0,0,1);
+    glTranslatef(-150,-125,0);
 
     glColor3f(0.5, 0.5, 0.5);
     drawRectangle(originalVertex);
