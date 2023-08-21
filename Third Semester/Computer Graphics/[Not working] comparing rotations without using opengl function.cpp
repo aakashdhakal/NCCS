@@ -8,67 +8,96 @@ float width, height;
 int win_width = 800;
 int win_height = 600;
 
-void rotate()
-{
-    float theta = (30 * 3.14159265) / 180.0;
-    float rotationMatrix[3][3] = {cos(theta), -sin(theta), 0, sin(theta), cos(theta), 0, 0, 0, 1};
-    float translateToOrigin[3][3] = {1, 0, -150,0,1,-125,0,0,1};
-    float translateFromOrigin[3][3] = {1, 0, 150,0,1,125,0,0,1};
-    float originalVertex[3][4] = {{x, x + width, x + width, x}, {y, y, y + height, y + height}, {1, 1, 1, 1}};
-    float tempVertex1[3][4] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    float tempVertex2[3][4] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    float finalVertex[3][4] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
-    glColor3f(0.0f, 0.0f, 1.0f);
+void drawRectangle(float **rectangle){
     glLineWidth(2.0);
     glBegin(GL_LINE_LOOP);
     for (int i = 0; i < 4; i++)
     {
-        glVertex2f(originalVertex[0][i], originalVertex[1][i]);
+        glVertex2f(rectangle[0][i], rectangle[1][i]);
     }
     glEnd();
     glFlush();
-for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            for (int k = 0; k < 3; k++)
+}
+
+void **multiplyMatrix(float **matrix1,float **matrix2,float **answer,int row1, int row2,int col1,int col2){
+
+    for(int i = 0; i < row1; ++i){
+        for(int j = 0; j < col2; ++j){
+            for(int k = 0; k < col1; ++k)
             {
-                tempVertex1[i][j] += translateToOrigin[i][k] * rotationMatrix[k][j];
+                answer[i][j] += matrix1[i][k] * matrix2[k][j];
             }
         }
     }
 
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            for (int k = 0; k < 3; k++)
-            {
-                tempVertex2[i][j] += tempVertex1[i][k] * translateFromOrigin[k][j];
-            }
-        }
-    }
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            for (int k = 0; k < 3; k++)
-            {
-                finalVertex[i][j] += tempVertex2[i][k] * originalVertex[k][j];
-            }
-        }
-    }
-    glColor3f(1.0, 0.0, 0.0);
-    glBegin(GL_LINE_LOOP);
-    for (int i = 0; i < 4; i++)
-    {
-        glVertex2f(finalVertex[0][i], finalVertex[1][i]);
+}
+
+void rotate()
+{
+    float tx = 150, ty = 125;
+    float theta = (30 * 3.14159265) / 180.0;
+    float rotationMatrix[3][3] = {cos(theta), -sin(theta), 0, sin(theta), cos(theta), 0, 0, 0, 1};
+    float originalVertex[3][4] = {{x, x + width, x + width, x}, {y, y, y + height, y + height}, {1, 1, 1, 1}};
+    float translateMatrix[3][3] = {1,0,tx,0,1,ty,0,0,1};
+    float translateBackMatrix[3][3] = {1,0,-tx,0,1,-ty,0,0,1};
+    float **transformMatrix = new float*[3];
+    for(int i=0;i<3;i++){
+        transformMatrix[i] = new float[3];
     }
 
-    glEnd();
-    glFlush();
+    float **original = new float*[3];
+    for(int i=0;i<3;i++){
+        original[i] = new float[3];
+    }
 
+    float **rotation= new float*[3];
+    for(int i=0;i<3;i++){
+        rotation[i] = new float[3];
+    }
+
+    float **translate = new float*[3];
+    for(int i=0;i<3;i++){
+        translate[i] = new float[3];
+    }
+
+    float **final = new float*[3];
+    for(int i=0;i<3;i++){
+        final[i] = new float[4];
+    }
+    float **temp = new float*[3];
+    for(int i=0;i<3;i++){
+        temp[i] = new float[3];
+    }
+
+    float **translateBack = new float*[3];
+    for(int i=0;i<3;i++){
+        translateBack[i] = new float[3];
+    }
+
+
+    for(int i = 0; i<3;i++){
+        for(int j = 0; j<3; j++){
+            rotation[i][j] = rotationMatrix[i][j];
+            translate[i][j] = translateMatrix[i][j];
+            translateBack[i][j] = translateBackMatrix[i][j];
+        }
+    }
+     for(int i = 0; i<3;i++){
+        for(int j = 0; j<4; j++){
+            original[i][j] = originalVertex[i][j];
+        }
+    }
+
+    glColor3f(0.0f, 0.0f, 0.0f);
+    drawRectangle(original);
+
+    multiplyMatrix(translate,rotation,temp,3,3,3,3);
+    multiplyMatrix(temp,translateBack,transformMatrix,3,3,3,3);
+    multiplyMatrix(transformMatrix,original,final,3,3,3,4);
+
+
+    glColor3f(0.5, 0.5, 0.5);
+    drawRectangle(final);
 }
 
 void display()
