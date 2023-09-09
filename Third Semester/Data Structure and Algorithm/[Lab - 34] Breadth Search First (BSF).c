@@ -84,7 +84,7 @@ void BFS(int numVertices, int a[][numVertices], int startVertex)
         }
     }
 
-    free(q.arr);
+   
 }
 
 int main()
