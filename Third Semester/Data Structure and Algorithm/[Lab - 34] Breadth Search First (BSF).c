@@ -58,8 +58,8 @@ void BFS(int numVertices, int a[][numVertices], int startVertex)
 {
     struct queue q;
     q.size = numVertices + 1;
-    q.f = q.r = 0;
-    q.arr[q.size];
+    q.f = q.r = -1;                              // Initialize f and r properly
+    q.arr = (int *)malloc(q.size * sizeof(int)); // Dynamically allocate memory
 
     printf("BFS : %d", startVertex);
     enqueue(&q, startVertex);
@@ -84,7 +84,7 @@ void BFS(int numVertices, int a[][numVertices], int startVertex)
         }
     }
 
-   
+    free(q.arr); // Free the dynamically allocated memory
 }
 
 int main()
