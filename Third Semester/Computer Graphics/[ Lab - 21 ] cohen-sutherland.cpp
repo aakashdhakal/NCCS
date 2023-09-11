@@ -114,7 +114,7 @@ void display()
 {
 
     drawline(x_1, y_1, x_2, y_2);
-    Sleep(1000);
+    Sleep(10000);
     cohen_sutherland();
     drawline(x_1, y_1, x_2, y_2);
 }
@@ -124,7 +124,7 @@ int main(int argc, char **argv)
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize(800, 600);
-    glutCreateWindow("Line Clipping - Cohen-Sutherland");
+    glutCreateWindow("Cohen-Sutherland Method - Aakash Dhakal");
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
