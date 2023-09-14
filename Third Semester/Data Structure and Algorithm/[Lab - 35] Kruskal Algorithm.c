@@ -1,27 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX 999 // Define MAX globally
+#define MAX 999
+
 int parent[MAX];
 
 int find(int);
 int uni(int, int);
 
-void kruskal(int n, int cost[][n])
+void kruskal(int n, int cost[n][n])
 {
     int i, j, k, a, b, u, v;
-    int min;
+    int min = MAX;
     int ne = 1;
     int mincost = 0;
 
     printf("\nThe edges of Minimum Cost Spanning Tree are\n");
     while (ne < n)
     {
-        for (i = 1, min = MAX; i <= n; i++)
+        min = MAX;
+        for (i = 0; i < n; i++)
         {
-            for (j = 1; j <= n; j++)
+            for (j = 0; j < n; j++)
             {
-                if (cost[i][j] < min)
+                if (cost[i][j] < min && cost[i][j] != 0)
                 {
                     min = cost[i][j];
                     a = u = i;
@@ -33,10 +35,10 @@ void kruskal(int n, int cost[][n])
         v = find(v);
         if (uni(u, v))
         {
-            printf("%d edge (%d,%d) = %d\n", ne++, a, b, min);
+            printf("%d edge (%d,%d) = %d\n", ne++, a + 1, b + 1, min); 
             mincost += min;
         }
-        cost[a][b] = cost[b][a] = MAX;
+        cost[a][b] = cost[b][a] = 0;
     }
     printf("\nMinimum cost = %d\n", mincost);
 }
@@ -65,13 +67,11 @@ int main()
     scanf("%d", &n);
     int cost[n][n];
     printf("\nEnter the cost adjacency matrix:\n");
-    for (i = 1; i <= n; i++)
+    for (i = 0; i < n; i++)
     {
-        for (j = 1; j <= n; j++)
+        for (j = 0; j < n; j++)
         {
             scanf("%d", &cost[i][j]);
-            if (cost[i][j] == 0)
-                cost[i][j] = MAX;
         }
     }
 
