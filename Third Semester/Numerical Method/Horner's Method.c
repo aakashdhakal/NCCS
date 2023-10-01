@@ -1,8 +1,9 @@
 #include <stdio.h>
+#define MAX 10
 
 int main()
 {
-   float a[100], sum = 0, x;
+   float a[MAX], sum = 0, x;
    int n, i;
 
    printf("\nEnter degree of the polynomial X : ");
