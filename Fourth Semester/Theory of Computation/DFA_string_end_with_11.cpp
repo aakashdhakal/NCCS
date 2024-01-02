@@ -11,9 +11,11 @@ int main()
 
     cout << "Enter the string: ";
     cin >> str;
+    int l = str.length();
+    
 
     // loop to check each character of the string for the DFA
-    for (int i = 0; i < str.length(); i++)
+    for (int i = 0; i < l; i++)
     {
         // check if the string is over {0,1} or not
         if (str[i] != '0' && str[i] != '1')
@@ -33,17 +35,15 @@ int main()
             state = 2;
         else if (state == 2 && str[i] == '0')
             state = 0;
-        else if (state == 2 && str[i] == '1')
-            state = 1;
     }
 
     // check if the string is accepted or not,
     // i.e. if the final state is 2 then string is accepted
     // else string is not accepted
     if (state == 2)
-        cout << "String accepted";
+        cout << "String accepted"<<endl;
     else
-        cout << "String not accepted";
+        cout << "String not accepted"<<endl;
 
     return 0;
 }
