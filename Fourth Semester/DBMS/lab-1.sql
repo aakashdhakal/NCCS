@@ -6,7 +6,8 @@ CREATE TABLE student(
     sex VARCHAR(20),
     PRIMARY KEY(sid)
 );
-INSERT INTO student VALUES (101,'Aakash','Bachelor',19,'Male');
+/
+INSERT INTO student VALUES (103,'Aakash','Bachelor',19,'Male');
 /
 SELECT * FROM student;
 /
@@ -29,5 +30,5 @@ credit_hours INT,
 PRIMARY KEY(cid)
 );
 /
-INSERT INTO course VALUES('CSC317','Simulation and Modeling',3);
+INSERT INTO course VALUES('CSC319','Simulation and Modeling',3);
 /

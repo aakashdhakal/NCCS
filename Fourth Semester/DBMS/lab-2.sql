@@ -5,7 +5,7 @@ CREATE TABLE department(
  block_no INT 
 );
 /
-INSERT INTO department VALUES(101, "BCA", 10);
+INSERT INTO department VALUES(101, "`lab3`BCA", 10);
 INSERT INTO department VALUES(102, "BIM", 20);
 INSERT INTO department VALUES(103, "CSIT", 30);
 /
