@@ -33,13 +33,25 @@ int main()
     cin >> str;
     Stack s;
     int i = 0;
+    char ch1, ch2;
+
+    if (str[0] == 'a')
+    {
+        ch1 = 'a';
+        ch2 = 'b';
+    }
+    else
+    {
+        ch1 = 'b';
+        ch2 = 'a';
+    }
     while (str[i] != '\0')
     {
-        if (str[i] == '0')
+        if (str[i] == ch1)
         {
             s.push(str[i]);
         }
-        else if (str[i] == '1')
+        else if (str[i] == ch2)
         {
             if (s.isEmpty())
             {
