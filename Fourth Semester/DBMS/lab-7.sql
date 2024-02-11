@@ -50,4 +50,7 @@ SELECT * FROM department d LEFT OUTER JOIN employee e ON (d.DEPT_ID = e.DEPT_NO)
 SELECT * FROM department d RIGHT OUTER JOIN employee e ON (d.DEPT_ID = e.DEPT_NO);
 /
 SELECT * FROM department d FULL OUTER JOIN employee e ON (d.DEPT_ID = e.DEPT_NO);
+/
+SELECT * FROM employee e1 INNER JOIN employee e2 ON(e1.SALARY < e2.SALARY);
+
 
