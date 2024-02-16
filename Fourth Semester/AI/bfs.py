@@ -22,14 +22,14 @@ def bfs(visited, adj_list, start_node):
 
     while queue:
         s = queue.pop(0)
-        top.append(s)
+        traverseOp.append(s)
 
         for neighbour in adj_list[s]:
             if neighbour not in visited:
                 visited.append(neighbour)
                 queue.append(neighbour)
 
-    print("The traversed output = ",top)
+    print("The traversed output = ",traverseOp)
         
 
 
