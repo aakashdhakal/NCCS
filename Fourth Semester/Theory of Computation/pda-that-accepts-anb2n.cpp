@@ -24,7 +24,8 @@ public:
     {
         return top == -1;
     }
-    char peek(){
+    char peek()
+    {
         return arr[top];
     }
 };
@@ -36,21 +37,25 @@ int main()
     cin >> str;
     Stack s;
     int i = 0;
-    while(str[i] != '\0'){
-        if(str[i] == 'a'){
+    while (str[i] != '\0')
+    {
+        if (str[i] == 'a')
+        {
             s.push(str[i]);
             s.push(str[i]);
         }
-        else if(str[i] == 'b' && s.peek() == 'a'){
+        else if (str[i] == 'b' && s.peek() == 'a')
+        {
             s.pop();
         }
-        else{
-            cout<<"Not Accepted"<<endl;
+        else
+        {
+            cout << "Not Accepted" << endl;
             return 0;
         }
         i++;
     }
- if (s.isEmpty())
+    if (s.isEmpty())
     {
         cout << "Accepted" << endl;
     }
