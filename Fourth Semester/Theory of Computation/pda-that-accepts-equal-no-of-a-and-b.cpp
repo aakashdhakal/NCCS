@@ -16,13 +16,21 @@ public:
     {
         arr[++top] = x;
     }
-    char pop()
+    void pop()
     {
-        return arr[top--];
+        if (!isEmpty())
+            top--;
     }
     bool isEmpty()
     {
         return top == -1;
+    }
+    char peek()
+    {
+        if (!isEmpty())
+            return arr[top];
+        else
+            return ' ';
     }
 };
 
@@ -33,39 +41,28 @@ int main()
     cin >> str;
     Stack s;
     int i = 0;
-    char ch1, ch2;
 
-    if (str[0] == 'a')
-    {
-        ch1 = 'a';
-        ch2 = 'b';
-    }
-    else
-    {
-        ch1 = 'b';
-        ch2 = 'a';
-    }
     while (str[i] != '\0')
     {
-        if (str[i] == ch1)
+        if (str[i] == '0' && (s.isEmpty() || s.peek() == '0'))
         {
-            s.push(str[i]);
+            s.push('0');
         }
-        else if (str[i] == ch2)
+        else if (str[i] == '1' && (s.isEmpty() || s.peek() == '1'))
         {
-            if (s.isEmpty())
-            {
-                cout << "Not accepted" << endl;
-                return 0;
-            }
-            else
-            {
-                s.pop();
-            }
+            s.push('1');
+        }
+        else if (str[i] == '0' && s.peek() == '1')
+        {
+            s.pop();
+        }
+        else if (str[i] == '1' && s.peek() == '0')
+        {
+            s.pop();
         }
         else
         {
-            cout << "Not accepted" << endl;
+            cout << "Not Accepted" << endl;
             return 0;
         }
         i++;
@@ -76,7 +73,7 @@ int main()
     }
     else
     {
-        cout << "Not accepted" << endl;
+        cout << "No Accepted" << endl;
     }
     return 0;
 }
