@@ -14,7 +14,7 @@ adj_list = {
 
 visited = []
 queue = []
-top = []
+traverseOp = []
 
 def bfs(visited, adj_list, start_node):
     visited.append(start_node)
