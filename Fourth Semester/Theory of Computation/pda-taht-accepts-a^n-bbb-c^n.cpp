@@ -46,7 +46,6 @@ int main()
         }
         else if (str[i] == 'b')
         {
-            cout << countB << endl;
             if (s.isEmpty() || s.peek() != 'a')
             {
                 cout << "Not Accepted" << endl;
