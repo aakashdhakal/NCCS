@@ -1,4 +1,3 @@
-//not completed
 #include <iostream>
 #include <string>
 using namespace std;
@@ -25,15 +24,10 @@ public:
     {
         return top == -1;
     }
-    char peek(){
+    char peek()
+    {
         return arr[top];
     }
-    void printStack()
-    {
-    	    for(i=0;i<=arr.length;i++){
-    	cout <<arr[i]<<endl;
-	}
-	}
 };
 
 int main()
@@ -42,28 +36,45 @@ int main()
     cout << "Enter the string: ";
     cin >> str;
     Stack s;
-    int count = 0;
     int i = 0;
-    while(str[i] != '\0'){
-        if(str[i] == 'a'){
+    int countB = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] == 'a')
+        {
             s.push(str[i]);
         }
-        else if(str[i] == 'b'  && count < 3 ){
-        	s.push(str[i]);
-        	count++;
-		}
-        else if(str[i] == 'c'){
-        	if(s.peek() == 'a'){
-        		s.pop();
-			}else{
-				cout<<"Not Accepted"<<endl;
-				return 0 ;
-			}
-		}
+        else if (str[i] == 'b')
+        {
+            cout << countB << endl;
+            if (s.isEmpty() || s.peek() != 'a')
+            {
+                cout << "Not Accepted" << endl;
+                return 0;
+            }
+            else if (countB < 3)
+            {
+                countB++;
+            }
+            else
+            {
+                cout << "Not Accepted" << endl;
+                return 0;
+            }
+        }
+        else if (str[i] == 'c')
+        {
+            if (s.isEmpty() || s.peek() != 'a')
+            {
+                cout << "Not Accepted" << endl;
+                return 0;
+            }
+            else
+                s.pop();
+        }
         i++;
     }
-s.printStack();
- if (s.isEmpty())
+    if (s.isEmpty())
     {
         cout << "Accepted" << endl;
     }
