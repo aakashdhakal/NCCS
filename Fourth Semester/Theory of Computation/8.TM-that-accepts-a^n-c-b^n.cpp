@@ -1,4 +1,3 @@
-//code is not working need to debug
 #include <iostream>
 using namespace std;
 
@@ -21,10 +20,8 @@ int main()
     cout << "Enter a string: ";
     cin >> A;
     A += "B"; // Add a blank symbol to the end of the string
-    while (A[head] != 'B')
+    do
     {
-        cout << A[head] << endl;
-        cout << string(head, ' ') << "^" << endl;
         if (state == 0 && A[head] == 'a')
         {
             A[head] = 'X';
@@ -45,8 +42,13 @@ int main()
         else if (state == 2 && A[head] == 'b')
         {
             A[head] = 'Y';
-            right();
+            left();
             state = 3;
+        }
+        else if (state == 2 && A[head] == 'Y')
+        {
+            right();
+            state = 2;
         }
 
         else if (state == 3 && (A[head] == 'Y' || A[head] == 'c' || A[head] == 'a'))
@@ -71,14 +73,18 @@ int main()
         }
         else if (state == 4 && A[head] == 'B')
         {
+            state = 5;
             break;
         }
         else
         {
-            cout << "String rejected fuck" << endl;
+            cout << "String rejected " << endl;
             return 0;
         }
+    } while (true);
+    if (state == 5)
+    {
+        cout << "String Accepted" << endl;
     }
-    cout << "String accepted" << endl;
     return 0;
 }
