@@ -1,0 +1,13 @@
+ipconfig
+ipconfig/all
+nslookup
+ping -url-
+tracert
+getmac
+netstat
+arp -a
+route
+hostname
+nbtstat
+systeminfo
+tasklist
