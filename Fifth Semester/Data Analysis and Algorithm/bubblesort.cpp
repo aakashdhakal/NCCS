@@ -1,48 +1,55 @@
-#include <iostream>
+#include<iostream>
 using namespace std;
+int count = 0;
 
-void bubbleSort(int number[], int n, int& steps)
+void BubbleSort(int A[],int n)
 {
-    int i, j, temp;
-    for (i = 0; i < n - 1; i++)
+    for(int i=0;i<n;i++)
     {
-        for (j = 0; j < n - 1 - i; j++)
+        for(int j=0;j<n-1;j++)
         {
-            steps++; // Incrementing the steps count for comparison
-            if (number[j] > number[j + 1])
+            if(A[j]>A[j+1])
             {
-                steps++; // Incrementing the steps count for swap
-                temp = number[j];
-                number[j] = number[j + 1];
-                number[j + 1] = temp;
+                int t= A[j];
+                A[j]=A[j+1];
+                A[j+1]=t;
+                
             }
+            
+            count =count+8;
+            
         }
-    }
-    cout << "The numbers after sorting: ";
-    for (i = 0; i < n; i++)
-    {
-        cout << number[i] << "\t";
-    }
+        count = count+4;
+    }    
 }
 
 int main()
 {
-    int n, steps = 0;
-    cout << "Enter the total no. of elements: ";
-    cin >> n;
-    int numbers[n], i;
-    cout << "Enter " << n << " numbers: ";
-    for (i = 0; i < n; i++)
-    {
-        cin >> numbers[i];
-    }
-    cout << "The numbers before sorting: ";
-    for (i = 0; i < n; i++)
-    {
-        cout << numbers[i] << "\t";
-    }
-    cout << endl;
-    bubbleSort(numbers, n, steps);
-    cout << "\nTotal steps: " << steps << endl;
-    return 0;
+    
+int a[9] = {100,22,12,45,809,130,170,10,200};
+//int a[9] = {1,2,3,4,5,6,7,8,9};
+
+
+cout<<"Before sorting: \n";
+   for(int i=0 ;i<9 ;i++)
+        {
+    cout<<a[i]<<"\t" ;
+    
+    
+        }
+        
+    cout<<endl;
+    
+BubbleSort(a,9);
+
+cout<<"After sorting: \n";
+ for(int i=0 ;i<9 ;i++)
+        {
+    cout<<a[i]<<"\t" ;
+        }
+cout<<endl;        
+cout<<"No. of Steps required : "<<count;        
+        
+return 0;
+
 }
