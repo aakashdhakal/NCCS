@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab-11</title>
+    <style>
+        #layout{
+            display: grid;
+            grid-template-areas:
+            'logo logo'
+            'navigation navigation'
+            'header header'
+            'body sidebar'
+            'footer footer' 
+            ;
+            height: 100vh;
+            margin: auto;
+            grid-template-columns: 1fr 0.3fr;
+        }
+        div{
+            border: 1px solid black;
+        }
+        .logo{
+            grid-area: logo;
+        }
+        .navigation{
+            grid-area: navigation;
+        }
+        .header-banner{
+            grid-area: header;
+        }
+        .body-area{
+            grid-area: body;
+        }
+        .sidebar{
+            grid-area: sidebar;
+        }
+        .footer{
+            grid-area: footer;
+        }
+     
+    </style>
+</head>
+<body>
+<section id="layout">
+<div class="logo">Logo</div>
+<div class="navigation">Navigation</div>
+<div class="header-banner">Header banner</div>
+<div class="body-area">Body Area</div>
+<div class="sidebar">Sidebar</div>
+<div class="footer">Footer</div>
+</section>
+</body>
+</html>
