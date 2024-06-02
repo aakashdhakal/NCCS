@@ -1,22 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
-</head>
-<body>
-    <form action="">
-    Full Name: <input type="text" name="" id=""><br>
-    Date of Birth: <input type="date" name="" id=""><br>
-    Phone: <input type="number" name="" id=""><br>
-    Email: <input type="email" name="" id=""><br>
-    Gender: <input type="radio" name="gender" id="">Male
-            <input type="radio" name="gender" id="">Female
-            <input type="radio" name="gender" id="">Other<br>
-    Local Address: <input type="text" name="" id="">
-    Residential Address: <input type="text" name="" id="">
-    Last School
-    </form>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Registration Form</title>
+	</head>
+	<body>
+		<form action="">
+			Full Name: <input type="text" name="" id="" /><br />
+			Date of Birth: <input type="date" name="" id="" /><br />
+			Phone: <input type="number" name="" id="" /><br />
+			Email: <input type="email" name="" id="" /><br />
+			Gender: <input type="radio" name="gender" id="" />Male
+			<input type="radio" name="gender" id="" />Female
+			<input type="radio" name="gender" id="" />Other<br />
+			Last School/College: <input type="text" name="" id="" /><br />
+			Course: <input type="radio" name="course" id="" />BSc.CSIT
+			<input type="radio" name="course" id="" />BCA
+			<input type="radio" name="course" id="" />BBM<br />
+			<table>
+				<tr>
+					<th>Local Address</th>
+					<th>Permanent Address</th>
+				</tr>
+				<tr>
+					<td>
+						<textarea
+							name=""
+							id=""
+							cols="30"
+							rows="3"
+							style="resize: none"></textarea>
+					</td>
+					<td>
+						<textarea
+							name=""
+							id=""
+							cols="30"
+							rows="3"
+							style="resize: none"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<th>Student's Signature</th>
+					<th>Campus's Signature</th>
+				</tr>
+				<tr>
+					<td><hr style="border: 1px dashed; width: 70%" /></td>
+					<td><hr style="border: 1px dashed; width: 70%" /></td>
+				</tr>
+			</table>
+
+			<input type="submit" value="Submit" />
+			<input type="reset" name="" id="" />
+		</form>
+	</body>
 </html>
