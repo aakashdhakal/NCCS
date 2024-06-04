@@ -1,0 +1,16 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Run C/C++",
+			"request": "launch",
+			"type": "cppvsdbg",
+			"program": "${fileDirname}/${fileBasenameNoExtension}.exe",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}",
+			"console": "externalTerminal",
+			"preLaunchTask": "C/C++: gcc.exe build active file"
+		}
+	]
+}
