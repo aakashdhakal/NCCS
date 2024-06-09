@@ -1,0 +1,66 @@
+<!-- Write CSS code to illustrate position properties.-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Lab 12</title>
+	</head>
+
+	<body>
+		<div class="fixed">Fixed position</div>
+		<div class="static">Static position</div>
+		<div class="relative">
+			Relative position
+			<div class="absolute">Absolute position</div>
+		</div>
+		<div class="sticky">Sticky position</div>
+
+		<style>
+			body {
+				height: 120vh;
+				margin-top: 70px;
+			}
+
+			div {
+				border-radius: 30px;
+			}
+
+			.fixed {
+				background-color: red;
+				padding: 15px;
+				position: fixed;
+				right: 15px;
+				top: 10px;
+				z-index: 1;
+			}
+
+			.static {
+				position: static;
+				background-color: rgb(130, 130, 236);
+				padding: 5px;
+				margin-bottom: 10px;
+			}
+
+			.relative {
+				position: relative;
+				padding: 50px;
+				background-color: aquamarine;
+				margin-bottom: 10px;
+			}
+
+			.absolute {
+				position: absolute;
+				background-color: rgb(185, 169, 255);
+				padding: 15px;
+				right: 40%;
+				top: 10px;
+			}
+
+			.sticky {
+				position: sticky;
+				top: 0;
+				background-color: yellow;
+				padding: 20px;
+			}
+		</style>
+	</body>
+</html>
