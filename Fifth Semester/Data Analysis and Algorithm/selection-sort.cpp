@@ -1,57 +1,65 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 int count = 0;
 
-void SelectionSort(int A[],int n)
+void SelectionSort(int A[], int n)
 {
-    for(int i=0;i<n;i++)
+    for (int i = 0; i < n; i++)
     {
-        int least =A[i];
-        int loc =i;
-        
-        for(int j=i+1;j<n;j++)
+        int least = A[i];
+        int loc = i;
+
+        for (int j = i + 1; j < n; j++)
         {
-            if(A[j]<least)
+            if (A[j] < least)
             {
                 least = A[j];
-                loc =j;                
+                loc = j;
             }
-            
-            count =count+6;
-            
+
+            count = count + 6;
         }
-        A[loc] = A[i];
-        A[i] =least;
-        count = count+8;
-    }    
+        // Swap the elements
+        int temp = A[i];
+        A[i] = A[loc];
+        A[loc] = temp;
+
+        count = count + 8;
+    }
 }
 
 int main()
 {
-    
-int a[] = {100,200,22,12,45,809,130,170,10,200};
+    int n;
+    cout << "Enter the number of elements: ";
+    cin >> n;
+    int a[n]; // Create an array of size n
 
+    cout << "Enter " << n << " elements: ";
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
 
-int n= sizeof(a)/sizeof(int);
+    cout << endl
+         << "Before sorting: ";
+    for (int i = 0; i < n; i++)
+    {
+        cout << a[i] << "  ";
+    }
+    cout << endl;
 
-cout<<"Before sorting: \n";
-   for(int i=0 ;i<n ;i++)
-        {
-    cout<<a[i]<<"\t" ;    
-        }
-        
-    cout<<endl;
-    
-SelectionSort(a,n);
+    SelectionSort(a, n);
 
-cout<<"After sorting: \n";
- for(int i=0 ;i<n ;i++)
-        {
-    cout<<a[i]<<"\t" ;
-        }
-cout<<endl;        
-cout<<"No. of Steps required for "<<n<<" is "<<count;        
-        
-return 0;
+    cout << endl
+         << "After sorting: ";
+    for (int i = 0; i < n; i++)
+    {
+        cout << a[i] << "  ";
+    }
+    cout << endl
+         << endl;
+    cout << "No. of Steps required for " << n << " datas is " << count << endl;
 
+    return 0;
 }

@@ -1,47 +1,56 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
-int count =0;
+int count = 0;
 
-void InsertionSort(int A[],int n)
+void InsertionSort(int A[], int n)
 {
-    int key;
-    int j;
-    for(int i=1;i<=n-1;i++)
+    for (int i = 1; i < n; i++)
     {
-        key =A[i];
-    
-        for(j=i-1;A[j]>key && j>=0;j--)
+        int key = A[i];
+        int j = i - 1;
+
+        while (j >= 0 && A[j] > key)
         {
-            A[j+1] =A[j];
+            A[j + 1] = A[j];
+            j = j - 1;
             count += 7;
         }
-        A[j+1] = key;
-            count += 7;
+        A[j + 1] = key;
+        count += 7;
     }
-
 }
-
 
 int main()
 {
-    int a[] = {12,13,25,10,5,29,30,100,8,2};
-    int n = sizeof(a)/sizeof(int);
-    
-    cout<<"Before sorting :\n";
-    for(int i =0 ;i<n;i++)
+    int n;
+    cout << "Enter the number of elements: ";
+    cin >> n;
+    int a[n]; // Create an array of size n
+
+    cout << endl
+         << "Enter " << n << " elements: ";
+    for (int i = 0; i < n; i++)
     {
-        cout<<a[i]<< "\t";
-        
+        cin >> a[i];
     }
-     InsertionSort(a,n);
-    
-    cout<<"\nAfter sorting :\n";
-    for(int i =0 ;i<n;i++)
+
+    cout << endl
+         << "Before sorting : ";
+    for (int i = 0; i < n; i++)
     {
-        cout<<a[i]<< "\t";
-        
+        cout << a[i] << "  ";
     }
-    
-    cout<<"\nRequired Number of steps for "<<n << "sized Data: "<<count;
+    cout << endl;
+
+    InsertionSort(a, n);
+
+    cout << "\nAfter sorting : ";
+    for (int i = 0; i < n; i++)
+    {
+        cout << a[i] << "  ";
+    }
+    cout << endl;
+
+    cout << "\nNo. of Steps required for " << n << " datas is " << count << endl;
     return 0;
 }

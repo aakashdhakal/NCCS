@@ -1,30 +1,79 @@
 #include <iostream>
 #include <string>
+
 using namespace std;
 
-string xor_encrypt_decrypt(const string &input, const string &key)
+string stringEncryption(string text, string key)
 {
-    string output = input;
+    string cipherText = "";
+    int cipher[key.length()];
 
-    for (size_t i = 0; i < input.size(); i++)
+    for (int i = 0; i < key.length(); i++)
     {
-        output[i] = input[i] ^ key[i % key.size()];
+        cipher[i] = text.at(i) - 'A' + key.at(i) - 'A';
     }
 
-    return output;
+    for (int i = 0; i < key.length(); i++)
+    {
+        if (cipher[i] > 25)
+        {
+            cipher[i] = cipher[i] - 26;
+        }
+    }
+
+    for (int i = 0; i < key.length(); i++)
+    {
+        int x = cipher[i] + 'A';
+        cipherText += (char)x;
+    }
+
+    return cipherText;
+}
+
+static string stringDecryption(string s, string key)
+{
+    string plainText = "";
+    int plain[key.length()];
+
+    for (int i = 0; i < key.length(); i++)
+    {
+        plain[i] = s.at(i) - 'A' - (key.at(i) - 'A');
+    }
+
+    for (int i = 0; i < key.length(); i++)
+    {
+        if (plain[i] < 0)
+        {
+            plain[i] = plain[i] + 26;
+        }
+    }
+
+    for (int i = 0; i < key.length(); i++)
+    {
+        int x = plain[i] + 'A';
+        plainText += (char)x;
+    }
+
+    return plainText;
 }
 
 int main()
 {
-    string message = "Hello, World!";
-    string key = "SECRETKEY";
+    string plainText = "Hello";
+    string key = "MONEY";
 
-    string encrypted = xor_encrypt_decrypt(message, key);
-    string decrypted = xor_encrypt_decrypt(encrypted, key);
+    for (int i = 0; i < plainText.length(); i++)
+    {
+        plainText[i] = toupper(plainText[i]);
+    }
+    for (int i = 0; i < key.length(); i++)
+    {
+        key[i] = toupper(key[i]);
+    }
+    string encryptedText = stringEncryption(plainText, key);
 
-    cout << "Original message: " << message << endl;
-    cout << "Encrypted message: " << encrypted << endl;
-    cout << "Decrypted message: " << decrypted << endl;
+    cout << "Cipher Text - " << encryptedText << endl;
+    cout << "Message - " << stringDecryption(encryptedText, key);
 
     return 0;
 }
