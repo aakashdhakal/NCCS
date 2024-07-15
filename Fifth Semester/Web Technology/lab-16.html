@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab 16</title>
+</head>
+<body>
+    Enter an index (0-4): <input type="number" class="index"><br><br>
+    <button onclick="stringOperation()">Confirm</button>
+    <p class="result1"></p>
+    <p class="result2"></p>
+    <p class="result3"></p>
+    <p class="result4"></p>
+    <p class="date"></p>
+    <script>
+        let name=['Aakash','AmarDeep','Umang','manish','bharad']
+        function stringOperation(){
+            let index=document.querySelector('.index').value
+            if(index>4){
+                document.querySelector('.result1').innerHTML='Error in index';
+                document.querySelector('.date').innerHTML=Date();
+            }
+            else{
+                let len=name[index].length
+                let upperCase=name[index].toUpperCase();
+                let lowerCase=name[index].toLowerCase();
+                document.querySelector('.result1').innerHTML=name[index];
+                document.querySelector('.result2').innerHTML=`The length of the string is ${len}`;
+                document.querySelector('.result3').innerHTML=`The string in uppercase is ${upperCase}`;
+                document.querySelector('.result4').innerHTML=`The string in lowercase is ${lowerCase}`;
+                document.querySelector('.date').innerHTML=Date();
+            }
+        }
+    </script>
+</body>
+</html>
