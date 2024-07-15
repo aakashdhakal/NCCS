@@ -7,37 +7,24 @@
     <style>
         #layout{
             display: grid;
-            grid-template-areas:
-            'logo logo'
-            'navigation navigation'
-            'header header'
-            'body sidebar'
-            'footer footer' 
-            ;
-            height: 100vh;
-            margin: auto;
-            grid-template-columns: 1fr 0.3fr;
+            grid-template-rows: 1fr 1fr 1fr 3fr 1fr;
+            grid-template-columns: 1fr;
+            gap: 6px;
+            padding: 15px;
+            border: solid 1px;
+            height: 500px;
         }
-        div{
-            border: 1px solid black;
+        .logo, .navigation, .header-banner, .body-area, .sidebar, .footer{
+            background-color: rgb(192, 192, 192);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
         }
-        .logo{
-            grid-area: logo;
-        }
-        .navigation{
-            grid-area: navigation;
-        }
-        .header-banner{
-            grid-area: header;
-        }
-        .body-area{
-            grid-area: body;
-        }
-        .sidebar{
-            grid-area: sidebar;
-        }
-        .footer{
-            grid-area: footer;
+        .sidebar-body-container{
+           display: grid;
+           grid-template-columns: 1fr 0.3fr;
+            gap: 6px;
         }
      
     </style>
@@ -47,8 +34,10 @@
 <div class="logo">Logo</div>
 <div class="navigation">Navigation</div>
 <div class="header-banner">Header banner</div>
-<div class="body-area">Body Area</div>
-<div class="sidebar">Sidebar</div>
+<div class="sidebar-body-container">
+    <div class="body-area">Body Area</div>
+    <div class="sidebar">Sidebar</div>
+</div>
 <div class="footer">Footer</div>
 </section>
 </body>
