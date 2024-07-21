@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Students>
+    <Student>
+        <Id>1</Id>
+        <Name>Aakash</Name>
+        <Age>21</Age>
+        <Gender>Male</Gender>
+        <Address>Gothatar</Address>
+        <Courses>CSIT</Courses>
+    </Student>
+    <Student>
+        <Id>2</Id>
+        <Name>Aarati</Name>
+        <Age>22</Age>
+        <Gender>Female</Gender>
+        <Address>Gauradaha</Address>
+        <Courses>MBBBS</Courses>
+    </Student>
+</Students>

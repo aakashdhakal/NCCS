@@ -1,0 +1,91 @@
+<!-- 
+ a. Design employee registration form and validate it through javascript.
+ b. Write about JQuery and illustrate the example of mouse event and keyboard/key press event.
+ c. WAP to Animating/effect text element using JQuery.
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lab 17</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <form name="myForm">
+        <fieldset>
+            <legend>Employee Registration form</legend>
+            <table>
+                <tr>
+                    <th>User Name:</th>
+                    <td><input type="text" name="name" /></td>
+                </tr>
+                <tr>
+                    <th>DoB:</th>
+                    <td><input type="date" name="dob" /></td>
+                </tr>
+                <tr>
+                    <th>Phone:</th>
+                    <td><input type="number" name="phone" /></td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td><input type="email" name="email" /></td>
+                </tr>
+                <tr>
+                    <th>Gender:</th>
+                    <td>
+                        <input type="radio" name="gender" /> Male
+                        <input type="radio" name="gender" /> Female
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" id="submit" onclick="validateForm();" />
+            <input type="reset" id="reset" />
+        </fieldset>
+    </form>
+    <br />
+
+    <h2>
+        <u>JQuery</u>
+        <h5>(Press JQuery to show text.)</h5>
+    </h2>
+
+    <p>
+        jQuery is a lightweight, "write less, do more", JS library.The purpose of
+        jQuery is to make it much easier to use JS on your website.
+    </p>
+    <input id="inputText" placeholder="Enter text" />
+
+    <script>
+        function validateForm() {
+            let data = ["name", "dob", "phone", "email", "gender"];
+            for (let i = 0; i < data.length; i++) {
+                if (document.forms["myForm"][data[i]].value == "") {
+                    alert(data[i] + " must be filled out");
+                    return false;
+                }
+            }
+        }
+
+        $("#LearnMore").click(() => {
+            location.href = "https://jquery.com/";
+        });
+        $("#inputText").on("keypress", () => {
+            alert("Handler for `keypress` called.");
+        });
+
+        $("p").hide();
+        $("h2").click(() => {
+            $("p").show();
+            $("p").animate({
+                left: "250px",
+                width: "350px",
+            });
+        });
+
+        //animate
+    </script>
+</body>
+
+</html>

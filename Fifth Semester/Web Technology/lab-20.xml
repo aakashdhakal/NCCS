@@ -1,0 +1,18 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<Employees>
+    <Employee id="1">
+        <FirstName>Aakash</FirstName>
+        <LastName>Dhakal</LastName>
+        <Email>contact@aakashdhakal.com.np</Email>
+        <Department>Finance</Department>
+        <Position>Accountant</Position>
+    </Employee>
+    <Employee id="2">
+        <FirstName>Amardeep</FirstName>
+        <LastName>Limbu</LastName>
+        <Email>crocmaster@gmail.com</Email>
+        <Department>IT</Department>
+        <Position>Developer</Position>
+    </Employee>
+    <!-- Add more employee entries here -->
+</Employees>
