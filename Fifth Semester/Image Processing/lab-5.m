@@ -4,7 +4,7 @@ clc;
 
 pkg load image;
 
-i=imread("Batman.jpg");
+i=imread("Batman.png");
 b0=double(bitget(i,1));
 b1=double(bitget(i,2));
 b2=double(bitget(i,3));

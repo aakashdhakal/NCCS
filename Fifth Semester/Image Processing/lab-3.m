@@ -2,7 +2,7 @@ clear all;
 close all;
 clc;
 
-a=imread('penguin.jpg');
+a=imread('Batman.png');
 subplot(2,2,1);
 imshow(a);
 title 'Original Image';
@@ -23,7 +23,7 @@ clear all;
 close all;
 clc;
 
-a=imread('penguin.jpg');
+a=imread('Batman.png');
 subplot(2,2,1);
 imshow(a);
 title 'Original Image';

@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstdlib>
 using namespace std;
 int count = 0;
 
@@ -75,17 +74,17 @@ int main()
     }
 
     cout << "\nBefore sorting: ";
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < n; i++)
     {
         cout << a[i] << "  ";
     }
 
     cout << endl;
 
-    RandQuickSort(a, 0, 8);
+    RandQuickSort(a, 0, n - 1);
 
     cout << "\nAfter sorting: ";
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < n; i++)
     {
         cout << a[i] << "  ";
     }

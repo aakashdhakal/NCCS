@@ -2,7 +2,7 @@ clear all;
 close all;
 clc;
 
-a=imread('penguin.jpg');
+a=imread('Batman.png');
 subplot(2,2,1);
 imshow(a);
 title 'Original Image';
@@ -29,6 +29,6 @@ ga3 = input('Enter the gamma value: ');
 sp2 = (a3*(b.^ga3))*256;
 s3=uint8(sp2);
 subplot(2,2,4);
-imshow(s1);
-title "Image 1";
+imshow(s3);
+title "Image 3";
 
