@@ -13,3 +13,18 @@ confirmBtn.addEventListener("click", function(){
 promptBtn.addEventListener("click", function(){
     prompt("Enter your message")
 })
+
+let displaySum = document.querySelector("#sum");
+let addBtn = document.querySelector("#addBtn");
+
+function sum() {
+    let a = parseInt(document.querySelector("#a").value);
+    let b = parseInt(document.querySelector("#b").value);
+    
+    displaySum.innerHTML = "Sum = "+ (a + b);
+}
+
+addBtn.addEventListener("click", sum);
+
+
+document.querySelector("#name").innerText = "Aakash Dhakal";
