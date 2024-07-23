@@ -45,6 +45,9 @@
     <div class="content">
         <p>Welcome to our organization. We are dedicated to making a difference in the community through our various
             programs and initiatives. Join us in our mission to create positive change.</p>
+
+        <button>Learn More
+        </button>
     </div>
 
     <div class="footer">
@@ -52,9 +55,15 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            alert('Welcome to Our Organization!');
+        const footer = document.querySelector('.footer');
+        const year = new Date().getFullYear();
+        footer.textContent += ` © ${year}`;
+
+        const button = document.querySelector('button');
+        button.addEventListener('click', function () {
+            alert('Thank you for your interest in our organization. We look forward to working with you!');
         });
+
     </script>
 
 </body>
