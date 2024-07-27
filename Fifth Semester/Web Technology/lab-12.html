@@ -15,38 +15,46 @@
     <div class="sticky">Sticky position</div>
 
     <style>
-        body{
+        body {
             height: 150vh;
+            width: 95vw;
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
-        div{
+
+        div {
             width: 100%;
             padding: 1rem;
             background-color: #d3d3d3;
             border: 1px solid black;
             font-size: 1.2rem;
         }
-        .fixed{
+
+        .fixed {
             position: fixed;
-            bottom: 10px; 
+            bottom: 10px;
+            width: 100%;
         }
-        .static{
+
+        .static {
             position: static;
         }
-        .relative{
+
+        .relative {
             position: relative;
             height: 100px;
         }
-        .absolute{
+
+        .absolute {
             position: absolute;
             right: 40%;
-            top:20px;
+            top: 20px;
             width: 60px;
             height: 50px;
         }
-        .sticky{
+
+        .sticky {
             position: sticky;
             top: 10px;
         }

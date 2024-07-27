@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MCQQuestions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="lab-23-b.xsd">
+    <Question id="1">
+        <Text>What is the capital of France?</Text>
+        <Option isCorrect="false">Berlin</Option>
+        <Option isCorrect="false">Madrid</Option>
+        <Option isCorrect="true">Paris</Option>
+        <Option isCorrect="false">Rome</Option>
+    </Question>
+    <Question id="2">
+        <Text>Which planet is known as the Red Planet?</Text>
+        <Option isCorrect="false">Earth</Option>
+        <Option isCorrect="true">Mars</Option>
+        <Option isCorrect="false">Jupiter</Option>
+        <Option isCorrect="false">Saturn</Option>
+    </Question>
+    <!-- Add more questions here -->
+</MCQQuestions>

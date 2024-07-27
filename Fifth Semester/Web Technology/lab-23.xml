@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Students xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="lab-23.xsd">
+    <Student id="1">
+        <FirstName>John</FirstName>
+        <LastName>Doe</LastName>
+        <Email>john.doe@example.com</Email>
+        <Major>Computer Science</Major>
+        <GPA>3.8</GPA>
+    </Student>
+    <Student id="2">
+        <FirstName>Jane</FirstName>
+        <LastName>Smith</LastName>
+        <Email>jane.smith@example.com</Email>
+        <Major>Mathematics</Major>
+        <GPA>3.9</GPA>
+    </Student>
+    <!-- Add more student entries here -->
+</Students>

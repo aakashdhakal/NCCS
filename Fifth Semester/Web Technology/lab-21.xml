@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Books [
+    <!ELEMENT Books (Book+)>
+    <!ELEMENT Book (Title, Author, Genre, Price, PublishDate, Description)>
+    <!ATTLIST Book id ID #REQUIRED>
+    <!ELEMENT Title (#PCDATA)>
+    <!ELEMENT Author (#PCDATA)>
+    <!ELEMENT Genre (#PCDATA)>
+    <!ELEMENT Price (#PCDATA)>
+    <!ELEMENT PublishDate (#PCDATA)>
+    <!ELEMENT Description (#PCDATA)>
+]>
+<Books>
+    <Book id="book1">
+        <Title>The Great Gatsby</Title>
+        <Author>F. Scott Fitzgerald</Author>
+        <Genre>Fiction</Genre>
+        <Price>10.99</Price>
+        <PublishDate>1925-04-10</PublishDate>
+        <Description>A novel set in the Roaring Twenties.</Description>
+    </Book>
+    <Book id="book2">
+        <Title>1984</Title>
+        <Author>George Orwell</Author>
+        <Genre>Dystopian</Genre>
+        <Price>8.99</Price>
+        <PublishDate>1949-06-08</PublishDate>
+        <Description>A novel about a dystopian future society.</Description>
+    </Book>
+    <!-- Add more book entries here -->
+</Books>

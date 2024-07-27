@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Movies [
+    <!ELEMENT Movies (Movie+)>
+    <!ELEMENT Movie (Title, Director, Genre, ReleaseDate, Rating, Description)>
+    <!ATTLIST Movie id CDATA #REQUIRED>
+    <!ELEMENT Title (#PCDATA)>
+    <!ELEMENT Director (#PCDATA)>
+    <!ELEMENT Genre (#PCDATA)>
+    <!ELEMENT ReleaseDate (#PCDATA)>
+    <!ELEMENT Rating (#PCDATA)>
+    <!ELEMENT Description (#PCDATA)>
+]>
+<Movies>
+    <Movie id="1">
+        <Title>Inception</Title>
+        <Director>Christopher Nolan</Director>
+        <Genre>Sci-Fi</Genre>
+        <ReleaseDate>2010-07-16</ReleaseDate>
+        <Rating>8.8</Rating>
+        <Description>A thief who steals corporate secrets through the use of dream-sharing
+            technology.</Description>
+    </Movie>
+    <Movie id="2">
+        <Title>The Shawshank Redemption</Title>
+        <Director>Frank Darabont</Director>
+        <Genre>Drama</Genre>
+        <ReleaseDate>1994-09-23</ReleaseDate>
+        <Rating>9.3</Rating>
+        <Description>Two imprisoned men bond over a number of years, finding solace and eventual
+            redemption through acts of common decency.</Description>
+    </Movie>
+    <!-- Add more movie entries here -->
+</Movies>
