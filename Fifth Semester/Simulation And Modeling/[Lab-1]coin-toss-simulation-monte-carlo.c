@@ -6,7 +6,7 @@ int main()
     int head = 0, tail = 0, itr;
     double r;
     srand(time(NULL));
-    printf("Enter number of iterations\n");
+    printf("Enter number of iterations: ");
     scanf("%d", &itr);
     for (int i = 1; i <= itr; i++)
     {
@@ -19,7 +19,7 @@ int main()
     printf("Head=  %d\n", head);
     printf("Tail = %d\n", tail);
     if (head > tail)
-        printf("Head wins by %d", head - tail);
+        printf("Head wins by %d\n", head - tail);
     else
-        printf("Tail wins by %d", tail - head);
+        printf("Tail wins by %d\n", tail - head);
 }
