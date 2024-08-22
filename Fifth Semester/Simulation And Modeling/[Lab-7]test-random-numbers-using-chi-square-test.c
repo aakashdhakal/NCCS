@@ -60,10 +60,7 @@ int main()
     }
     printf("s =  %0.2f\n", s);
     printf("Alpha at  5%% level of significance for n=9 is %0.2f\n", alpha);
-    if (s <= alpha)
-        printf("Accepted");
-    else
-        printf("Rejected");
+    printf("%s\n", (s <= alpha) ? "Accepted" : "Rejected");
 }
 void sort(float x[])
 {

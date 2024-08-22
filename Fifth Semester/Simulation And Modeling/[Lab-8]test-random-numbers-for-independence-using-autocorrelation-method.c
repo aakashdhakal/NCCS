@@ -19,10 +19,6 @@ int main()
     r35 = sqrt(13 * M + 7) / (12 * (M + 1));
 
     z0 = r35 / s35;
-    if (z0 <= 1.96)
-        printf("The null hypothesis that numbers are independent is accepted\n");
-    else
-
-        printf("The null hypothesis that numbers are independent is not accepted\n");
+    printf("The null hypothesis that numbers are independent is %s\n", (z0 <= 1.96) ? "accepted" : "not accepted");
     return 0;
 }

@@ -1,3 +1,5 @@
+A machine tool in a manufacturing shop is turning out parts at the rate of one every 5 minutes. As they are finished, the parts go to an inspector, who take 4+-3 minutes to examine each one and rejects about 10 % of the parts. Each part will be represented by one transaction and the time unit selected for the problem will be 1 minute
+
 GENERATE 5
 ADVANCE 4,3
 TRANSFER 0.1, ACC,REJ

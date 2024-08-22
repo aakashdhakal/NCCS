@@ -8,7 +8,7 @@ int main()
     float x, iat, st, awt, pcu, wt = 0, it = 0;
     float mean = 10.0, sd = 1.5, mue = 9.5, sigma = 1.0;
     float sb = 0.0, se = 0.0, cit = 0, cat = 0, cwt = 0;
-    printf("\nIAT     CAT     SB     ST     SE     CWT     CIT");
+    printf("\n  IAT         CAT       SB         ST         SE         CWT       CIT");
 
     for (j = 1; j <= run; ++j)
     {
@@ -40,10 +40,10 @@ int main()
         }
         st = mue + sigma * (sum - 6.0);
         se = sb + st;
-        printf("\n %5.2f %6.2f %6.2f %6.2f %6.2f %6.2f %6.2f", iat, cat, sb, st, se, cwt, cit);
+        printf("\n %5.2f     %6.2f     %6.2f     %6.2f     %6.2f     %6.2f     %6.2f", iat, cat, sb, st, se, cwt, cit);
     }
     awt = cwt / run;
     pcu = ((cat - cit) * 100.0) / cat;
-    printf("\n Average waiting time =  %6.2f", awt);
-    printf("\nPercentage capacity untilization =  %6.2f", pcu);
+    printf("\n\nAverage waiting time =  %6.2f", awt);
+    printf("\nPercentage capacity untilization =  %6.2f\n", pcu);
 }
