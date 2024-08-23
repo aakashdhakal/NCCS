@@ -4,7 +4,7 @@ clc;
 
 pkg load image;
 
-i=imread("Batman.jpg");
+i=imread("Batman.png");
 subplot(4,2,1);imshow(i);title("Original Image");
 g = rgb2gray(i);
 subplot(4,2,5);imshow(i);title("Gray Image");

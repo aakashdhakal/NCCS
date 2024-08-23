@@ -4,7 +4,7 @@ clc;
 
 pkg load image;
 
-i=imread("Batman.jpg");
+i=imread("Batman.png");
 i = i(:,:,1); subplot(2,2,1); imshow(i); title("Original Image");
 a = [0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 ];
 R = conv2(a,i);

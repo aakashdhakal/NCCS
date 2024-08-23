@@ -1,0 +1,14 @@
+clear all;
+close all;
+clc;
+pkg load image;
+i=imread('Batman.png');
+k=rgb2gray(i);
+j=imnoise(k,'salt & pepper',0.05);
+f=medfilt2(j,[3,3]);
+f1=medfilt2(j,[10,10]);
+subplot(3,2,1); imshow(i);title('Original Image');
+subplot(3,2,2); imshow(k);title('Gray Image');
+subplot(3,2,3); imshow(j);title('Noise added Image');
+subplot(3,2,4); imshow(f);title('3*3 Image');
+subplot(3,2,5); imshow(f1);title('10*10 Image');
