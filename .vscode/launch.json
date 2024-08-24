@@ -11,13 +11,6 @@
 			"cwd": "${workspaceFolder}",
 			"console": "externalTerminal",
 			"preLaunchTask": "C/C++: gcc.exe build active file"
-		},
-		{
-			"type": "octave",
-			"request": "launch",
-			"name": "Octave Debug Adapter(preview)",
-			"exec": "octave-cli",
-			"program": "${command:AskForProgramName}"
 		}
 	]
 }
