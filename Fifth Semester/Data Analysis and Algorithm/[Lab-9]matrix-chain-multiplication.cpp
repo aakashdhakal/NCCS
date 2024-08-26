@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 int c = 0;
 
@@ -40,5 +40,5 @@ int main() {
   int size = 5;
   cout << "Minimum no. of multiplication sign used : "
        << MatrixChainOrder(arr, size) << endl;
-  cout << "No. of step Required : " << c;
+  cout << "No. of step Required : " << c << endl;
 }

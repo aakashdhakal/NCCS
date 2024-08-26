@@ -1,5 +1,4 @@
 #include <iostream>
-#include <limits.h>
 using namespace std;
 
 #define V 9
@@ -17,7 +16,7 @@ int minDistance(int dist[], bool sptSet[]) {
 void printSolution(int dist[]) {
   cout << "Vertex \t Distance from Source\n";
   for (int i = 0; i < V; i++)
-    cout << i << " \t\t\t\t" << dist[i] << endl;
+    cout << i << " \t\t" << dist[i] << endl;
 }
 
 void dijkstra(int graph[V][V], int src) {

@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <iostream>
+#include <vector>
 using namespace std;
 
 typedef pair<int, int> iPair;
@@ -98,7 +100,7 @@ int main() {
   cout << "Edges of MST are \n";
   int mst_wt = g.kruskalMST();
 
-  cout << "\nWeight of MST is " << mst_wt;
+  cout << "\nWeight of MST is " << mst_wt << endl;
 
   return 0;
 }

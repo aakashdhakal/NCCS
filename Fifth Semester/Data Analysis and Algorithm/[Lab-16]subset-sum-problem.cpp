@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 #define ARRAYSIZE(a) (sizeof(a)) / (sizeof(a[0]))
@@ -71,6 +71,6 @@ int main() {
   int target = 53;
   int size = ARRAYSIZE(weights);
   generateSubsets(weights, size, target);
-  cout << "Nodes generated " << total_nodes;
+  cout << "Nodes generated " << total_nodes << endl;
   return 0;
 }
