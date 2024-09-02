@@ -12,7 +12,7 @@ if (!$conn) {
 }
 
 // Create database
-$sql = "CREATE DATABASE Test";
+$sql = "CREATE DATABASE webTechLab";
 if (mysqli_query($conn, $sql) === TRUE) {
     echo "Database created successfully";
 } else {
