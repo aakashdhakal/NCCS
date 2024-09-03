@@ -21,4 +21,18 @@ if (mysqli_query($conn, $sql) === TRUE) {
 
 // Close connection
 mysqli_close($conn);
+
+
+$firstName = "Aakash";
+$lastName = "Dhakal";
+
+//string operations
+echo "Concatenation: " . $firstName . " " . $lastName . "<br>";
+echo "Length of firstName: " . strlen($firstName) . "<br>";
+echo "Length of lastName: " . strlen($lastName) . "<br>";
+echo "Substring: " . substr($firstName, 0, 3) . "<br>";
+echo "Position of 'k' in firstName: " . strpos($firstName, 'k') . "<br>";
+echo "Uppercase: " . strtoupper($firstName) . "<br>";
+echo "Lowercase: " . strtolower($lastName) . "<br>";
+echo "Replace: " . str_replace("Dhakal", "D", $lastName) . "<br>";
 ?>
