@@ -11,6 +11,17 @@
 			"cwd": "${workspaceFolder}",
 			"console": "externalTerminal",
 			"preLaunchTask": "C/C++: gcc.exe build active file"
+		},
+		{
+			"name": "Run C#",
+			"type": "coreclr",
+			"request": "launch",
+			"program": "${fileDirname}/${fileBasenameNoExtension}.cs",
+			"args": [],
+			"cwd": "${workspaceFolder}",
+			"stopAtEntry": false,
+			"console": "externalTerminal",
+			"preLaunchTask": "C#: build active file"
 		}
 	]
 }
