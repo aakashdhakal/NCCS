@@ -93,5 +93,5 @@
 		"variant": "cpp",
 		"stdio.h": "c"
 	},
-	"dotnet.defaultSolution": "ConsoleApp.sln"
+	"dotnet.defaultSolution": "Practical-1.sln"
 }

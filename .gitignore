@@ -1,3 +1,7 @@
 *.exe
 .fake
 .vscode
+bin
+obj
+*.csproj
+*.sln
