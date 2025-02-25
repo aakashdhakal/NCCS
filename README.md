@@ -33,5 +33,3 @@ If you have any questions or need assistance, please feel free to reach out
 
 Happy coding!
 
-optimize the code in simple way if possible and shorten if possible and write
-comment in each and every line saying what is being done
