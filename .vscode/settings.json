@@ -92,5 +92,6 @@
 		"valarray": "cpp",
 		"variant": "cpp",
 		"stdio.h": "c"
-	}
+	},
+	"dotnet.defaultSolution": "ConsoleApp.sln"
 }

@@ -1,4 +1,4 @@
-# NCCS 
+# NCCS
 
 Welcome to the NCCS Codes! This repository contains all the code files of my
 college practical.
@@ -13,8 +13,8 @@ To get started, follow these steps:
 
 ## Folder Structure
 
-Each semester has its own folder, which contains the code files for the practicals
-
+Each semester has its own folder, which contains the code files for the
+practicals
 
 ## Contributing
 
@@ -32,3 +32,6 @@ guidelines:
 If you have any questions or need assistance, please feel free to reach out
 
 Happy coding!
+
+optimize the code in simple way if possible and shorten if possible and write
+comment in each and every line saying what is being done
