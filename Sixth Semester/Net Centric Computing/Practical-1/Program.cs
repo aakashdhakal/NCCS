@@ -1,2 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using System;
+namespace Practical_1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Create an object of Person class
+            Person person = new Person("John Doe", 25);
+        }
+    }
+}
