@@ -5,3 +5,5 @@ bin
 obj
 *.csproj
 *.sln
+Properties
+*.json
