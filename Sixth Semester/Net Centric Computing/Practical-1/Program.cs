@@ -6,7 +6,9 @@ namespace Practical_1
         static void Main(string[] args)
         {
             // Create an object of Person class
-            Person person = new Person("John Doe", 25);
+            Person person = new("John Doe", 25);
+            Console.WriteLine("Name: " + person.Name);
+            Console.ReadKey();
         }
     }
 }
