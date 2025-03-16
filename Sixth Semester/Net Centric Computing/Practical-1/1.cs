@@ -1,6 +1,6 @@
 using System;
 
-namespace Practical_1
+namespace Question_1
 {
     class Person
     {
@@ -19,7 +19,17 @@ namespace Practical_1
         public void DisplayInfo()
         {
             Console.WriteLine("Name: " + Name);
+            Console.WriteLine("Age: " + Age);
         }
     }
 
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Person person = new Person("Aakash", 22);
+            person.DisplayInfo();
+            Console.ReadKey();
+        }
+    }
 }

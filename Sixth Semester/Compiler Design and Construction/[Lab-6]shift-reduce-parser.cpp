@@ -13,22 +13,24 @@ void check() {
   // Iterate over each production rule
   for (const auto &rule : rules) {
     string left = rule.first; // Left-hand side of the production (Non-terminal)
-    string right =
-        rule.second; // Right-hand side of the production (Replacement)
+    string right = rule.second; // Right-hand side of the production (Replacement)
 
     // Ensure the stack is long enough to apply the rule
     if (strlen(stk) >= right.length() &&
         string(stk).substr(strlen(stk) - right.length()) == right) {
       // Print the reduction action
-      printf("REDUCE TO %s->%s", left.c_str(), right.c_str());
+      cout << "REDUCE TO " << left << "->" << right;
 
       // Update the stack after reduction
-      string new_stack =
-          string(stk).substr(0, strlen(stk) - right.length()) + left;
+      string new_stack = string(stk).substr(0, strlen(stk) - right.length()) + left;
       strcpy(stk, new_stack.c_str());
 
       // Print the current stack and input
-      printf("\n$%s\t%s$\t", stk, a);
+      cout << "\n$" << stk << "\t" << a << "$\t";
+
+      // Recheck after reduction
+      check();
+      break;
     }
   }
 }

@@ -9,8 +9,20 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
-			"console": "newExternalWindow",
-			"preLaunchTask": "C/C++: gcc.exe build active file"
+			"console": "externalTerminal",
+			"preLaunchTask": "C/C++: gcc.exe build active file",
+			"postDebugTask": "waitForUserInput"
+		},
+		{
+			"name": ".NET Core Launch (console)",
+			"type": "coreclr",
+			"request": "launch",
+			"preLaunchTask": "build",
+			"program": "${fileDirname}/bin/Debug/net9.0/${fileDirnameBasename}.dll",
+			"args": ["/k", "dotnet run --project"],
+			"cwd": "${workspaceFolder}",
+			"console": "externalTerminal",
+			"stopAtEntry": false
 		}
 	]
 }

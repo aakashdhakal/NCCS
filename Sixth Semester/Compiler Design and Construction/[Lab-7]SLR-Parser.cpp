@@ -122,24 +122,25 @@ int parse(const string &input) {
 
     // Print action and stack state in table
     if (action == 1 && currentInput == '$') { // Accept condition
-      printf("Accept\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
+      cout << "Accept\n";
       return 1;
     } else if (action > 0) { // Shift condition
-      printf("Shift\t\t%d\t%c\t\t%d\t\t\t\t%s\n", currentState, currentInput,
-             action, getStackString().c_str());
+      cout << "Shift\t\t" << currentState << "\t" << currentInput << "\t\t"
+           << action << "\t\t\t\t" << getStackString() << "\n";
       push(action, currentInput);        // Push new state and symbol
       currentPos++;                      // Move to next input symbol
     } else if (action < 0) {             // Reduce condition
       int productionIndex = -action - 1; // Get production index
       Production &prod = productions[productionIndex]; // Get production
 
-      printf("Reduce\t\t%d\t%c\tby production %d\t\t\t%s\n", currentState,
-             currentInput, productionIndex, getStackString().c_str());
+      cout << "Reduce\t\t" << currentState << "\t" << currentInput
+           << "\tby production " << productionIndex << "\t\t\t"
+           << getStackString() << "\n";
       pop(prod.length); // Pop elements from stack
       int newState = GOTO[parseStack[top].state]
                          [getColumnIndex(prod.nonTerminal)]; // Get new state
-      printf("Goto\t\t\t\t\t\t\t%d\t\t\t\t%s\n", newState,
-             getStackString().c_str());
+      cout << "Goto\t\t\t\t\t\t\t" << newState << "\t\t\t\t" << getStackString()
+           << "\n";
       push(newState, prod.nonTerminal); // Push new state and non-terminal
     } else {                            // Syntax error condition
       cout << "Syntax error at position " << currentPos << endl;
