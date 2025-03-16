@@ -1,5 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="3.aspx.cs" Inherits="project.WebLab" %>
-
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="q3.aspx.cs" Inherits="project.q3" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">

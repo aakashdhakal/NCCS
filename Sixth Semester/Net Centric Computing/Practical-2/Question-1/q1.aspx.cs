@@ -1,8 +1,8 @@
 using System;
 
-namespace Demo
+namespace project
 {
-    public partial class _1 : System.Web.UI.Page
+    public partial class q1 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
