@@ -22,19 +22,19 @@ class Program
         {
             connection.Open();
 
-            // // Create table
-            // string createTableQuery = @"
-            //     CREATE TABLE tbl_registration (
-            //         id INT PRIMARY KEY,
-            //         username NVARCHAR(50),
-            //         password NVARCHAR(50),
-            //         repassword NVARCHAR(50),
-            //         gender NVARCHAR(10),
-            //         course NVARCHAR(50),
-            //         country NVARCHAR(50)
-            //     )";
-            // SqlCommand createTableCmd = new SqlCommand(createTableQuery, connection);
-            // createTableCmd.ExecuteNonQuery();
+            // Create table
+            string createTableQuery = @"
+                CREATE TABLE tbl_registration (
+                    id INT PRIMARY KEY,
+                    username NVARCHAR(50),
+                    password NVARCHAR(50),
+                    repassword NVARCHAR(50),
+                    gender NVARCHAR(10),
+                    course NVARCHAR(50),
+                    country NVARCHAR(50)
+                )";
+            SqlCommand createTableCmd = new SqlCommand(createTableQuery, connection);
+            createTableCmd.ExecuteNonQuery();
 
             // Insert data
             for (int i = 0; i < 5; i++)
