@@ -23,6 +23,39 @@
 			"cwd": "${workspaceFolder}",
 			"console": "externalTerminal",
 			"stopAtEntry": false
+		},
+		{
+			"name": ".NET Core Launch (console)",
+			"type": "coreclr",
+			"request": "launch",
+			"preLaunchTask": "build",
+			"program": "D:\\NCCS\\NCCS-LAB\\Sixth Semester\\Net Centric Computing\\Practical-2\\bin\\Debug\\net48\\Practical-2.exe",
+			"args": [],
+			"cwd": "${workspaceFolder}",
+			"stopAtEntry": false,
+			"console": "externalTerminal"
+		},
+		{
+			"name": "Launch IIS Express",
+			"type": "coreclr",
+			"request": "launch",
+			"program": "C:\\Program Files\\IIS Express\\iisexpress.exe",
+			"args": [
+				"/path:D:\\NCCS\\NCCS-LAB\\Sixth Semester\\Net Centric Computing\\Practical-2",
+				"/port:8080"
+			],
+			"cwd": "D:\\NCCS\\NCCS-LAB\\Sixth Semester\\Net Centric Computing\\Practical-2",
+			"stopAtEntry": false,
+			"serverReadyAction": {
+				"action": "openExternally",
+				"pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+			},
+			"env": {
+				"ASPNETCORE_ENVIRONMENT": "Development"
+			},
+			"sourceFileMap": {
+				"/Views": "${workspaceFolder}/Views"
+			}
 		}
 	]
 }

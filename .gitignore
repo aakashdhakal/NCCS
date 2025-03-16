@@ -7,3 +7,4 @@ obj
 *.sln
 Properties
 *.json
+.vs
