@@ -1,0 +1,52 @@
+﻿@{
+    var name = "Aakash Dhakal";
+    var age = 25;
+    var hobbies = new List<string> { "Reading", "Traveling", "Gaming" };
+    var isStudent = true;
+    var address = new
+    {
+        Street = "123 Main St",
+        City = "Kathmandu",
+        ZipCode = "44600"
+    };
+    var skills = new Dictionary<string, string>
+{
+{ "Programming", "C#, JavaScript" },
+{ "Frameworks", "ASP.NET, React" },
+{ "Databases", "SQL Server, MongoDB" }
+};
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Data in Razor</title>
+</head>
+
+<body>
+    <h1>Basic Razor Syntax</h1>
+    <h4>Name: @name</h4>
+    <p>Age: @age</p>
+    <p>Hobbies:</p>
+    <ul type="disc">
+        @foreach (var hobby in hobbies)
+        {
+            <li>@hobby</li>
+        }
+    </ul>
+    <p>Is Student: @(isStudent ? "Yes" : "No")</p>
+    <h2>Address:</h2>
+    <p>@address.Street, @address.City, @address.ZipCode</p>
+    <h2>Skills:</h2>
+    <ul>
+        @foreach (var skill in skills)
+        {
+            <li>@skill.Key: @skill.Value</li>
+        }
+    </ul>
+</body>
+
+</html>
+

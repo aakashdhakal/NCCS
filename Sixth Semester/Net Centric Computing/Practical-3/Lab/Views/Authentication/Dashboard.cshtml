@@ -1,0 +1,10 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<h2>Welcome, @(User?.Identity?.Name ?? "Guest")!</h2>
+<ul>
+    <li><a href="@Url.Action("AdminPage", "Authentication")">Go to Admin Page</a></li>
+    <li><a href="@Url.Action("EditPage", "Authentication")">Go to Edit Page</a></li>
+    <li><a href="@Url.Action("SpecialPage", "Authentication")">Go to Special Page</a></li>
+    <li><a href="@Url.Action("Logout", "Authentication")">Logout</a></li>
+</ul>

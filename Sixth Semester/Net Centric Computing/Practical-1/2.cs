@@ -22,7 +22,7 @@ namespace Question_2
         {
             return a + b;
         }
-        static void Main(string[] args)
+         void Main(string[] args)
         {
             Console.WriteLine(Add(5, 10));
             Console.WriteLine(Add(5.5, 10.5));

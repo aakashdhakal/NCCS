@@ -1,0 +1,15 @@
+@model Lab.Models.Officer
+<h2>Delete Officer</h2>
+<h3>Are you sure you want to delete this officer?</h3>
+<div>
+    <p><strong>Name:</strong> @Model.Name</p>
+    <p><strong>Gender:</strong> @Model.Gender</p>
+    <p><strong>Phone:</strong> @Model.Phone</p>
+    <p><strong>Department:</strong> @Model.Department</p>
+    <p><strong>Position:</strong> @Model.Position</p>
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

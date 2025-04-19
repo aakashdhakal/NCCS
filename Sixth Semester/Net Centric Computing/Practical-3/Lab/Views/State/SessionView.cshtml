@@ -1,0 +1,11 @@
+@{
+    ViewData["Title"] = "Session Management";
+}
+<h2>Session Data</h2>
+@if (ViewBag.Message != null)
+{
+    <p><strong style="color: green;">@ViewBag.Message</strong></p>
+}
+<p>Stored Session Value: <strong>@ViewBag.User</strong></p>
+<a asp-controller="State" asp-action="SetSession">Set Session</a> |
+<a asp-controller="State" asp-action="GetSession">Get Session</a>

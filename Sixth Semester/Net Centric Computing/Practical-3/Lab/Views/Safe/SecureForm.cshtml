@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "Secure Form";
+}
+<h2>Secure Form</h2>
+<!-- Form to prevent CSRF & XSS -->
+<form method="post" action="/Safe/SecureForm">
+    @Html.AntiForgeryToken() <!-- CSRF Token -->
+    <label>Enter Text:</label>
+    <input type="text" name="userInput" required>
+    <button type="submit">Submit</button>
+</form>
+@if (ViewBag.Message != null)
+{
+    <p style="color: green">@ViewBag.Message</p>
+}
+<hr>
+<!-- Open Redirect Prevention -->
+<h3>Try Unsafe Redirect</h3>
+<form action="/Safe/SafeRedirect" method="get">
+    <input type="text" name="returnUrl" placeholder="Enter redirect URL">
+    <button type="submit">Click to Try Unsafe Redirect</button>
+</form>

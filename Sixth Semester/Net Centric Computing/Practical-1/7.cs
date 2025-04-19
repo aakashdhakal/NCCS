@@ -30,7 +30,7 @@ namespace Question_7
 
     class Program
     {
-        static void Main(string[] args)
+         void Main(string[] args)
         {
             // Single level inheritance
             Car car = new Car();

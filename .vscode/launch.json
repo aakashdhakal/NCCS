@@ -25,7 +25,7 @@
 			"stopAtEntry": false
 		},
 		{
-			"name": ".NET Core Launch (console)",
+			"name": "practical 2",
 			"type": "coreclr",
 			"request": "launch",
 			"preLaunchTask": "build",

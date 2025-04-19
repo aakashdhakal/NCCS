@@ -1,0 +1,38 @@
+@model Lab.Models.Officer
+
+<h2>Add Officer</h2>
+<br /><br />
+<form asp-action="RegisterOfficer" method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div><br /><br />
+
+    <div class="form-group">
+        <label asp-for="Gender"></label><br />
+        <input type="radio" asp-for="Gender" value="Male" /> Male
+        <input type="radio" asp-for="Gender" value="Female" /> Female
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div><br /><br />
+
+    <div class="form-group">
+        <label asp-for="Phone"></label>
+        <input asp-for="Phone" class="form-control" type="tel" /> <!-- Changed to type="tel" -->
+        <span asp-validation-for="Phone" class="text-danger"></span>
+    </div><br /><br />
+
+    <div class="form-group">
+        <label asp-for="Position"></label>
+        <input asp-for="Position" class="form-control" />
+        <span asp-validation-for="Position" class="text-danger"></span>
+    </div><br /><br />
+
+    <div class="form-group">
+        <label asp-for="Department"></label>
+        <input asp-for="Department" class="form-control" />
+        <span asp-validation-for="Department" class="text-danger"></span>
+    </div><br /><br />
+
+    <button type="submit" class="btn btn-primary">Add Officer</button>
+</form>

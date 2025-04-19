@@ -1,3 +1,6 @@
+
+//Write a program to demonstrate multiple inheritance using interface
+
 using System;
 
 namespace Question_10
@@ -27,7 +30,7 @@ namespace Question_10
 
     class Program
     {
-        static void Main(string[] args)
+         void Main(string[] args)
         {
             MultipleInheritance obj = new MultipleInheritance();
             obj.FirstMethod();

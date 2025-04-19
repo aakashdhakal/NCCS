@@ -23,7 +23,7 @@ namespace Question_8
 
     class Program
     {
-        static void Main()
+         void Main()
         {
             Dog myDog = new Dog();
             myDog.MakeSound();

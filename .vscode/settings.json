@@ -93,5 +93,6 @@
 		"variant": "cpp",
 		"stdio.h": "c"
 	},
-	"dotnet.defaultSolution": "Practical-1.sln"
+	"dotnet.defaultSolution": "Practical-1.sln",
+	"dataworkspace.excludedProjects": ["Test/Test.sqlproj"]
 }

@@ -1,0 +1,17 @@
+@{
+    string retUrl = ViewData["returnUrl"] as string ?? "/Authentication/Dashboard";
+}
+<h1>Login</h1>
+<br />
+@if (ViewData["Error"] != null)
+{
+    <p style="color: red">@ViewData["Error"]</p>
+    <br />
+}
+<form method="post" action="Login?returnUrl=@System.Net.WebUtility.UrlEncode(retUrl)">
+    <label>Username:</label>
+    <input type="text" name="uname" required /><br /><br />
+    <label>Password:</label>
+    <input type="password" name="pass" required /><br /><br />
+    <input type="submit" value="Login" />
+</form>

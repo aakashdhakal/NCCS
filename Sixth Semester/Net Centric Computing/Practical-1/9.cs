@@ -29,7 +29,7 @@ namespace Question_9
 
     class Program
     {
-        static void Main(string[] args)
+         void Main(string[] args)
         {
             Animal myAnimal = new Animal();
             Animal myDog = new Dog();

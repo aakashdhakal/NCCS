@@ -1,42 +1,31 @@
-// 2. Write a program to demonstrate exception handline (try, catch, throw throws)
-
+//Write a program to demonstrate exception handline (try, catch, throw throws)
 using System;
 
-namespace Question_12
+public class Program
 {
-    class Program
+     void Main()
     {
-        static void Main(string[] args)
+        try
         {
-            try
+            Console.Write("Enter a number to divide 10 by: ");
+            int num = Convert.ToInt32(Console.ReadLine());  // Read user input
+
+            if (num == 0)
             {
-                Console.Write("Enter a number: ");
-                int number = Convert.ToInt32(Console.ReadLine());
-                if (number < 0)
-                {
-                    throw new ArgumentException("Number cannot be negative");
-                }
-                Console.WriteLine("You entered: " + number);
-            }
-            catch (FormatException ex)
-            {
-                Console.WriteLine("Input was not a valid number. " + ex.Message);
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Error: " + ex.Message);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An unexpected error occurred. " + ex.Message);
-            }
-            finally
-            {
-                Console.WriteLine("Execution completed.");
+                throw new DivideByZeroException("Cannot divide by zero");
             }
 
-            Console.WriteLine("Press any key to exit.");
-            Console.ReadKey();
+            int result = 10 / num;
+            Console.WriteLine("Result: " + result);
         }
+        catch (DivideByZeroException ex)
+        {
+            Console.WriteLine("Error: " + ex.Message);  // Catch division by zero error
+        }
+        catch (Exception ex)  // Catch any other errors
+        {
+            Console.WriteLine("Error: " + ex.Message);
+        }
+        Console.ReadKey();  // Wait for user input before closing
     }
 }

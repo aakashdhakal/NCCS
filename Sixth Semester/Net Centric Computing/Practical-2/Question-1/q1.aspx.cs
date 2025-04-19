@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace project
 {
@@ -10,25 +11,65 @@ namespace project
 
         protected void btnAdd_Click(object sender, EventArgs e)
         {
-            int firstNumber = int.Parse(txtFirstNumber.Text);
-            int secondNumber = int.Parse(txtSecondNumber.Text);
-            int result = firstNumber + secondNumber;
-            txtResult.Text = "Sum: " + result.ToString();
+            try
+            {
+                int firstNumber = int.Parse(txtFirstNumber.Text);
+                int secondNumber = int.Parse(txtSecondNumber.Text);
+                int result = firstNumber + secondNumber;
+                txtResult.Text = "Sum: " + result.ToString();
+            }
+            catch (FormatException)
+            {
+                txtResult.Text = "Please enter valid numbers.";
+            }
         }
 
         protected void btnSubtract_Click(object sender, EventArgs e)
         {
-            int firstNumber = int.Parse(txtFirstNumber.Text);
-            int secondNumber = int.Parse(txtSecondNumber.Text);
-            int result = firstNumber - secondNumber;
-            txtResult.Text = "Difference: " + result.ToString();
+            try
+            {
+                int firstNumber = int.Parse(txtFirstNumber.Text);
+                int secondNumber = int.Parse(txtSecondNumber.Text);
+                int result = firstNumber - secondNumber;
+                txtResult.Text = "Difference: " + result.ToString();
+            }
+            catch (FormatException)
+            {
+                txtResult.Text = "Please enter valid numbers.";
+            }
         }
 
         protected void btnFindPrime_Click(object sender, EventArgs e)
         {
-            int number = int.Parse(txtFirstNumber.Text);
-            bool isPrime = IsPrime(number);
-            txtResult.Text = isPrime ? number + " is a prime number" : number + " is not a prime number";
+            try
+            {
+                int start = int.Parse(txtFirstNumber.Text);
+                int end = int.Parse(txtSecondNumber.Text);
+
+                if (start > end)
+                {
+                    txtResult.Text = "Start number must be less than or equal to the end number.";
+                    return;
+                }
+
+                List<int> primeNumbers = new List<int>();
+
+                for (int i = start; i <= end; i++)
+                {
+                    if (IsPrime(i))
+                    {
+                        primeNumbers.Add(i);
+                    }
+                }
+
+                txtResult.Text = primeNumbers.Count > 0
+                    ? "Prime numbers: " + string.Join(", ", primeNumbers)
+                    : "No prime numbers found in the range.";
+            }
+            catch (FormatException)
+            {
+                txtResult.Text = "Please enter valid numbers.";
+            }
         }
 
         private bool IsPrime(int number)

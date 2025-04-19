@@ -54,7 +54,7 @@ namespace Question_4
             Console.WriteLine("\n");
         }
 
-        public static void Main(string[] args)
+        public  void Main(string[] args)
         {
             // Creating instances of Number
             Number num1 = new Number();

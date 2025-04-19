@@ -6,7 +6,7 @@ namespace Question_14
 {
     class Program
     {
-        static void Main()
+         void Main()
         {
             Func<int, int> square = x => x * x;  // Lambda expression to square a number
 

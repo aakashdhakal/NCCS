@@ -31,7 +31,7 @@ namespace Question_5
         {
             this.length = length;
             this.breadth = breadth;
-            this.height = 0;
+            height = 0;
         }
 
         // Constructor with three parameters
@@ -70,7 +70,7 @@ namespace Question_5
 
     public class Program
     {
-        public static void Main(string[] args)
+        public  void Main(string[] args)
         {
             // Create first object of Shape with two parameters
             Shape rectangle = new Shape(5, 10);

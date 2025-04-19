@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "HTML Helper Example";
+}
+<h2>HTML Helper Example</h2>
+@using (Html.BeginForm())
+{
+    @Html.Label("Name")
+    @Html.TextBox("Name")
+    <br />
+    @Html.Label("Password")
+    @Html.Password("Password")
+    <br />
+    @Html.Label("Remember Me")
+    @Html.CheckBox("RememberMe")
+    <br />
+    <input type="submit" value="Submit" />
+}

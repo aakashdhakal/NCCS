@@ -26,7 +26,7 @@ namespace Question_11
 
     class Program
     {
-        static void Main(string[] args)
+         void Main(string[] args)
         {
             Shape circle = new Circle(5);
             Console.WriteLine("Area of Circle: " + circle.Area());

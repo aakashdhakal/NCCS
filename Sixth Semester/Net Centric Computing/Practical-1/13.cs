@@ -27,7 +27,7 @@ namespace Question_13
 
     class Program
     {
-        static void Main(string[] args)
+         void Main(string[] args)
         {
             IAnimal dog = new Dog();
             IAnimal cat = new Cat();

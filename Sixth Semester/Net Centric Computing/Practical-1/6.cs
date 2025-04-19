@@ -76,17 +76,17 @@ namespace Question_6
 
     public class Program
     {
-        public static void Main(string[] args)
+        public  void Main(string[] args)
         {
-            SalaryInfo employee1 = new SalaryInfo(1, "John Doe", "Male", "123 Main St", "Developer", 350000);
+            SalaryInfo employee1 = new SalaryInfo(1, "Aakash Dhakal", "Male", "Gothatar", "Developer", 350000);
             employee1.DisplayDetails();
             employee1.CalcTax();
 
-            SalaryInfo employee2 = new SalaryInfo(2, "Jane Doe", "Female", "456 Elm St", "Manager", 600000);
+            SalaryInfo employee2 = new SalaryInfo(2, "Archana Subedi", "Female", "Jhapa", "Manager", 600000);
             employee2.DisplayDetails();
             employee2.CalcTax();
 
-            SalaryInfo employee3 = new SalaryInfo(3, "Alice Doe", "Female", "789 Oak St", "CEO", 1200000);
+            SalaryInfo employee3 = new SalaryInfo(3, "Amardeep Limbu", "Male", "Kapan", "CEO", 1200000);
             employee3.DisplayDetails();
             employee3.CalcTax();
 
