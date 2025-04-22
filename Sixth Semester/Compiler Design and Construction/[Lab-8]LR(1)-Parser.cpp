@@ -1,95 +1,102 @@
-#include <iostream> // Include input-output stream library
-#include <map>      // Include map library
-#include <stack>    // Include stack library
-#include <string>   // Include string library
-#include <vector>   // Include vector library
+#include <iostream>
+#include <map>
+#include <stack>
+#include <string>
+#include <vector>
 
-using namespace std; // Use the standard namespace
+using namespace std;
 
-// Rule class to hold grammar rules
 class Rule {
 public:
-  char lhs;   // Left-hand side of the rule
-  string rhs; // Right-hand side of the rule
+  char lhs;
+  string rhs;
 
-  Rule(char lhs, string rhs)
-      : lhs(lhs), rhs(rhs) {} // Constructor to initialize rule
+  Rule(char lhs, const string &rhs) : lhs(lhs), rhs(rhs) {}
 };
 
-// Grammar rules
-vector<Rule> rules = {Rule('S', "AB"), Rule('A', "aA"), Rule('A', ""),
-                      Rule('B', "bB"), Rule('B', "")};
-
-// Terminal symbols mapping
-map<char, int> terminalMap = {{'a', 0}, {'b', 1}, {'$', 2}};
-
-// Action table for LR(1) parsing
-map<int, map<char, int>> actionTable = {{0, {{'a', 1}, {'b', 2}, {'$', -1}}},
-                                        {1, {{'a', 1}, {'b', -2}, {'$', -2}}},
-                                        {2, {{'a', -3}, {'b', 2}, {'$', -3}}},
-                                        {3, {{'a', -1}, {'b', -1}, {'$', 0}}},
-                                        {4, {{'a', -4}, {'b', -4}, {'$', -4}}}};
-
-// Goto table for LR(1) parsing
-map<int, map<char, int>> gotoTable = {{0, {{'A', 3}, {'B', 4}}},
-                                      {1, {{'A', 3}, {'B', 4}}},
-                                      {2, {{'A', 3}, {'B', 4}}},
-                                      {3, {{'S', 5}, {'A', 3}, {'B', 4}}},
-                                      {4, {{'A', 3}, {'B', 4}}}};
-
-// Parser class to handle the parsing process
 class Parser {
-public:
-  // Function to parse the input string
-  bool parse(const string &input) {
-    stack<int> stateStack;               // Stack to hold states
-    stack<char> symbolStack;             // Stack to hold symbols
-    stateStack.push(0);                  // Push initial state
-    symbolStack.push('$');               // Push initial symbol
-    int i = 0;                           // Initialize input index
-    string augmentedInput = input + '$'; // Append '$' to input
+private:
+  vector<Rule> rules;
+  map<int, map<char, int>> actionTable;
+  map<int, map<char, int>> gotoTable;
 
-    while (true) {                           // Loop until parsing is complete
-      int state = stateStack.top();          // Get current state
-      char currentInput = augmentedInput[i]; // Get current input symbol
+  void initRules() {
+    rules.emplace_back('S', "AB");
+    rules.emplace_back('A', "aA");
+    rules.emplace_back('A', "");
+    rules.emplace_back('B', "bB");
+    rules.emplace_back('B', "");
+  }
+
+  void initActionTable() {
+    actionTable = {{0, {{'a', 1}, {'b', 2}, {'$', -1}}},
+                   {1, {{'a', 1}, {'b', -2}, {'$', -2}}},
+                   {2, {{'a', -3}, {'b', 2}, {'$', -3}}},
+                   {3, {{'a', -1}, {'b', -1}, {'$', 0}}},
+                   {4, {{'a', -4}, {'b', -4}, {'$', -4}}}};
+  }
+
+  void initGotoTable() {
+    gotoTable = {{0, {{'A', 3}, {'B', 4}}},
+                 {1, {{'A', 3}, {'B', 4}}},
+                 {2, {{'A', 3}, {'B', 4}}},
+                 {3, {{'S', 5}, {'A', 3}, {'B', 4}}},
+                 {4, {{'A', 3}, {'B', 4}}}};
+  }
+
+public:
+  Parser() {
+    initRules();
+    initActionTable();
+    initGotoTable();
+  }
+
+  bool parse(const string &inputStr) {
+    string input = inputStr + "$";
+    stack<int> stateStack;
+    stack<char> symbolStack;
+    stateStack.push(0);
+    symbolStack.push('$');
+
+    int i = 0;
+
+    while (true) {
+      int state = stateStack.top();
+      char currentInput = input[i];
 
       cout << "Current state: " << state << ", Current token: " << currentInput
            << endl;
 
-      // If action not found, reject the input
       if (actionTable[state].find(currentInput) == actionTable[state].end()) {
         cout << "Action found: REJECT" << endl;
-        return false; // Return false if input is rejected
+        return false;
       }
 
-      int action =
-          actionTable[state][currentInput]; // Get action from action table
+      int action = actionTable[state][currentInput];
 
-      if (action > 0) { // Shift action
+      if (action > 0) {
         cout << "Action found: SHIFT to state " << action << endl;
-        stateStack.push(action);        // Push new state
-        symbolStack.push(currentInput); // Push current input symbol
-        i++;                            // Move to next input symbol
-      } else if (action == 0) {         // Accept action
+        stateStack.push(action);
+        symbolStack.push(currentInput);
+        i++;
+      } else if (action == 0) {
         cout << "Action found: ACCEPT" << endl;
-        return true;                  // Return true if input is accepted
-      } else if (action < 0) {        // Reduce action
-        int ruleIndex = -action - 1;  // Get rule index
-        Rule rule = rules[ruleIndex]; // Get rule
+        return true;
+      } else if (action < 0) {
+        int ruleIndex = -action - 1;
+        Rule rule = rules[ruleIndex];
         cout << "Action found: REDUCE using production " << rule.lhs << " -> "
-             << rule.rhs << endl;
+             << (rule.rhs.empty() ? "ε" : rule.rhs) << endl;
 
-        // Pop symbols and states based on RHS length
         for (int j = 0; j < rule.rhs.length(); j++) {
-          stateStack.pop();  // Pop state
-          symbolStack.pop(); // Pop symbol
+          stateStack.pop();
+          symbolStack.pop();
         }
 
-        int prevState = stateStack.top(); // Get previous state
-        int nextState =
-            gotoTable[prevState][rule.lhs]; // Get next state from goto table
-        stateStack.push(nextState);         // Push next state
-        symbolStack.push(rule.lhs);         // Push LHS of rule
+        int prevState = stateStack.top();
+        int nextState = gotoTable[prevState][rule.lhs];
+        stateStack.push(nextState);
+        symbolStack.push(rule.lhs);
         cout << "New state after reduction: " << nextState << endl;
       }
     }
@@ -97,19 +104,19 @@ public:
 };
 
 int main() {
-  Parser parser; // Create parser object
+  Parser parser;
   string input;
 
   cout << "Enter the input string to parse: ";
-  getline(cin, input); // Get input string
+  getline(cin, input);
 
-  bool result = parser.parse(input); // Parse the input string
+  bool result = parser.parse(input);
 
   if (result) {
-    cout << "Accepted" << endl; // If accepted
+    cout << "Accepted" << endl;
   } else {
-    cout << "Rejected" << endl; // If rejected
+    cout << "Rejected" << endl;
   }
 
-  return 0; // Return 0 to indicate successful execution
+  return 0;
 }

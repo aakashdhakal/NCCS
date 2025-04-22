@@ -1,109 +1,152 @@
-#include <iostream> // Include input-output stream library
-#include <map>      // Include map library
-#include <stack>    // Include stack library
-#include <string>   // Include string library
-#include <vector>   // Include vector library
+#include <ctype.h>
+#include <stdio.h>
+#include <string.h>
+#define MAX 100
 
-using namespace std; // Use the standard namespace
+char stack[MAX];
+int top = -1;
+char input[MAX];
 
-// Define a class for grammar rules
-class Rule {
-public:
-  char lhs;   // Left-hand side of the rule
-  string rhs; // Right-hand side of the rule
+void push(char c) { stack[++top] = c; }
 
-  Rule(char lhs, string rhs)
-      : lhs(lhs), rhs(rhs) {} // Constructor to initialize rule
-};
+void pop(int count) { top -= count; }
 
-// Define grammar rules
-vector<Rule> rules = {Rule('S', "AB"), Rule('A', "aA"), Rule('A', ""),
-                      Rule('B', "bB"), Rule('B', "")};
+void printStackAndInput(int index) {
+  printf("\nStack: ");
+  for (int i = 0; i <= top; i++) {
+    printf("%c", stack[i]);
+  }
+  printf("\tInput: ");
+  for (int i = index; i < strlen(input); i++) {
+    printf("%c", input[i]);
+  }
+  printf("\tAction: ");
+}
 
-// Define terminal symbols mapping
-map<char, int> terminalMap = {{'a', 0}, {'b', 1}, {'$', 2}};
+char peek(int pos) {
+  if (top - pos >= 0) {
+    return stack[top - pos];
+  }
+  return '\0';
+}
 
-// Define action table for parsing
-map<int, map<char, int>> actionTable = {
-    {0, {{'a', 1}, {'b', 2}, {'$', -1}}},    // State 0 actions
-    {1, {{'a', 1}, {'b', -2}, {'$', -2}}},   // State 1 actions
-    {2, {{'a', -3}, {'b', 2}, {'$', -3}}},   // State 2 actions
-    {3, {{'a', -1}, {'b', -1}, {'$', 0}}},   // State 3 actions
-    {4, {{'a', -4}, {'b', -4}, {'$', -4}}}}; // State 4 actions
+int reduce() {
+  int reduced = 0;
 
-// Define goto table for parsing
-map<int, map<char, int>> gotoTable = {
-    {0, {{'A', 3}, {'B', 4}}},           // State 0 gotos
-    {1, {{'A', 3}, {'B', 4}}},           // State 1 gotos
-    {2, {{'A', 3}, {'B', 4}}},           // State 2 gotos
-    {3, {{'S', 5}, {'A', 3}, {'B', 4}}}, // State 3 gotos
-    {4, {{'A', 3}, {'B', 4}}}};          // State 4 gotos
+  do {
+    reduced = 0;
 
-// Function to parse the input string
-bool parse(string input) {
-  stack<int> stateStack;   // Stack to hold states
-  stack<char> symbolStack; // Stack to hold symbols
-  stateStack.push(0);      // Push initial state
-  symbolStack.push('$');   // Push initial symbol
+    printf("\nChecking reductions for stack: ");
+    for (int i = 0; i <= top; i++) {
+      printf("%c", stack[i]);
+    }
+
+    // Rule 1: digit → F
+    if (isdigit(peek(0))) {
+      printf("\nReducing digit %c to F", stack[top]);
+      stack[top] = 'F';
+      reduced = 1;
+      continue;
+    }
+
+    // Rule 2: F → T (when not part of multiplication)
+    if (peek(0) == 'F' && peek(1) != '*') {
+      printf("\nReducing F to T");
+      stack[top] = 'T';
+      reduced = 1;
+      continue;
+    }
+
+    // Rule 3: T * F → T (handle multiplication)
+    if (peek(0) == 'F' && peek(1) == '*' && peek(2) == 'T') {
+      printf("\nReducing T * F to T");
+      pop(2);
+      stack[top] = 'T';
+      reduced = 1;
+      continue;
+    }
+
+    // Rule 4: E * F → T (new rule to handle E*F case)
+    if (peek(0) == 'F' && peek(1) == '*' && peek(2) == 'E') {
+      printf("\nReducing E * F to T");
+      pop(2);
+      stack[top] = 'T';
+      reduced = 1;
+      continue;
+    }
+
+    // Rule 5: T → E (when not part of addition)
+    if (peek(0) == 'T' && peek(1) != '+') {
+      printf("\nReducing T to E");
+      stack[top] = 'E';
+      reduced = 1;
+      continue;
+    }
+
+    // Rule 6: E + T → E (handle addition)
+    if (peek(0) == 'T' && peek(1) == '+' && peek(2) == 'E') {
+      printf("\nReducing E + T to E");
+      pop(2);
+      stack[top] = 'E';
+      reduced = 1;
+      continue;
+    }
+
+  } while (reduced);
+
+  return reduced;
+}
+
+void parseExpression() {
+  printf("\nParsing Expression: %s\n", input);
+  printf("\nTrace of parsing steps:");
+
   int i = 0;
-  input += '$'; // Append '$' to input
+  while (i < strlen(input)) {
+    printStackAndInput(i);
+    printf("Shift %c", input[i]);
+    push(input[i]);
+    i++;
+    reduce();
+  }
 
-  while (true) {
-    int state = stateStack.top(); // Get current state
-    char currentInput = input[i]; // Get current input symbol
+  // Keep reducing until no more reductions are possible
+  printf("\n\nPerforming final reductions:");
+  while (1) {
+    int did_reduce = reduce();
+    if (!did_reduce)
+      break;
+  }
 
-    cout << "Current state: " << state << ", Current token: " << currentInput
-         << endl;
+  printf("\n\nFinal stack: ");
+  for (int i = 0; i <= top; i++) {
+    printf("%c", stack[i]);
+  }
 
-    // Check if action exists for current state and input
-    if (actionTable[state].find(currentInput) == actionTable[state].end()) {
-      cout << "Action found: REJECT" << endl;
-      return false; // Reject if no action found
+  if (top == 0 && stack[top] == 'E') {
+    printf("\n✅ Accepted: Valid Expression!\n");
+  } else {
+    printf("\n❌ Rejected: Invalid Expression!\n");
+    printf("Expected single 'E' on stack, found: ");
+    for (int i = 0; i <= top; i++) {
+      printf("%c", stack[i]);
     }
-
-    int action = actionTable[state][currentInput]; // Get action
-
-    if (action > 0) { // Shift action
-      cout << "Action found: SHIFT to state " << action << endl;
-      stateStack.push(action);        // Push new state
-      symbolStack.push(currentInput); // Push current input symbol
-      i++;                            // Move to next input symbol
-    } else if (action == 0) {         // Accept action
-      cout << "Action found: ACCEPT" << endl;
-      return true;                  // Accept the input
-    } else if (action < 0) {        // Reduce action
-      int ruleIndex = -action - 1;  // Get rule index
-      Rule rule = rules[ruleIndex]; // Get rule
-      cout << "Action found: REDUCE using production " << rule.lhs << " -> "
-           << rule.rhs << endl;
-
-      // Pop symbols and states based on RHS length
-      for (int j = 0; j < rule.rhs.length(); j++) {
-        stateStack.pop();
-        symbolStack.pop();
-      }
-
-      int prevState = stateStack.top(); // Get previous state
-      int nextState =
-          gotoTable[prevState][rule.lhs]; // Get next state from GOTO table
-      stateStack.push(nextState);         // Push next state
-      symbolStack.push(rule.lhs);         // Push LHS of rule
-      cout << "New state after reduction: " << nextState << endl;
-    }
+    printf("\n");
   }
 }
 
 int main() {
-  string input;
-  cout << "Enter input string: ";
-  cin >> input;               // Get input string from user
-  bool result = parse(input); // Parse the input string
+  printf("Enter an arithmetic expression (use digits, +, *): ");
+  scanf("%s", input);
 
-  if (result) {
-    cout << "Accepted" << endl; // Print accepted if parsing is successful
-  } else {
-    cout << "Rejected" << endl; // Print rejected if parsing fails
+  // Input validation
+  for (int i = 0; i < strlen(input); i++) {
+    if (!isdigit(input[i]) && input[i] != '+' && input[i] != '*') {
+      printf("\n❌ Invalid character in expression: %c\n", input[i]);
+      return 1;
+    }
   }
 
+  parseExpression();
   return 0;
 }

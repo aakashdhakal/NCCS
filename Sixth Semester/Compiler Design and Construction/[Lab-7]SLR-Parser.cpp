@@ -1,164 +1,167 @@
-#include <cstdlib>  // Include cstdlib for exit function
-#include <iostream> // Include iostream for input/output operations
-#include <sstream>  // Include sstream for string stream operations
-#include <string>   // Include string for string operations
+#include <bits/stdc++.h>
+#define MAX_STACK 100
+using namespace std;
 
-#define MAX_STACK 100 // Define maximum stack size
-
-using namespace std; // Use standard namespace
-
-// Define a class for stack elements
+// Class representing a single stack element
 class StackElement {
 public:
-  int state;   // State number
-  char symbol; // Grammar symbol
+  int state;
+  char symbol;
+
+  StackElement(int state = 0, char symbol = '$')
+      : state(state), symbol(symbol) {}
 };
 
-// Define a class for productions
+// Class representing a production rule
 class Production {
 public:
-  char nonTerminal;       // Non-terminal symbol
-  const char *production; // Production rule
-  int length;             // Length of the production
+  char nonTerminal;
+  string production;
+  int length;
+
+  Production(char nonTerminal, const string &production)
+      : nonTerminal(nonTerminal), production(production),
+        length(production.length()) {}
 };
 
-// Initialize the parse stack and top pointer
-StackElement parseStack[MAX_STACK];
-int top = -1;
+// Class representing the LR Parser
+class LRParser {
+private:
+  StackElement parseStack[MAX_STACK];
+  int top;
 
-// Define the production rules
-Production productions[] = {
-    {'S', "AA", 2}, // S -> AA  (production 0)
-    {'A', "aA", 2}, // A -> aA  (production 1)
-    {'A', "b", 1}   // A -> b   (production 2)
-};
+  vector<Production> productions;
 
-// Define the ACTION table
-const int ACTION[7][3] = {
-    {2, 3, 0},  // State 0
-    {0, 0, 1},  // State 1 (Accept)
-    {2, 3, 0},  // State 2
-    {0, 0, -3}, // State 3 (Reduce A->b)
-    {0, 0, -1}, // State 4 (Reduce S->AA)
-    {2, 3, 0},  // State 5
-    {0, 0, -2}  // State 6 (Reduce A->aA)
-};
+  const int ACTION[7][3] = {
+      {2, 3, 0},  // State 0
+      {0, 0, 1},  // State 1 (Accept)
+      {2, 3, 0},  // State 2
+      {0, 0, -3}, // State 3 (Reduce A->b)
+      {0, 0, -1}, // State 4 (Reduce S->AA)
+      {2, 3, 0},  // State 5
+      {0, 0, -2}  // State 6 (Reduce A->aA)
+  };
 
-// Define the GOTO table
-const int GOTO[7][2] = {
-    {4, 1}, // State 0
-    {0, 0}, // State 1
-    {6, 0}, // State 2
-    {0, 0}, // State 3
-    {0, 0}, // State 4
-    {0, 0}, // State 5
-    {0, 0}  // State 6
-};
+  const int GOTO[7][2] = {
+      {4, 1}, // State 0
+      {0, 0}, // State 1
+      {6, 0}, // State 2
+      {0, 0}, // State 3
+      {0, 0}, // State 4
+      {0, 0}, // State 5
+      {0, 0}  // State 6
+  };
 
-// Function to get the column index for the action table
-int getColumnIndex(char input) {
-  switch (input) {
-  case 'a':
-    return 0;
-  case 'b':
-    return 1;
-  case '$':
-    return 2;
-  default:
-    return -1;
-  }
-}
-
-// Function to push a state and symbol onto the stack
-void push(int state, char symbol) {
-  if (top >= MAX_STACK - 1) { // Check for stack overflow
-    cout << "Stack overflow\n";
-    exit(1);
-  }
-  parseStack[++top] = {state, symbol}; // Push the element
-}
-
-// Function to pop elements from the stack
-void pop(int count) {
-  top -= count;   // Decrease the top pointer
-  if (top < -1) { // Check for stack underflow
-    cout << "Stack underflow\n";
-    exit(1);
-  }
-}
-
-// Function to get the string representation of the stack for printing
-string getStackString() {
-  stringstream ss;
-  for (int i = 0; i <= top; i++) {
-    ss << "(" << parseStack[i].state << ", " << parseStack[i].symbol << ") ";
-  }
-  return ss.str();
-}
-
-// Function to print the table header
-void printTableHeader() {
-  cout << "\nAction\tState\tSymbol\tNext State/Production\t\t\tStack\n";
-  cout << "---------------------------------------------------------------\n";
-}
-
-// Function to parse the input string
-int parse(const string &input) {
-  int currentPos = 0; // Initialize current position
-  push(0, '$');       // Push initial state and symbol
-  printTableHeader(); // Print table header
-
-  while (true) {
-    char currentInput = input[currentPos];    // Get current input symbol
-    int currentState = parseStack[top].state; // Get current state
-    int col = getColumnIndex(currentInput); // Get column index for ACTION table
-
-    if (col == -1) { // Check for invalid input symbol
-      cout << "Invalid input symbol: " << currentInput << endl;
+  int getColumnIndex(char input) {
+    switch (input) {
+    case 'a':
       return 0;
-    }
-
-    int action = ACTION[currentState][col]; // Get action from ACTION table
-
-    // Print action and stack state in table
-    if (action == 1 && currentInput == '$') { // Accept condition
-      cout << "Accept\n";
+    case 'b':
       return 1;
-    } else if (action > 0) { // Shift condition
-      cout << "Shift\t\t" << currentState << "\t" << currentInput << "\t\t"
-           << action << "\t\t\t\t" << getStackString() << "\n";
-      push(action, currentInput);        // Push new state and symbol
-      currentPos++;                      // Move to next input symbol
-    } else if (action < 0) {             // Reduce condition
-      int productionIndex = -action - 1; // Get production index
-      Production &prod = productions[productionIndex]; // Get production
-
-      cout << "Reduce\t\t" << currentState << "\t" << currentInput
-           << "\tby production " << productionIndex << "\t\t\t"
-           << getStackString() << "\n";
-      pop(prod.length); // Pop elements from stack
-      int newState = GOTO[parseStack[top].state]
-                         [getColumnIndex(prod.nonTerminal)]; // Get new state
-      cout << "Goto\t\t\t\t\t\t\t" << newState << "\t\t\t\t" << getStackString()
-           << "\n";
-      push(newState, prod.nonTerminal); // Push new state and non-terminal
-    } else {                            // Syntax error condition
-      cout << "Syntax error at position " << currentPos << endl;
+    case '$':
+      return 2;
+    case 'A':
       return 0;
+    case 'S':
+      return 1;
+    default:
+      return -1;
     }
   }
-}
 
-// Main function
+  void push(int state, char symbol) {
+    if (top >= MAX_STACK - 1) {
+      cout << "Stack overflow\n";
+      exit(1);
+    }
+    parseStack[++top] = StackElement(state, symbol);
+  }
+
+  void pop(int count) {
+    top -= count;
+    if (top < -1) {
+      cout << "Stack underflow\n";
+      exit(1);
+    }
+  }
+
+  string getStackString() {
+    stringstream ss;
+    for (int i = 0; i <= top; i++) {
+      ss << "(" << parseStack[i].state << ", " << parseStack[i].symbol << ") ";
+    }
+    return ss.str();
+  }
+
+  void printTableHeader() {
+    cout << "\nAction\tState\tSymbol\tNext State/Production\t\t\tStack\n";
+    cout << "---------------------------------------------------------------\n";
+  }
+
+public:
+  LRParser() : top(-1) {
+    productions.emplace_back('S', "AA"); // 0
+    productions.emplace_back('A', "aA"); // 1
+    productions.emplace_back('A', "b");  // 2
+  }
+
+  bool parse(const string &input) {
+    int currentPos = 0;
+    push(0, '$');
+    printTableHeader();
+
+    while (true) {
+      char currentInput = input[currentPos];
+      int currentState = parseStack[top].state;
+      int col = getColumnIndex(currentInput);
+
+      if (col == -1) {
+        cout << "Invalid input symbol: " << currentInput << endl;
+        return false;
+      }
+
+      int action = ACTION[currentState][col];
+
+      if (action == 1 && currentInput == '$') {
+        printf("Accept\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
+        return true;
+      } else if (action > 0) {
+        printf("Shift\t\t%d\t%c\t\t%d\t\t\t\t%s\n", currentState, currentInput,
+               action, getStackString().c_str());
+        push(action, currentInput);
+        currentPos++;
+      } else if (action < 0) {
+        int productionIndex = -action - 1;
+        Production &prod = productions[productionIndex];
+
+        printf("Reduce\t\t%d\t%c\tby production %d\t\t\t%s\n", currentState,
+               currentInput, productionIndex, getStackString().c_str());
+        pop(prod.length);
+        int newState =
+            GOTO[parseStack[top].state][getColumnIndex(prod.nonTerminal)];
+        printf("Goto\t\t\t\t\t\t\t%d\t\t\t\t%s\n", newState,
+               getStackString().c_str());
+        push(newState, prod.nonTerminal);
+      } else {
+        cout << "Syntax error at position " << currentPos << endl;
+        return false;
+      }
+    }
+  }
+};
+
 int main() {
+  LRParser parser;
   string input;
-  cout << "Enter input string (end with $): "; // Prompt for input
-  cin >> input;                                // Read input
 
-  if (parse(input)) { // Parse the input
+  cout << "Enter input string (end with $): ";
+  cin >> input;
+
+  if (parser.parse(input)) {
     cout << "Parsing completed successfully\n";
   } else {
     cout << "Parsing failed\n";
   }
+
   return 0;
 }

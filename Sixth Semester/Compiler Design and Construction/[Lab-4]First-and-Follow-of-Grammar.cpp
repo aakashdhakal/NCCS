@@ -1,146 +1,216 @@
-#include <cstring> // Include the cstring library for string manipulation functions
-#include <iostream> // Include the iostream library for input and output operations
-using namespace std; // Use the standard namespace
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <set>
+#include <vector>
+using namespace std;
 
-const int MAX_RULES = 10; // Define a constant for the maximum number of production rules
-const int MAX_SYMBOLS = 20; // Define a constant for the maximum number of symbols in a rule
+const int MAX_RULES = 10;
+const int MAX_SYMBOLS = 20;
+const char EPSILON = 'e'; // Using 'e' for epsilon (empty string)
 
-char grammar[MAX_RULES][MAX_SYMBOLS]; // Declare a 2D array to store the grammar rules
-int numRules; // Declare a variable to store the number of production rules
-char firstSets[MAX_RULES][MAX_SYMBOLS]; // Declare a 2D array to store the FIRST sets
-char followSets[MAX_RULES][MAX_SYMBOLS]; // Declare a 2D array to store the FOLLOW sets
+struct Production {
+  char lhs;
+  string rhs;
+};
 
-void computeFirst(char nonTerminal); // Function prototype to compute the FIRST set of a non-terminal
-void computeFollow(char nonTerminal); // Function prototype to compute the FOLLOW set of a non-terminal
+vector<Production> grammar;
+set<char> nonTerminals;
+set<char> terminals;
+
+// Function prototypes
+void computeFirstSets();
+void computeFollowSets();
+set<char> computeFirst(char nonTerminal);
+set<char> computeFirstOfString(const string &str);
+void printSets();
 
 int main() {
-    cout << "Enter the number of production rules: "; // Prompt the user to enter the number of production rules
-    cin >> numRules; // Read the number of production rules from the user
-    cin.ignore(); // Ignore the newline character left in the input buffer
+  cout << "Enter the number of production rules: ";
+  int numRules;
+  cin >> numRules;
+  cin.ignore();
 
-    cout << "Enter the production rules: " << endl; // Prompt the user to enter the production rules
-    for (int i = 0; i < numRules; i++) { // Loop to read each production rule
-        cin.getline(grammar[i], MAX_SYMBOLS); // Read a production rule from the user
+  cout << "Enter the production rules (e.g., S->aA|e): " << endl;
+  for (int i = 0; i < numRules; i++) {
+    string line;
+    getline(cin, line);
+
+    size_t arrowPos = line.find("->");
+    if (arrowPos == string::npos || arrowPos == 0) {
+      cerr << "Invalid rule format: " << line << endl;
+      return 1;
     }
 
-    memset(firstSets, '\0', sizeof(firstSets)); // Initialize the FIRST sets array with null characters
-    memset(followSets, '\0', sizeof(followSets)); // Initialize the FOLLOW sets array with null characters
+    char lhs = line[0];
+    string rhs = line.substr(arrowPos + 2);
+    nonTerminals.insert(lhs);
 
-    for (int i = 0; i < numRules; i++) { // Loop to compute the FIRST and FOLLOW sets for each non-terminal
-        computeFirst(grammar[i][0]); // Compute the FIRST set for the non-terminal
-        computeFollow(grammar[i][0]); // Compute the FOLLOW set for the non-terminal
-    }
+    // Split alternatives separated by |
+    size_t start = 0;
+    size_t end = rhs.find('|');
+    while (end != string::npos) {
+      string alternative = rhs.substr(start, end - start);
+      grammar.push_back({lhs, alternative});
 
-    cout << "\nFIRST Sets:" << endl; // Print the FIRST sets
-    for (int i = 0; i < numRules; i++) { // Loop to print each FIRST set
-        cout << "FIRST(" << grammar[i][0] << ") = { "; // Print the non-terminal
-        for (int j = 0; firstSets[i][j] != '\0'; j++) { // Loop to print each symbol in the FIRST set
-            cout << firstSets[i][j] << " "; // Print the symbol
+      // Collect terminals
+      for (char c : alternative) {
+        if (!isupper(c) && c != EPSILON) {
+          terminals.insert(c);
         }
-        cout << "}" << endl; // Close the set
-    }
+      }
 
-    cout << "\nFOLLOW Sets:" << endl; // Print the FOLLOW sets
-    for (int i = 0; i < numRules; i++) { // Loop to print each FOLLOW set
-        cout << "FOLLOW(" << grammar[i][0] << ") = { "; // Print the non-terminal
-        for (int j = 0; followSets[i][j] != '\0'; j++) { // Loop to print each symbol in the FOLLOW set
-            cout << followSets[i][j] << " "; // Print the symbol
-        }
-        cout << "}" << endl; // Close the set
+      start = end + 1;
+      end = rhs.find('|', start);
     }
+    string lastAlternative = rhs.substr(start);
+    grammar.push_back({lhs, lastAlternative});
 
-    return 0; // Return 0 to indicate successful execution
+    // Collect terminals from last alternative
+    for (char c : lastAlternative) {
+      if (!isupper(c) && c != EPSILON) {
+        terminals.insert(c);
+      }
+    }
+  }
+
+  computeFirstSets();
+  computeFollowSets();
+  printSets();
+
+  return 0;
 }
 
-void computeFirst(char nonTerminal) {
-    int index = -1; // Initialize the index to -1
-    for (int i = 0; i < numRules; i++) { // Loop to find the index of the non-terminal in the grammar
-        if (grammar[i][0] == nonTerminal) { // Check if the current rule's non-terminal matches the given non-terminal
-            index = i; // Set the index to the current rule's index
-            break; // Break the loop
-        }
-    }
-    if (index == -1) return; // If the non-terminal is not found, return
+set<char> computeFirst(char nonTerminal) {
+  set<char> first;
 
-    for (int i = 3; grammar[index][i] != '\0'; i++) { // Loop to process the production rule
-        char currentSymbol = grammar[index][i]; // Get the current symbol in the production rule
-        if (isupper(currentSymbol)) { // Check if the current symbol is a non-terminal
-            computeFirst(currentSymbol); // Recursively compute the FIRST set for the non-terminal
-            for (int j = 0; j < numRules; j++) { // Loop to find the FIRST set of the non-terminal
-                if (grammar[j][0] == currentSymbol) { // Check if the current rule's non-terminal matches the current symbol
-                    for (int k = 0; firstSets[j][k] != '\0'; k++) { // Loop to add the symbols from the FIRST set
-                        if (!strchr(firstSets[index], firstSets[j][k])) { // Check if the symbol is not already in the FIRST set
-                            int len = strlen(firstSets[index]); // Get the length of the FIRST set
-                            firstSets[index][len] = firstSets[j][k]; // Add the symbol to the FIRST set
-                            firstSets[index][len + 1] = '\0'; // Null-terminate the FIRST set
-                        }
-                    }
-                    break; // Break the loop
-                }
-            }
-            if (!strchr(firstSets[index], 'e')) break; // If epsilon is not in the FIRST set, break the loop
-        } else { // If the current symbol is a terminal
-            if (!strchr(firstSets[index], currentSymbol)) { // Check if the symbol is not already in the FIRST set
-                int len = strlen(firstSets[index]); // Get the length of the FIRST set
-                firstSets[index][len] = currentSymbol; // Add the symbol to the FIRST set
-                firstSets[index][len + 1] = '\0'; // Null-terminate the FIRST set
-            }
-            break; // Break the loop
-        }
+  for (const auto &prod : grammar) {
+    if (prod.lhs != nonTerminal)
+      continue;
+
+    const string &rhs = prod.rhs;
+    if (rhs.empty()) {
+      first.insert(EPSILON);
+      continue;
     }
+
+    bool allProduceEpsilon = true;
+    for (char symbol : rhs) {
+      if (isupper(symbol)) { // Non-terminal
+        set<char> firstOfSymbol = computeFirst(symbol);
+        first.insert(firstOfSymbol.begin(), firstOfSymbol.end());
+        first.erase(EPSILON);
+
+        if (firstOfSymbol.find(EPSILON) == firstOfSymbol.end()) {
+          allProduceEpsilon = false;
+          break;
+        }
+      } else { // Terminal or epsilon
+        first.insert(symbol);
+        allProduceEpsilon = false;
+        break;
+      }
+    }
+
+    if (allProduceEpsilon) {
+      first.insert(EPSILON);
+    }
+  }
+
+  return first;
 }
 
-void computeFollow(char nonTerminal) {
-    int index = -1; // Initialize the index to -1
-    for (int i = 0; i < numRules; i++) { // Loop to find the index of the non-terminal in the grammar
-        if (grammar[i][0] == nonTerminal) { // Check if the current rule's non-terminal matches the given non-terminal
-            index = i; // Set the index to the current rule's index
-            break; // Break the loop
-        }
-    }
-    if (index == -1) return; // If the non-terminal is not found, return
+set<char> computeFirstOfString(const string &str) {
+  set<char> first;
+  bool allProduceEpsilon = true;
 
-    if (nonTerminal == grammar[0][0] && !strchr(followSets[index], '$')) { // If the non-terminal is the start symbol and '$' is not in the FOLLOW set
-        int len = strlen(followSets[index]); // Get the length of the FOLLOW set
-        followSets[index][len] = '$'; // Add '$' to the FOLLOW set
-        followSets[index][len + 1] = '\0'; // Null-terminate the FOLLOW set
-    }
+  for (char symbol : str) {
+    if (isupper(symbol)) { // Non-terminal
+      set<char> firstOfSymbol = computeFirst(symbol);
+      first.insert(firstOfSymbol.begin(), firstOfSymbol.end());
+      first.erase(EPSILON);
 
-    for (int i = 0; i < numRules; i++) { // Loop to process each production rule
-        for (int j = 3; grammar[i][j] != '\0'; j++) { // Loop to find the non-terminal in the production rule
-            if (grammar[i][j] == nonTerminal) { // Check if the current symbol matches the non-terminal
-                if (grammar[i][j + 1] != '\0') { // If there is a symbol after the non-terminal
-                    char nextSymbol = grammar[i][j + 1]; // Get the next symbol
-                    if (isupper(nextSymbol)) { // Check if the next symbol is a non-terminal
-                        for (int k = 0; k < numRules; k++) { // Loop to find the FIRST set of the next symbol
-                            if (grammar[k][0] == nextSymbol) { // Check if the current rule's non-terminal matches the next symbol
-                                for (int l = 0; firstSets[k][l] != '\0'; l++) { // Loop to add the symbols from the FIRST set
-                                    if (!strchr(followSets[index], firstSets[k][l])) { // Check if the symbol is not already in the FOLLOW set
-                                        int len = strlen(followSets[index]); // Get the length of the FOLLOW set
-                                        followSets[index][len] = firstSets[k][l]; // Add the symbol to the FOLLOW set
-                                        followSets[index][len + 1] = '\0'; // Null-terminate the FOLLOW set
-                                    }
-                                }
-                            }
-                        }
-                    } else { // If the next symbol is a terminal
-                        if (!strchr(followSets[index], nextSymbol)) { // Check if the symbol is not already in the FOLLOW set
-                            int len = strlen(followSets[index]); // Get the length of the FOLLOW set
-                            followSets[index][len] = nextSymbol; // Add the symbol to the FOLLOW set
-                            followSets[index][len + 1] = '\0'; // Null-terminate the FOLLOW set
-                        }
-                    }
-                } else if (grammar[i][0] != nonTerminal) { // If the non-terminal is at the end of the production rule
-                    computeFollow(grammar[i][0]); // Recursively compute the FOLLOW set for the non-terminal on the left-hand side
-                    for (int k = 0; followSets[i][k] != '\0'; k++) { // Loop to add the symbols from the FOLLOW set
-                        if (!strchr(followSets[index], followSets[i][k])) { // Check if the symbol is not already in the FOLLOW set
-                            int len = strlen(followSets[index]); // Get the length of the FOLLOW set
-                            followSets[index][len] = followSets[i][k]; // Add the symbol to the FOLLOW set
-                            followSets[index][len + 1] = '\0'; // Null-terminate the FOLLOW set
-                        }
-                    }
-                }
-            }
-        }
+      if (firstOfSymbol.find(EPSILON) == firstOfSymbol.end()) {
+        allProduceEpsilon = false;
+        break;
+      }
+    } else { // Terminal or epsilon
+      first.insert(symbol);
+      allProduceEpsilon = false;
+      break;
     }
+  }
+
+  if (allProduceEpsilon) {
+    first.insert(EPSILON);
+  }
+
+  return first;
+}
+
+void computeFirstSets() {
+  cout << "\nFIRST Sets:" << endl;
+  for (char nt : nonTerminals) {
+    set<char> first = computeFirst(nt);
+    cout << "FIRST(" << nt << ") = { ";
+    for (char c : first) {
+      cout << c << " ";
+    }
+    cout << "}" << endl;
+  }
+}
+
+void computeFollowSets() {
+  map<char, set<char>> follow;
+  char startSymbol = grammar[0].lhs;
+  follow[startSymbol].insert('$'); // Rule 1: $ is in FOLLOW(S)
+
+  bool changed;
+  do {
+    changed = false;
+    for (const auto &prod : grammar) {
+      const string &rhs = prod.rhs;
+      for (size_t i = 0; i < rhs.size(); i++) {
+        char B = rhs[i];
+        if (!isupper(B))
+          continue; // Only for non-terminals
+
+        // Rule 2: A → αBβ, add FIRST(β)-{ε} to FOLLOW(B)
+        string beta = rhs.substr(i + 1);
+        if (!beta.empty()) {
+          set<char> firstBeta = computeFirstOfString(beta);
+          size_t before = follow[B].size();
+          follow[B].insert(firstBeta.begin(), firstBeta.end());
+          follow[B].erase(EPSILON);
+          if (follow[B].size() > before) {
+            changed = true;
+          }
+        }
+
+        // Rule 3: A → αB or A → αBβ where β ⇒* ε
+        if (i == rhs.size() - 1 ||
+            (beta.empty() ? false
+                          : computeFirstOfString(beta).count(EPSILON))) {
+          size_t before = follow[B].size();
+          follow[B].insert(follow[prod.lhs].begin(), follow[prod.lhs].end());
+          if (follow[B].size() > before) {
+            changed = true;
+          }
+        }
+      }
+    }
+  } while (changed);
+
+  cout << "\nFOLLOW Sets:" << endl;
+  for (char nt : nonTerminals) {
+    cout << "FOLLOW(" << nt << ") = { ";
+    for (char c : follow[nt]) {
+      cout << c << " ";
+    }
+    cout << "}" << endl;
+  }
+}
+
+void printSets() {
+  // Already printed in computeFirstSets and computeFollowSets
 }
