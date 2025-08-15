@@ -2,6 +2,90 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"type": "java",
+			"name": "LoginPage",
+			"request": "launch",
+			"mainClass": "Lab7.LoginPage",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "LayoutDemo",
+			"request": "launch",
+			"mainClass": "Lab7.LayoutDemo",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "BankDemo",
+			"request": "launch",
+			"mainClass": "Lab6.BankDemo",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "EvenOddThreads",
+			"request": "launch",
+			"mainClass": "Lab6.EvenOddThreads",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "BankSimulation",
+			"request": "launch",
+			"mainClass": "Lab5.BankSimulation",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "Gaadi",
+			"request": "launch",
+			"mainClass": "Lab2.Gaadi",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "Calculator",
+			"request": "launch",
+			"mainClass": "Lab1.Calculator",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "Gaadi",
+			"request": "launch",
+			"mainClass": "Gaadi",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "Hello",
+			"request": "launch",
+			"mainClass": "Hello",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "Calculator",
+			"request": "launch",
+			"mainClass": "Calculator",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "Main",
+			"request": "launch",
+			"mainClass": "Main",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "SimpleCalculator",
+			"request": "launch",
+			"mainClass": "SimpleCalculator",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
 			"name": "Run C/C++",
 			"request": "launch",
 			"preLaunchTask": "C/C++: g++.exe build active file",

@@ -1,152 +1,98 @@
-#include <ctype.h>
-#include <stdio.h>
-#include <string.h>
-#define MAX 100
+#include <iostream>
+#include <map>
+#include <stack>
+#include <string>
+#include <vector>
 
-char stack[MAX];
-int top = -1;
-char input[MAX];
+using namespace std;
 
-void push(char c) { stack[++top] = c; }
+struct Rule {
+  char lhs;
+  string rhs;
+};
 
-void pop(int count) { top -= count; }
+vector<Rule> rules = {
+    {'S', "AB"}, {'A', "aA"}, {'A', ""}, {'B', "bB"}, {'B', ""}};
 
-void printStackAndInput(int index) {
-  printf("\nStack: ");
-  for (int i = 0; i <= top; i++) {
-    printf("%c", stack[i]);
-  }
-  printf("\tInput: ");
-  for (int i = index; i < strlen(input); i++) {
-    printf("%c", input[i]);
-  }
-  printf("\tAction: ");
-}
+map<char, int> terminalMap = {{'a', 0}, {'b', 1}, {'$', 2}};
 
-char peek(int pos) {
-  if (top - pos >= 0) {
-    return stack[top - pos];
-  }
-  return '\0';
-}
+map<int, map<char, int>> actionTable = {{0, {{'a', 1}, {'b', 2}, {'$', -1}}},
+                                        {1, {{'a', 1}, {'b', -2}, {'$', -2}}},
+                                        {2, {{'a', -3}, {'b', 2}, {'$', -3}}},
+                                        {3, {{'a', -1}, {'b', -1}, {'$', 0}}},
+                                        {4, {{'a', -4}, {'b', -4}, {'$', -4}}}};
 
-int reduce() {
-  int reduced = 0;
+map<int, map<char, int>> gotoTable = {{0, {{'A', 3}, {'B', 4}}},
+                                      {1, {{'A', 3}, {'B', 4}}},
+                                      {2, {{'A', 3}, {'B', 4}}},
+                                      {3, {{'S', 5}, {'A', 3}, {'B', 4}}},
+                                      {4, {{'A', 3}, {'B', 4}}}};
 
-  do {
-    reduced = 0;
-
-    printf("\nChecking reductions for stack: ");
-    for (int i = 0; i <= top; i++) {
-      printf("%c", stack[i]);
-    }
-
-    // Rule 1: digit → F
-    if (isdigit(peek(0))) {
-      printf("\nReducing digit %c to F", stack[top]);
-      stack[top] = 'F';
-      reduced = 1;
-      continue;
-    }
-
-    // Rule 2: F → T (when not part of multiplication)
-    if (peek(0) == 'F' && peek(1) != '*') {
-      printf("\nReducing F to T");
-      stack[top] = 'T';
-      reduced = 1;
-      continue;
-    }
-
-    // Rule 3: T * F → T (handle multiplication)
-    if (peek(0) == 'F' && peek(1) == '*' && peek(2) == 'T') {
-      printf("\nReducing T * F to T");
-      pop(2);
-      stack[top] = 'T';
-      reduced = 1;
-      continue;
-    }
-
-    // Rule 4: E * F → T (new rule to handle E*F case)
-    if (peek(0) == 'F' && peek(1) == '*' && peek(2) == 'E') {
-      printf("\nReducing E * F to T");
-      pop(2);
-      stack[top] = 'T';
-      reduced = 1;
-      continue;
-    }
-
-    // Rule 5: T → E (when not part of addition)
-    if (peek(0) == 'T' && peek(1) != '+') {
-      printf("\nReducing T to E");
-      stack[top] = 'E';
-      reduced = 1;
-      continue;
-    }
-
-    // Rule 6: E + T → E (handle addition)
-    if (peek(0) == 'T' && peek(1) == '+' && peek(2) == 'E') {
-      printf("\nReducing E + T to E");
-      pop(2);
-      stack[top] = 'E';
-      reduced = 1;
-      continue;
-    }
-
-  } while (reduced);
-
-  return reduced;
-}
-
-void parseExpression() {
-  printf("\nParsing Expression: %s\n", input);
-  printf("\nTrace of parsing steps:");
-
+bool parse(string input) {
+  stack<int> stateStack;
+  stack<char> symbolStack;
+  stateStack.push(0);
+  symbolStack.push('$'); // Push initial symbol
   int i = 0;
-  while (i < strlen(input)) {
-    printStackAndInput(i);
-    printf("Shift %c", input[i]);
-    push(input[i]);
-    i++;
-    reduce();
-  }
+  input += '$'; // Append '$' to input
 
-  // Keep reducing until no more reductions are possible
-  printf("\n\nPerforming final reductions:");
-  while (1) {
-    int did_reduce = reduce();
-    if (!did_reduce)
-      break;
-  }
+  while (true) {
+    int state = stateStack.top();
+    char currentInput = input[i];
 
-  printf("\n\nFinal stack: ");
-  for (int i = 0; i <= top; i++) {
-    printf("%c", stack[i]);
-  }
+    cout << "Current state: " << state << ", Current token: " << currentInput
+         << endl;
 
-  if (top == 0 && stack[top] == 'E') {
-    printf("\n✅ Accepted: Valid Expression!\n");
-  } else {
-    printf("\n❌ Rejected: Invalid Expression!\n");
-    printf("Expected single 'E' on stack, found: ");
-    for (int i = 0; i <= top; i++) {
-      printf("%c", stack[i]);
+    if (actionTable[state].find(currentInput) == actionTable[state].end()) {
+      cout << "Action found: REJECT" << endl;
+      return false;
     }
-    printf("\n");
+
+    int action = actionTable[state][currentInput];
+
+    if (action > 0) {
+      cout << "Action found: SHIFT to state " << action << endl;
+      stateStack.push(action);
+      symbolStack.push(currentInput);
+      i++;
+    } else if (action == 0) {
+      cout << "Action found: ACCEPT" << endl;
+      return true;
+    } else if (action < 0) {
+      int ruleIndex = -action - 1;
+      Rule rule = rules[ruleIndex];
+      cout << "Action found: REDUCE using production " << rule.lhs << " -> "
+           << rule.rhs << endl;
+
+      // Pop symbols and states based on RHS length
+      for (int j = 0; j < rule.rhs.length(); j++) {
+        stateStack.pop();
+        symbolStack.pop();
+      }
+
+      // Get the state *before* the pop
+      int prevState = stateStack.top();
+
+      // Use prevState to get the next state from the GOTO table
+      int nextState = gotoTable[prevState][rule.lhs];
+      stateStack.push(nextState);
+      symbolStack.push(rule.lhs);
+      cout << "New state after reduction: " << nextState << endl;
+    }
   }
 }
 
 int main() {
-  printf("Enter an arithmetic expression (use digits, +, *): ");
-  scanf("%s", input);
+  string input;
+  cout << "Enter input string :";
+  cin >> input;
+  bool result = parse(input);
 
-  // Input validation
-  for (int i = 0; i < strlen(input); i++) {
-    if (!isdigit(input[i]) && input[i] != '+' && input[i] != '*') {
-      printf("\n❌ Invalid character in expression: %c\n", input[i]);
-      return 1;
-    }
+  if (result) {
+    cout << "Accepted" << endl;
+  } else {
+    cout << "Rejected" << endl;
   }
 
-  parseExpression();
   return 0;
 }

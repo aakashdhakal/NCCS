@@ -94,5 +94,11 @@
 		"stdio.h": "c"
 	},
 	"dotnet.defaultSolution": "Practical-1.sln",
-	"dataworkspace.excludedProjects": ["Test/Test.sqlproj"]
+	"dataworkspace.excludedProjects": ["Test/Test.sqlproj"],
+	"java.debug.settings.onBuildFailureProceed": true,
+	"java.project.sourcePaths": [
+		"Seventh Semester\\Advance Java Programming\\src"
+	],
+	"java.project.referencedLibraries": [],
+	"java.format.settings.url": ".vscode/java-formatter.xml"
 }
