@@ -33,6 +33,18 @@
 			"type": "process",
 			"args": ["build", "${workspaceFolder}"],
 			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "compile",
+			"type": "shell",
+			"command": "cd demo && mvn -B compile",
+			"group": "build"
+		},
+		{
+			"label": "test",
+			"type": "shell",
+			"command": "cd demo && mvn -B test",
+			"group": "test"
 		}
 	],
 	"version": "2.0.0"

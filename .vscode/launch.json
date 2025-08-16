@@ -3,6 +3,35 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "ServerSocketDemo",
+			"request": "launch",
+			"mainClass": "Lab9.ServerSocketDemo",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+
+		{
+			"type": "java",
+			"name": "ClientSocketDemo",
+			"request": "launch",
+			"mainClass": "Lab9.ClientSocketDemo",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "URLComponents",
+			"request": "launch",
+			"mainClass": "Lab9.URLComponents",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "StudentCRUD",
+			"request": "launch",
+			"mainClass": "Lab8.StudentCRUD",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
 			"name": "LoginPage",
 			"request": "launch",
 			"mainClass": "Lab7.LoginPage",

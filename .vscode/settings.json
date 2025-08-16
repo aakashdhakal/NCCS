@@ -99,6 +99,9 @@
 	"java.project.sourcePaths": [
 		"Seventh Semester\\Advance Java Programming\\src"
 	],
-	"java.project.referencedLibraries": [],
+	"java.project.referencedLibraries": [
+		"c:\\Users\\anamo\\Downloads\\Compressed\\mysql-connector-j-9.3.0\\mysql-connector-j-9.3.0.jar",
+		"c:\\Users\\anamo\\Downloads\\jakarta.servlet-api-6.1.0.jar"
+	],
 	"java.format.settings.url": ".vscode/java-formatter.xml"
 }
