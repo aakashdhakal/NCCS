@@ -18,7 +18,7 @@ public class ClientSocketDemo {
             System.out.println("Server: " + welcomeMessage);
 
             // Send a message to the server
-            String message = "Hello, Server!";
+            String message = "Hello, Server this is a message from client";
             out.println(message);
             System.out.println("Sent to server: " + message);
 

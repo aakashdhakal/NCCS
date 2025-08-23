@@ -1,6 +1,7 @@
 package Lab7;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -14,22 +15,20 @@ public class LoginPage extends JFrame implements ActionListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(500, 500);
         setLocationRelativeTo(null);
+        setLayout(new FlowLayout());
 
         JLabel userLabel = new JLabel("Username:");
         JLabel passLabel = new JLabel("Password:");
         userField = new JTextField(15);
+
         passField = new JPasswordField(15);
         loginBtn = new JButton("Login");
 
-        JPanel panel = new JPanel(new FlowLayout());
-        panel.add(userLabel);
-        panel.add(userField);
-        panel.add(passLabel);
-        panel.add(passField);
-        panel.add(new JLabel());
-        panel.add(loginBtn);
-
-        add(panel);
+        add(userLabel);
+        add(userField);
+        add(passLabel);
+        add(passField);
+        add(loginBtn);
 
         loginBtn.addActionListener(this);
     }

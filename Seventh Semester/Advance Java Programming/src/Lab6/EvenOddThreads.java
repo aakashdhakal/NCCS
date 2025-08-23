@@ -2,8 +2,10 @@ package Lab6;
 
 class EvenThread extends Thread {
     public void run() {
+        System.out.print("Even: ");
         for (int i = 2; i <= 20; i += 2)
-            System.out.println("Even: " + i);
+            System.out.print(i + " ");
+        System.out.println();
         try {
             Thread.sleep(100); // Small delay for better output readability
         } catch (InterruptedException e) {
@@ -14,8 +16,10 @@ class EvenThread extends Thread {
 
 class OddThread extends Thread {
     public void run() {
+        System.out.print("Odd: ");
         for (int i = 1; i <= 19; i += 2)
-            System.out.println("Odd: " + i);
+            System.out.print(i + " ");
+        System.out.println();
         try {
             Thread.sleep(100); // Small delay for better output readability
         } catch (InterruptedException e) {
@@ -30,7 +34,9 @@ public class EvenOddThreads {
         Thread oddThread = new OddThread();
         try {
             evenThread.start();
+            evenThread.join();
             oddThread.start();
+            oddThread.join();
         } catch (Exception e) {
             System.out.println(e);
         }

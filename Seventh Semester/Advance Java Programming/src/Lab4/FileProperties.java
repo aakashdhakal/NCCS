@@ -4,9 +4,8 @@ import java.io.File;
 
 public class FileProperties {
     public static void main(String[] args) {
-        String user = System.getProperty("user.name");
-        String desktopPath = "C:\\Users\\" + user + "\\Desktop\\YourName.txt";
-        File file = new File(desktopPath);
+        String path = "C://Users//anamo//OneDrive//Desktop//Aakash.txt";
+        File file = new File(path);
 
         if (file.exists()) {
             System.out.println("File Name: " + file.getName());

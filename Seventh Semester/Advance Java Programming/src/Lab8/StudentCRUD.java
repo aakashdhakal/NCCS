@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class StudentCRUD {
     static final String URL = "jdbc:mysql://localhost:3306/jdbc";
-    static final String USER = "root"; // change as needed
-    static final String PASS = ""; // change as needed
+    static final String USER = "root";
+    static final String PASS = "";
 
     public static void main(String[] args) {
         try {
@@ -17,7 +17,8 @@ public class StudentCRUD {
             con.createStatement().execute(createTable);
 
             while (true) {
-                System.out.println("\n1. Create 2. Read 3. Update 4. Delete 5. Exit");
+                System.out.println("\n1. Create \n2. Read \n3. Update \n4. Delete \n5. Exit");
+                System.out.print("Enter choice: ");
                 int ch = sc.nextInt();
                 if (ch == 5)
                     break;
@@ -26,6 +27,7 @@ public class StudentCRUD {
                     System.out.print("ID: ");
                     int id = sc.nextInt();
                     System.out.print("Name: ");
+                    sc.nextLine();
                     String name = sc.nextLine();
                     System.out.print("Age: ");
                     int age = sc.nextInt();
@@ -49,7 +51,7 @@ public class StudentCRUD {
                     break;
                 case 2: // Read
                     ResultSet rs = con.createStatement().executeQuery("SELECT * FROM student");
-                    System.out.println("ID\tName\tAge\tAddress\t\tEmail\t\tPhone");
+                    System.out.println("ID\tName\t\tAge\tAddress\t\tEmail\t\t\t\tPhone");
                     while (rs.next()) {
                         System.out.printf("%d\t%s\t%d\t%s\t%s\t%s\n", rs.getInt("id"), rs.getString("name"),
                                 rs.getInt("age"), rs.getString("address"), rs.getString("email"),
@@ -60,11 +62,12 @@ public class StudentCRUD {
                     System.out.print("Enter ID to update: ");
                     int uid = sc.nextInt();
                     System.out.print("New Name: ");
-                    String nname = sc.next();
+                    sc.nextLine();
+                    String nname = sc.nextLine();
                     System.out.print("New Age: ");
                     int nage = sc.nextInt();
                     System.out.print("New Address: ");
-                    sc.nextLine();
+                    sc.nextLine(); // consume leftover newline
                     String naddr = sc.nextLine();
                     System.out.print("New Email: ");
                     String nemail = sc.next();
@@ -95,8 +98,8 @@ public class StudentCRUD {
                 default:
                     System.out.println("Invalid choice.");
                 }
-                sc.close();
             }
+            sc.close();
         } catch (SQLException e) {
             System.out.println("Connection error: " + e.getMessage());
         }

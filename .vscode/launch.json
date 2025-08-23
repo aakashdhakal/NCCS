@@ -3,12 +3,60 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "FileProperties",
+			"request": "launch",
+			"mainClass": "Lab4.FileProperties",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "FileReadWite",
+			"request": "launch",
+			"mainClass": "Lab4.FileReadWite",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "FileCreateWriteRead",
+			"request": "launch",
+			"mainClass": "Lab4.FileCreateWriteRead",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "FileExistsCheck",
+			"request": "launch",
+			"mainClass": "Lab4.FileExistsCheck",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "Lab3",
+			"request": "launch",
+			"mainClass": "Lab3.Lab3",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "VehicleDemo",
+			"request": "launch",
+			"mainClass": "Lab2.VehicleDemo",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
+			"name": "ShapeDemo",
+			"request": "launch",
+			"mainClass": "Lab2.ShapeDemo",
+			"projectName": "NCCS-LAB_c7ab3896"
+		},
+		{
+			"type": "java",
 			"name": "ServerSocketDemo",
 			"request": "launch",
 			"mainClass": "Lab9.ServerSocketDemo",
 			"projectName": "NCCS-LAB_c7ab3896"
 		},
-
 		{
 			"type": "java",
 			"name": "ClientSocketDemo",

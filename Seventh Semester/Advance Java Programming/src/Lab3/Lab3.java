@@ -54,9 +54,9 @@ class Triangle implements Shape {
 // Test class to demonstrate functionality
 public class Lab3 {
     public static void main(String[] args) {
-        Shape rectangle = new Rectangle(10, 5);
-        Shape circle = new Circle(7);
-        Shape triangle = new Triangle(8, 6);
+        Shape rectangle = new Rectangle(21, 13);
+        Shape circle = new Circle(17);
+        Shape triangle = new Triangle(25, 9);
 
         System.out.println("Rectangle area: " + rectangle.getArea());
         System.out.println("Circle area: " + circle.getArea());

@@ -50,15 +50,24 @@ class WithdrawThread extends Thread {
 
 public class BankDemo {
     public static void main(String[] args) {
-        BankAccount acc = new BankAccount();
-        Thread t1 = new DepositThread(acc, 1000, "Depositor-1");
-        Thread t2 = new WithdrawThread(acc, 500, "Withdrawer-1");
-        Thread t3 = new WithdrawThread(acc, 700, "Withdrawer-2");
-        Thread t4 = new DepositThread(acc, 300, "Depositor-2");
+        BankAccount account = new BankAccount();
 
-        t1.start();
-        t2.start();
-        t3.start();
-        t4.start();
+        Thread depositor1 = new Thread(() -> account.deposit(2000, "Depositor1"));
+        Thread withdrawer1 = new Thread(() -> account.withdraw(1200, "Withdrawer1"));
+        Thread depositor2 = new Thread(() -> account.deposit(1000, "Depositor2"));
+        Thread withdrawer2 = new Thread(() -> account.withdraw(1500, "Withdrawer2"));
+        Thread depositor3 = new Thread(() -> account.deposit(2500, "Depositor3"));
+        Thread withdrawer3 = new Thread(() -> account.withdraw(1800, "Withdrawer3"));
+        Thread depositor4 = new Thread(() -> account.deposit(1000, "Depositor4"));
+        Thread withdrawer4 = new Thread(() -> account.withdraw(2200, "Withdrawer4"));
+
+        depositor1.start();
+        withdrawer1.start();
+        depositor2.start();
+        withdrawer2.start();
+        depositor3.start();
+        withdrawer3.start();
+        depositor4.start();
+        withdrawer4.start();
     }
 }

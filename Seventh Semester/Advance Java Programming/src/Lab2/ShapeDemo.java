@@ -54,7 +54,7 @@ class Triangle extends Shape {
     }
 }
 
-public class Main {
+public class ShapeDemo {
     public static void main(String[] args) {
         Shape rect = new Rectangle(20, 15);
         Shape circle = new Circle(21);
