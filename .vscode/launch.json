@@ -216,6 +216,14 @@
 			"sourceFileMap": {
 				"/Views": "${workspaceFolder}/Views"
 			}
+		},
+		{
+			"name": "Python: Current File (External Terminal)",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${file}",
+			"console": "externalTerminal", // This is the key setting
+			"justMyCode": true
 		}
 	]
 }
